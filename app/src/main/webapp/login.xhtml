@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+    <h:outputStylesheet name="bootstrap.min.css" library="css" />
+    <h:outputStylesheet name="main.css" library="css" />
+</h:head>
+
+<h:body styleClass="boddy">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="pt-5 mx-auto">
+                <div class="card">
+                    <h3 class="card-header">Zaloguj</h3>
+                    <div class="card-body">
+                        <h:form>
+                            <div class="form-group">
+                                <label>Login</label>
+                                <h:inputText styleClass="form-control" value="#{LoginController.login}"></h:inputText><br/>
+                            </div>
+                            <div class="form-group">
+                                <label>Haslo</label>
+                                <h:inputSecret styleClass="form-control" value="#{LoginController.passoword}"></h:inputSecret><br/>
+                            </div>
+                                <h:commandButton value="Login" styleClass="btn btn-primary"></h:commandButton>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</h:body>
+</html>
