@@ -20,13 +20,13 @@
                         <h:form>
                             <div class="form-group">
                                 <label>Login</label>
-                                <h:inputText styleClass="form-control" value="#{LoginController.login}"></h:inputText><br/>
+                                <h:inputText styleClass="form-control" value="#{loginRequest.username}"></h:inputText><br/>
                             </div>
                             <div class="form-group">
                                 <label>Haslo</label>
-                                <h:inputSecret styleClass="form-control" value="#{LoginController.passoword}"></h:inputSecret><br/>
+                                <h:inputSecret styleClass="form-control" value="#{loginRequest.password}"></h:inputSecret><br/>
                             </div>
-                                <h:commandButton value="Login" styleClass="btn btn-primary"></h:commandButton>
+                                <h:commandButton action="#{loginController.login}" value="Login" styleClass="btn btn-primary"></h:commandButton>
                         </h:form>
                     </div>
                 </div>
