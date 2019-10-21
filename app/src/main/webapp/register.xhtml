@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Rejestracja</title>
+    <h:outputStylesheet name="bootstrap.min.css" library="css" />
+    <h:outputStylesheet name="main.css" library="css" />
+</h:head>
+
+<h:body styleClass="boddy">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="pt-5 mx-auto">
+                <div class="card">
+                    <h3 class="card-header">Zaloguj</h3>
+                    <div class="card-body">
+                        <h:form>
+                            <div class="form-group">
+                                <label>Imie</label>
+                                <h:inputText id="name" styleClass="form-control" value="#{registerRequest.name}">
+\
+                                </h:inputText><br/>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Nazwisko</label>
+                                <h:inputText id="surname" styleClass="form-control" value="#{registerRequest.surname}">
+
+                                </h:inputText><br/>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Haslo</label>
+                                <h:inputSecret styleClass="form-control" value="#{registerRequest.password}"></h:inputSecret><br/>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Nazwa użytkownika</label>
+                                <h:inputText id="username" styleClass="form-control" value="#{registerRequest.username}">
+
+                                </h:inputText><br/>
+                            </div>
+
+                            <div class="form-group">
+                                <label>E-mail</label>
+                                <h:inputText id="email" styleClass="form-control" value="#{registerRequest.email}">
+
+                                </h:inputText><br/>
+                            </div>
+
+                            <h:commandButton action="#{registerController.register}" value="Zarejestruj" styleClass="btn btn-primary"></h:commandButton>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</h:body>
+</html>
