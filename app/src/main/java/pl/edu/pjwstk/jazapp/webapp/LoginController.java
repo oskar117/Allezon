@@ -19,10 +19,9 @@ public class LoginController {
         String correctLogin = "kamil";
         String correctPassword = "daszke";
 
-        if(loginRequest.getUsername() == correctLogin && loginRequest.getPassword() == correctPassword) {
+        if(loginRequest.getUsername().equals(correctLogin) && loginRequest.getPassword().equals(correctPassword)) {
             HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
             session.setAttribute("username", correctLogin);
-            System.out.println(session.getAttribute("username"));
         } else {
             System.out.println("Tried to log in using " + loginRequest.toString() + correctPassword + " " + loginRequest.getPassword());
         }

@@ -14,14 +14,25 @@ import java.io.IOException;
 public class LoginFilter extends HttpFilter {
 
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
-        if(userIsLogged()) {
-            res.sendRedirect("/index.xhtml");
-        } else {
-            chain.doFilter(req, res);
+        if(userIsLogged(req)) {
+            System.out.println("przekierowanko");
+            res.sendRedirect(req.getContextPath() + "/index.xhtml");
         }
+        chain.doFilter(req, res);
     }
 
-    private boolean userIsLogged() {
+    private boolean userIsLogged(HttpServletRequest req) {
+        try {
+            HttpSession session = req.getSession(false);
+
+            if(session != null && session.getAttribute("username") != null) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         return false;
     }
 }
