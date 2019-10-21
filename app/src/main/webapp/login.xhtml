@@ -28,9 +28,9 @@
                             </div>
                             <div class="form-group">
                                 <label>Haslo</label>
-                                <h:inputSecret styleClass="form-control" value="#{loginRequest.password}"></h:inputSecret><br/>
+                                <h:inputSecret styleClass="form-control" value="#{loginRequest.password}"/><br/>
                             </div>
-                                <h:commandButton action="#{loginController.login}" value="Login" styleClass="btn btn-primary"></h:commandButton>
+                                <h:commandButton action="#{loginController.login}" value="Login" styleClass="btn btn-primary"/>
                         </h:form>
 
                        <h:outputText value="#{msg['jaz.app.name']}"/>
