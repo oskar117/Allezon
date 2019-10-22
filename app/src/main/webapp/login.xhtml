@@ -21,7 +21,7 @@
                             <div class="form-group">
                                 <label>Login</label>
                                 <h:inputText id="username" styleClass="form-control" value="#{loginRequest.username}">
-                                    <f:validateLength maximum="15" minimum="3"/>
+                                    <f:validateLength maximum="50" minimum="3"/>
                                     <f:validateRegex pattern="^[a-z]+$"/>
                                 </h:inputText><br/>
                                 <h:message for="username"/>
@@ -30,10 +30,12 @@
                                 <label>Haslo</label>
                                 <h:inputSecret styleClass="form-control" value="#{loginRequest.password}"/><br/>
                             </div>
-                                <h:commandButton action="#{loginController.login}" value="Login" styleClass="btn btn-primary"/>
+                            <h:commandButton action="#{loginController.login}" value="Login" styleClass="btn btn-primary"/>
                         </h:form>
 
-                       <h:outputText value="#{msg['jaz.app.name']}"/>
+                        <br/>
+                        <div><a href="register.xhtml">Zarejestruj się</a></div>
+                       <!--<h:outputText value="#{msg['jaz.app.name']}"/>-->
 
                     </div>
                 </div>

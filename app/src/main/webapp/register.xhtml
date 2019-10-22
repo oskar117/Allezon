@@ -22,36 +22,45 @@
                             <div class="form-group">
                                 <label>Imie</label>
                                 <h:inputText id="name" styleClass="form-control" value="#{registerRequest.name}">
-\
+                                    <f:validateLength maximum="50" minimum="3"/>
+                                    <f:validateRegex pattern="^[a-z]+$"/>
                                 </h:inputText><br/>
+                                <h:message for="name"/>
                             </div>
 
                             <div class="form-group">
                                 <label>Nazwisko</label>
                                 <h:inputText id="surname" styleClass="form-control" value="#{registerRequest.surname}">
-
+                                    <f:validateLength maximum="50" minimum="3"/>
+                                    <f:validateRegex pattern="^[a-z]+$"/>
                                 </h:inputText><br/>
+                                <h:message for="surname"/>
                             </div>
 
                             <div class="form-group">
                                 <label>Haslo</label>
-                                <h:inputSecret styleClass="form-control" value="#{registerRequest.password}"></h:inputSecret><br/>
+                                <h:inputSecret id="password" styleClass="form-control" value="#{registerRequest.password}">
+                                    <f:validateRegex pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{5,30}$"/>
+                                </h:inputSecret><br/>
+                                <h:message for="password"/>
                             </div>
 
                             <div class="form-group">
                                 <label>Nazwa użytkownika</label>
                                 <h:inputText id="username" styleClass="form-control" value="#{registerRequest.username}">
-
+                                    <f:validateLength maximum="50" minimum="3"/>
                                 </h:inputText><br/>
+                                <h:message for="username"/>
                             </div>
 
                             <div class="form-group">
                                 <label>E-mail</label>
                                 <h:inputText id="email" styleClass="form-control" value="#{registerRequest.email}">
-
+                                    <f:validateLength maximum="50" minimum="3"/>
+                                    <f:validateRegex pattern="(?:[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*|'(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*')@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"/>
                                 </h:inputText><br/>
+                                <h:message for="email"/>
                             </div>
-
                             <h:commandButton action="#{registerController.register}" value="Zarejestruj" styleClass="btn btn-primary"></h:commandButton>
                         </h:form>
                     </div>

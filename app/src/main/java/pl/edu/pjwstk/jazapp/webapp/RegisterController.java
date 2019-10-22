@@ -13,6 +13,10 @@ public class RegisterController {
     private RegisterRequest registerRequest;
 
     public void register() {
+
+        Users users = new Users();
+        users.registerUser(registerRequest.getUsername(), registerRequest.getPassword());
+
         System.out.println("Tried to register in using " + registerRequest.toString());
     }
 
