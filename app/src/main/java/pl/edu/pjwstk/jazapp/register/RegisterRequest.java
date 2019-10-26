@@ -12,6 +12,8 @@ public class RegisterRequest {
     private String email;
     private String password;
     private String name;
+    private String date;
+    private String password2;
 
 
     public String getUsername() {
@@ -63,5 +65,21 @@ public class RegisterRequest {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getPassword2() {
+        return password2;
+    }
+
+    public void setPassword2(String password2) {
+        this.password2 = password2;
     }
 }

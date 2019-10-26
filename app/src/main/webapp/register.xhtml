@@ -46,6 +46,14 @@
                             </div>
 
                             <div class="form-group">
+                                <label>Powtórz hasło</label>
+                                <h:inputSecret id="password2" styleClass="form-control" value="#{registerRequest.password2}">
+                                    <f:validateRegex pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{5,30}$"/>
+                                </h:inputSecret><br/>
+                                <h:message for="password2"/>
+                            </div>
+
+                            <div class="form-group">
                                 <label>Nazwa użytkownika</label>
                                 <h:inputText id="username" styleClass="form-control" value="#{registerRequest.username}">
                                     <f:validateLength maximum="50" minimum="3"/>
@@ -61,6 +69,15 @@
                                 </h:inputText><br/>
                                 <h:message for="email"/>
                             </div>
+
+                            <div class="form-group">
+                                <label>E-mail</label>
+                                <h:inputText id="date" styleClass="form-control" value="#{registerRequest.date}">
+                                    <f:convertDateTime pattern="d-M-yyyy" />
+                                </h:inputText><br/>
+                                <h:message for="date"/>
+                            </div>
+
                             <h:commandButton action="#{registerController.register}" value="Zarejestruj" styleClass="btn btn-primary"></h:commandButton>
                         </h:form>
                     </div>

@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20191023_init
+      author: Olek Konieczny
+      sqlFile:
+        relativeToChangelogFile: true
+        splitStatements: false
+        path: 20191023_init.sql
