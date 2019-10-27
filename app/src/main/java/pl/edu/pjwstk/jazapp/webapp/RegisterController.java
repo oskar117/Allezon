@@ -15,21 +15,22 @@ public class RegisterController {
     @Inject
     private RegisterRequest registerRequest;
 
-    public void register() {
+    public String register() {
 
         if(registerRequest.getPassword().equals(registerRequest.getPassword2())) {
             Users users = new Users();
-            users.registerUser(registerRequest.getUsername(), registerRequest.getPassword());
+            users.registerUser(registerRequest.getUsername(), registerRequest.getSurname(), registerRequest.getEmail(), registerRequest.getPassword(), registerRequest.getName(), registerRequest.getDate());
+            return "login.xhtml";
         } else {
             System.out.println("zle haslo w sensie powtorzone");
             FacesContext fc = FacesContext.getCurrentInstance();
             FacesMessage msg = new FacesMessage("Password must match confirm password");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-            fc.addMessage(null, msg);
-            fc.renderResponse();
+            fc.addMessage("password", msg);
+            FacesMessage facesMessage = new FacesMessage("lalalalala");
+            FacesContext.getCurrentInstance().addMessage("username",  facesMessage);
         }
-
-        System.out.println("Tried to register in using " + registerRequest.toString());
+        return "register.xhtml";
     }
 
 }

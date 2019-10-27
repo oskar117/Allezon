@@ -10,6 +10,7 @@
 </h:head>
 
 <h:body>
-   <h1>No witam</h1>
+   <h1>No witaj #{username}</h1>
+    <h:form><h:commandButton action="#{loginController.logout}" value="Logout" styleClass="btn btn-primary"/></h:form>
 </h:body>
 </html>

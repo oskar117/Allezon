@@ -34,4 +34,10 @@ public class LoginController {
         }
         return "login.xhtml";
     }
+
+    public String logout() {
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        session.invalidate();
+        return "login.xhtml";
+    }
 }

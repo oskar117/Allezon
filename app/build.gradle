@@ -10,7 +10,7 @@ war {
 group 'pl.edu.pjwstk.jazapp'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 11
 
 repositories {
     mavenCentral()
@@ -25,6 +25,8 @@ dependencies {
     implementation 'com.zaxxer:HikariCP:3.4.1'
     implementation 'org.liquibase:liquibase-core:3.8.0'
     implementation 'org.liquibase:liquibase-cdi:3.8.0'
-
+    compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: '2.29.1'
+    compile group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: '2.29.1'
+    compile group: 'org.json', name: 'json', version: '20190722'
     testImplementation group: 'junit', name: 'junit', version: '4.12'
 }

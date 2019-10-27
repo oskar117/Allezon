@@ -15,10 +15,8 @@ public class LoginFilter extends HttpFilter {
 
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         if(!userIsLogged(req)) {
-            System.out.println("test1");
             res.sendRedirect(req.getContextPath() + "/login.xhtml");
         } else {
-            System.out.println("test2");
             chain.doFilter(req, res);
         }
     }
