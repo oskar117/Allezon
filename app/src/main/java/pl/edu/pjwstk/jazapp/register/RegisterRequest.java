@@ -2,6 +2,7 @@ package pl.edu.pjwstk.jazapp.register;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
 
 @Named
 @RequestScoped
@@ -11,7 +12,10 @@ public class RegisterRequest {
     private String surname;
     private String email;
     private String password;
+
+    @NotNull(message = "Name can't be empty")
     private String name;
+
     private String date;
     private String password2;
 

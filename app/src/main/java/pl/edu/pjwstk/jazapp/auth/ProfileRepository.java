@@ -4,6 +4,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @ApplicationScoped
 public class ProfileRepository {
@@ -11,15 +12,29 @@ public class ProfileRepository {
     private EntityManager em;
 
     @Transactional
-    public void sampleCodeWithPC() {
-        var profile = new ProfileEntity("test", "test", "test", "test", "test", "02-04-2005");
+    public void registerUser(String username, String surname, String email, String password, String name, String date) {
 
+        var profile = new ProfileEntity(username, surname, email, password, name, date);
         em.persist(profile);
-
-        final ProfileEntity profileEntity = em.find(ProfileEntity.class, 7L);
-        var list = em.createQuery("from ProfileEntity where username = :username", ProfileEntity.class)
-                .setParameter("username", "test2")
-                .getResultList();
-        System.out.println(list);
     }
+
+    @Transactional
+    public boolean userExists(String nickname) {
+
+        var qw = em.createQuery("select count(*) from ProfileEntity where username = :usr").setParameter("usr", nickname).getSingleResult();
+
+        if((long)qw != 0) {
+            ProfileEntity user = em.createQuery("from ProfileEntity where username = :usr", ProfileEntity.class).setParameter("usr", nickname).getSingleResult();
+            if(user != null) {
+                if(user.getUsername().equals(nickname)) return true;
+            }
+        }
+        return false;
+    }
+
+    public String getPassword(String nickname) {
+        ProfileEntity user = em.createQuery("from ProfileEntity where username = :usr", ProfileEntity.class).setParameter("usr", nickname).getSingleResult();
+        return user.getPassword();
+    }
+
 }

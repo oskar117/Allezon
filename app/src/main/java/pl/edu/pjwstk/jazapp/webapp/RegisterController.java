@@ -1,5 +1,6 @@
 package pl.edu.pjwstk.jazapp.webapp;
 
+import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
 import pl.edu.pjwstk.jazapp.register.RegisterRequest;
 
 import javax.enterprise.context.RequestScoped;
@@ -15,11 +16,14 @@ public class RegisterController {
     @Inject
     private RegisterRequest registerRequest;
 
+    @Inject
+    private ProfileRepository profileRepository;
+
     public String register() {
 
         if(registerRequest.getPassword().equals(registerRequest.getPassword2())) {
-            Users users = new Users();
-            users.registerUser(registerRequest.getUsername(), registerRequest.getSurname(), registerRequest.getEmail(), registerRequest.getPassword(), registerRequest.getName(), registerRequest.getDate());
+            //Users users = new Users();
+            profileRepository.registerUser(registerRequest.getUsername(), registerRequest.getSurname(), registerRequest.getEmail(), registerRequest.getPassword(), registerRequest.getName(), registerRequest.getDate());
             return "login.xhtml";
         } else {
             System.out.println("zle haslo w sensie powtorzone");

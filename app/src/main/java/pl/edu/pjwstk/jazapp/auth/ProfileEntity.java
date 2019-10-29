@@ -26,6 +26,7 @@ public class ProfileEntity {
     public ProfileEntity(String username, String surname, String email, String password, String name, String date) {
         this.username = username;
         this.name = name;
+        this.email = email;
         this.surname = surname;
         this.password = password;
         this.birth_date = date;
@@ -73,17 +74,6 @@ public class ProfileEntity {
 
     public void setName(String nick) {
         this.name = nick;
-    }
-
-    @Override
-    public String toString() {
-        return "RegisterRequest{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                '}';
     }
 
     public String getDate() {

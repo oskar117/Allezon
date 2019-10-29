@@ -23,11 +23,11 @@ public class LoginController {
     Users users = new Users();
 
     public String login() {
-        profileRepository.sampleCodeWithPC();
-        if(users.userExists(loginRequest.getUsername())) {
+
+        if(profileRepository.userExists(loginRequest.getUsername())) {
 
             String correctLogin = loginRequest.getUsername();
-            String correctPassword = users.getPassword(correctLogin);
+            String correctPassword = profileRepository.getPassword(correctLogin);
 
             if(loginRequest.getPassword().equals(correctPassword)) {
                 HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
