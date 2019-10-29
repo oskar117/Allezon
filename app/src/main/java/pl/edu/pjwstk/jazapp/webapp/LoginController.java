@@ -1,5 +1,6 @@
 package pl.edu.pjwstk.jazapp.webapp;
 
+import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
 import pl.edu.pjwstk.jazapp.login.LoginRequest;
 
 import javax.enterprise.context.RequestScoped;
@@ -15,10 +16,14 @@ import java.util.Map;
 public class LoginController {
     @Inject
     private LoginRequest loginRequest;
+
+    @Inject
+    private ProfileRepository profileRepository;
+
     Users users = new Users();
 
     public String login() {
-
+        profileRepository.sampleCodeWithPC();
         if(users.userExists(loginRequest.getUsername())) {
 
             String correctLogin = loginRequest.getUsername();

@@ -12,14 +12,14 @@ public class ProfileRepository {
 
     @Transactional
     public void sampleCodeWithPC() {
-        var profile = new ProfileEntity("pjanowiak");
+        var profile = new ProfileEntity("test", "test", "test", "test", "test", "02-04-2005");
 
         em.persist(profile);
 
         final ProfileEntity profileEntity = em.find(ProfileEntity.class, 7L);
-        var list = em.createQuery("from ProfileEntity where name = :name", ProfileEntity.class)
-                .setParameter("name", "pjanowiak2")
+        var list = em.createQuery("from ProfileEntity where username = :username", ProfileEntity.class)
+                .setParameter("username", "test2")
                 .getResultList();
-        System.out.println();
+        System.out.println(list);
     }
 }
