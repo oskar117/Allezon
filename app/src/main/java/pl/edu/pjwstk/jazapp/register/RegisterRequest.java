@@ -1,7 +1,9 @@
 package pl.edu.pjwstk.jazapp.register;
 
+import javax.ejb.Local;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import java.time.LocalDate;
 
 @Named
 @RequestScoped

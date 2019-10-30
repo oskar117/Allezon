@@ -4,6 +4,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 
 @ApplicationScoped
@@ -12,7 +13,7 @@ public class ProfileRepository {
     private EntityManager em;
 
     @Transactional
-    public void registerUser(String username, String surname, String email, String password, String name, String date) {
+    public void registerUser(String username, String surname, String email, String password, String name, LocalDate date) {
 
         ProfileEntity profile = new ProfileEntity(username, surname, email, password, name, date);
         em.persist(profile);

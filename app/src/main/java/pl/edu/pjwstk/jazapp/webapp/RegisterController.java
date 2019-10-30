@@ -1,5 +1,6 @@
 package pl.edu.pjwstk.jazapp.webapp;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
 import pl.edu.pjwstk.jazapp.register.RegisterRequest;
 
@@ -10,6 +11,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.swing.text.html.HTMLDocument;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 
@@ -28,7 +31,9 @@ public class RegisterController {
             if(profileRepository.userExists(registerRequest.getUsername())) {
                 FacesContext.getCurrentInstance().addMessage("form:username", new FacesMessage("Nick zajęty"));
             } else {
-                profileRepository.registerUser(registerRequest.getUsername(), registerRequest.getSurname(), registerRequest.getEmail(), registerRequest.getPassword(), registerRequest.getName(), registerRequest.getDate());
+                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+                profileRepository.registerUser(registerRequest.getUsername(), registerRequest.getSurname(), registerRequest.getEmail(), encoder.encode(registerRequest.getPassword()), registerRequest.getName(), registerRequest.getDate());
                 return "login.xhtml";
             }
         } else {

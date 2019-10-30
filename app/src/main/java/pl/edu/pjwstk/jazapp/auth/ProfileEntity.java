@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "users")
@@ -17,13 +18,13 @@ public class ProfileEntity {
     private String email;
     private String password;
     private String name;
-    private String birth_date;
+    private LocalDate birth_date;
 
     public ProfileEntity(String username) {
         this.username = username;
     }
 
-    public ProfileEntity(String username, String surname, String email, String password, String name, String date) {
+    public ProfileEntity(String username, String surname, String email, String password, String name, LocalDate date) {
         this.username = username;
         this.name = name;
         this.email = email;
@@ -76,11 +77,11 @@ public class ProfileEntity {
         this.name = nick;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return birth_date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.birth_date = date;
     }
 

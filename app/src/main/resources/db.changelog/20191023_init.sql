@@ -7,7 +7,7 @@ CREATE TABLE users
     name VARCHAR   NOT NULL,
     surname VARCHAR   NOT NULL,
     password VARCHAR NOT NULL,
-    birth_date VARCHAR,
+    birth_date DATE,
     email VARCHAR NOT NULL,
 
     PRIMARY KEY (id)

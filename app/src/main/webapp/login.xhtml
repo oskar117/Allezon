@@ -21,7 +21,7 @@
                         <h:form id="loginForm">
                             <div class="form-group">
                                 <label>Login</label>
-                                <h:inputText id="username" styleClass="form-control text-dark" value="#{loginRequest.username}">
+                                <h:inputText id="username" styleClass="form-control" value="#{loginRequest.username}" validatorMessage="#{msg['jaz.app.name']}">
                                     <f:validateLength maximum="50" minimum="3"/>
                                 </h:inputText><br/>
                                 <h:message for="username" styleClass="message"/>
