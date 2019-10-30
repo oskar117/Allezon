@@ -21,7 +21,7 @@
                         <h:form id="loginForm">
                             <div class="form-group">
                                 <label>Login</label>
-                                <h:inputText id="username" styleClass="form-control" value="#{loginRequest.username}" validatorMessage="#{msg['jaz.app.name']}">
+                                <h:inputText id="username" styleClass="form-control" value="#{loginRequest.username}">
                                     <f:validateLength maximum="50" minimum="3"/>
                                 </h:inputText><br/>
                                 <h:message for="username" styleClass="message"/>
@@ -29,14 +29,14 @@
                             <div class="form-group">
                                 <label>Haslo</label>
                                 <h:inputSecret id="password" styleClass="form-control" value="#{loginRequest.password}"/><br/>
-                                <h:message for="password"/>
+                                <h:message styleClass="message" for="password"/>
                             </div>
                             <h:commandButton action="#{loginController.login}" value="Login" styleClass="btn btn-primary"/>
                         </h:form>
-                            <h:outputLink styleClass="btn btn-danger" value="/app/googleAuthorization" target="_blank">Login Z googlem
+                            <h:outputLink style="margin-top: 5px" styleClass="btn btn-danger" value="/app/googleAuthorization" target="_blank">Login Z googlem
                             </h:outputLink>
                         <br/>
-                        <div><a href="register.xhtml">Zarejestruj się</a></div>
+                        <div><a style="margin-top: 5px" href="register.xhtml">Zarejestruj się</a></div>
                        <!--<h:outputText value="#{msg['jaz.app.name']}"/>-->
 
                     </div>

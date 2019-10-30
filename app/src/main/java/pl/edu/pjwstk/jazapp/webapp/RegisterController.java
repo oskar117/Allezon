@@ -13,6 +13,7 @@ import javax.swing.text.html.HTMLDocument;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,8 +33,8 @@ public class RegisterController {
                 FacesContext.getCurrentInstance().addMessage("form:username", new FacesMessage("Nick zajęty"));
             } else {
                 BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-                profileRepository.registerUser(registerRequest.getUsername(), registerRequest.getSurname(), registerRequest.getEmail(), encoder.encode(registerRequest.getPassword()), registerRequest.getName(), registerRequest.getDate());
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                profileRepository.registerUser(registerRequest.getUsername(), registerRequest.getSurname(), registerRequest.getEmail(), encoder.encode(registerRequest.getPassword()), registerRequest.getName(), LocalDate.parse(registerRequest.getDate(), formatter));
                 return "login.xhtml";
             }
         } else {
