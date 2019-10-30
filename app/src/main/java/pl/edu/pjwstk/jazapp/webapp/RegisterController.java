@@ -25,9 +25,12 @@ public class RegisterController {
     public String register() {
 
         if(registerRequest.getPassword().equals(registerRequest.getPassword2())) {
-            //Users users = new Users();
-            profileRepository.registerUser(registerRequest.getUsername(), registerRequest.getSurname(), registerRequest.getEmail(), registerRequest.getPassword(), registerRequest.getName(), registerRequest.getDate());
-            return "login.xhtml";
+            if(profileRepository.userExists(registerRequest.getUsername())) {
+                FacesContext.getCurrentInstance().addMessage("form:username", new FacesMessage("Nick zajęty"));
+            } else {
+                profileRepository.registerUser(registerRequest.getUsername(), registerRequest.getSurname(), registerRequest.getEmail(), registerRequest.getPassword(), registerRequest.getName(), registerRequest.getDate());
+                return "login.xhtml";
+            }
         } else {
             System.out.println("zle haslo w sensie powtorzone");
             FacesContext fc = FacesContext.getCurrentInstance();

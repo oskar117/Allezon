@@ -1,9 +1,31 @@
-#boddy, html, .container-fluid{
+#boddy, html, .container-fluid {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
-    background-color: lightgreen;
+    background-color: lightpink;
+    color: whitesmoke;;
+    animation-name: tlo;
+    animation-iteration-count: infinite;
+    animation-duration: 5s;
+}
+
+@keyframes tlo {
+    0% {
+        background-color: lightpink;
+    }
+
+    25% {
+        background-color: pink;
+    }
+
+    50% {
+        background-color: hotpink;
+    }
+
+    75% {
+        background-color: deeppink;
+    }
 }
 
 .message {

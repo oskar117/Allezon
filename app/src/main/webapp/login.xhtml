@@ -6,6 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
+    <title>Logowanie</title>
     <h:outputStylesheet name="bootstrap.min.css" library="css" />
     <h:outputStylesheet name="main.css" library="css" />
 </h:head>
@@ -14,21 +15,21 @@
     <div class="container-fluid">
         <div class="row">
             <div class="pt-5 mx-auto">
-                <div class="card">
+                <div class="card bg-dark">
                     <h3 class="card-header">Zaloguj</h3>
                     <div class="card-body">
-                        <h:form>
+                        <h:form id="loginForm">
                             <div class="form-group">
                                 <label>Login</label>
-                                <h:inputText id="username" styleClass="form-control" value="#{loginRequest.username}">
+                                <h:inputText id="username" styleClass="form-control text-dark" value="#{loginRequest.username}">
                                     <f:validateLength maximum="50" minimum="3"/>
-                                    <f:validateRegex pattern="^[a-z]+$"/>
                                 </h:inputText><br/>
-                                <h:message for="username"/>
+                                <h:message for="username" styleClass="message"/>
                             </div>
                             <div class="form-group">
                                 <label>Haslo</label>
-                                <h:inputSecret styleClass="form-control" value="#{loginRequest.password}"/><br/>
+                                <h:inputSecret id="password" styleClass="form-control" value="#{loginRequest.password}"/><br/>
+                                <h:message for="password"/>
                             </div>
                             <h:commandButton action="#{loginController.login}" value="Login" styleClass="btn btn-primary"/>
                         </h:form>

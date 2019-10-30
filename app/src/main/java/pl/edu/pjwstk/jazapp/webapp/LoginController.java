@@ -4,6 +4,7 @@ import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
 import pl.edu.pjwstk.jazapp.login.LoginRequest;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,7 +35,8 @@ public class LoginController {
                 session.setAttribute("username", correctLogin);
                 return "index.xhtml";
             } else {
-                System.out.println("Tried to log in using " + loginRequest.toString() + correctPassword + " " + loginRequest.getPassword());
+                FacesContext.getCurrentInstance().addMessage("loginForm:password", new FacesMessage("Błędne hasło, albo użytkownik nie istnieje"));
+                //System.out.println("Tried to log in using " + loginRequest.toString() + correctPassword + " " + loginRequest.getPassword());
             }
         }
         return "login.xhtml";

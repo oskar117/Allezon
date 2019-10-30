@@ -6,11 +6,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
+    <title>Zalogowano</title>
+    <h:outputStylesheet name="main.css" library="css" />
     <h:outputStylesheet name="bootstrap.min.css" library="css" />
 </h:head>
 
-<h:body>
-   <h1>No witaj #{username}</h1>
-    <h:form><h:commandButton action="#{loginController.logout}" value="Logout" styleClass="btn btn-primary"/></h:form>
+<h:body styleClass="boddy">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="pt-5 mx-auto">
+                <div class="card bg-dark">
+                    <h3 class="card-header">Witaj #{username}!</h3>
+                    <div class="card-body">
+                        <h:form><h:commandButton action="#{loginController.logout}" value="Logout" styleClass="btn btn-primary"/></h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </h:body>
 </html>
