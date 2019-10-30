@@ -8,7 +8,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.swing.text.html.HTMLDocument;
 import java.io.PrintWriter;
+import java.util.Iterator;
+import java.util.List;
 
 @Named
 @RequestScoped
@@ -28,11 +31,10 @@ public class RegisterController {
         } else {
             System.out.println("zle haslo w sensie powtorzone");
             FacesContext fc = FacesContext.getCurrentInstance();
-            FacesMessage msg = new FacesMessage("Password must match confirm password");
+            FacesMessage msg = new FacesMessage("Hasła się nie zgadzają");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-            fc.addMessage("password", msg);
-            FacesMessage facesMessage = new FacesMessage("lalalalala");
-            FacesContext.getCurrentInstance().addMessage("username",  facesMessage);
+            fc.addMessage("form:password", msg);
+
         }
         return "register.xhtml";
     }

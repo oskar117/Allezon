@@ -1,6 +1,5 @@
 package pl.edu.pjwstk.jazapp.oauth;
 
-import netscape.javascript.JSObject;
 import org.glassfish.jersey.client.ClientResponse;
 import org.glassfish.jersey.internal.util.collection.MultivaluedStringMap;
 import org.json.JSONObject;
