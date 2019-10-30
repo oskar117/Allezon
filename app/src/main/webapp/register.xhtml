@@ -22,6 +22,8 @@
                             <div class="form-group">
                                 <label>Imie</label>
                                 <h:inputText id="name" styleClass="form-control" value="#{registerRequest.name}">
+                                    <f:validateLength maximum="50" minimum="3"/>
+                                    <f:validateRegex pattern="^[a-z]+$"/>
                                 </h:inputText><br/>
                                 <h:message styleClass="message" for="name"/>
                             </div>
@@ -29,10 +31,10 @@
                             <div class="form-group">
                                 <label>Nazwisko</label>
                                 <h:inputText id="surname" styleClass="form-control" value="#{registerRequest.surname}">
-                                    <f:validateLength maximum="50" minimum="3"/>
                                     <f:validateRegex pattern="^[a-z]+$"/>
+                                    <f:validateLength maximum="50" minimum="3"/>
                                 </h:inputText><br/>
-                                <h:messages styleClass="message" for="surname" redisplay="false"/>
+                                <h:message styleClass="message" for="surname" redisplay="false"/>
                             </div>
 
                             <div class="form-group">
@@ -54,7 +56,7 @@
                                 <h:inputText id="username" styleClass="form-control" value="#{registerRequest.username}">
                                     <f:validateLength maximum="50" minimum="3"/>
                                 </h:inputText><br/>
-                                <h:messages styleClass="message" for="username" redisplay="false"/>
+                                <h:message styleClass="message" for="username" redisplay="false"/>
                             </div>
 
                             <div class="form-group">
@@ -63,7 +65,7 @@
                                     <f:validateLength maximum="50" minimum="3"/>
                                     <f:validateRegex pattern="(?:[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*|'(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*')@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"/>
                                 </h:inputText><br/>
-                                <h:messages styleClass="message" for="email" redisplay="false"/>
+                                <h:message styleClass="message" for="email" redisplay="false"/>
                             </div>
 
                             <div class="form-group">
@@ -71,7 +73,7 @@
                                 <h:inputText id="date" styleClass="form-control" value="#{registerRequest.date}">
                                     <f:convertDateTime pattern="dd-MM-yyyy" />
                                 </h:inputText><br/>
-                                <h:messages styleClass="message" for="date" redisplay="false"/>
+                                <h:message styleClass="message" for="date" redisplay="false"/>
                             </div>
 
                             <h:commandButton action="#{registerController.register}" value="Zarejestruj" styleClass="btn btn-primary"></h:commandButton>
