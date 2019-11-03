@@ -1,7 +1,10 @@
 package pl.edu.pjwstk.jazapp.webapp;
 
+import netscape.javascript.JSObject;
+import org.json.JSONObject;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
+import pl.edu.pjwstk.jazapp.oauth.Callback;
 import pl.edu.pjwstk.jazapp.register.RegisterRequest;
 
 import javax.enterprise.context.RequestScoped;
@@ -39,13 +42,23 @@ public class RegisterController {
             }
         } else {
             System.out.println("zle haslo w sensie powtorzone");
-            FacesContext fc = FacesContext.getCurrentInstance();
-            FacesMessage msg = new FacesMessage("Hasła się nie zgadzają");
-            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-            fc.addMessage("form:password", msg);
-
+            FacesContext.getCurrentInstance().addMessage("form:password", new FacesMessage("Hasła się nie zgadzają"));
         }
         return "register.xhtml";
+    }
+
+    public String oauthRegister() {
+        if(registerRequest.getPassword().equals(registerRequest.getPassword2())) {
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            JSONObject json = Callback.getSimpleUserDataJson();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            profileRepository.registerUser(json.getString("name"), json.getString("family_name"), json.getString("email"), encoder.encode(registerRequest.getPassword()), json.getString("given_name"), LocalDate.parse(Callback.getBirthDate(), formatter));
+            return "login.xhtml";
+        } else {
+            System.out.println("zle haslo w sensie powtorzone");
+            FacesContext.getCurrentInstance().addMessage("form:password", new FacesMessage("Hasła się nie zgadzają"));
+            return "oauthRegister.xhtml";
+        }
     }
 
 }

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Rejestracja</title>
+    <h:outputStylesheet name="bootstrap.min.css" library="css" />
+    <h:outputStylesheet name="main.css" library="css" />
+</h:head>
+
+<h:body styleClass="boddy">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="pt-5 mx-auto">
+                <div class="card bg-dark">
+                    <h3 class="card-header">Podaj hasło</h3>
+                    <div class="card-body">
+                        <h:form id="form">
+                            <div class="form-group">
+                                <label>Haslo</label>
+                                <h:inputSecret id="password" styleClass="form-control" value="#{registerRequest.password}" validatorMessage="#{msg['jaz.app.password']}">
+                                    <f:validateRegex pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{5,30}$"/>
+                                </h:inputSecret><br/>
+                                <h:message styleClass="message" for="password"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Powtórz hasło</label>
+                                <h:inputSecret id="password2" styleClass="form-control" value="#{registerRequest.password2}">
+                                </h:inputSecret><br/>
+                            </div>
+
+                            <h:commandButton action="#{registerController.oauthRegister}" value="Zarejestruj" styleClass="btn btn-primary"></h:commandButton>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</h:body>
+</html>
