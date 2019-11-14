@@ -38,4 +38,14 @@ public class ProfileRepository {
         return user.getPassword();
     }
 
+    public String getName(String username) {
+        ProfileEntity user = em.createQuery("from ProfileEntity where username = :usr", ProfileEntity.class).setParameter("usr", username).getSingleResult();
+        return user.getName();
+    }
+
+    public String getSurname(String username) {
+        ProfileEntity user = em.createQuery("from ProfileEntity where username = :usr", ProfileEntity.class).setParameter("usr", username).getSingleResult();
+        return user.getSurname();
+    }
+
 }

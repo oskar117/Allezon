@@ -6,3 +6,11 @@ databaseChangeLog:
         relativeToChangelogFile: true
         splitStatements: false
         path: 20191023_init.sql
+
+  - changeSet:
+      id: 20191113_auction
+      author: Olek Konieczny
+      sqlFile:
+        relativeToChangelogFile: true
+        splitStatements: false
+        path: 20191113_auction.sql

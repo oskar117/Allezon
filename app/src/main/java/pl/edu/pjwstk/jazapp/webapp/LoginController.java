@@ -33,12 +33,12 @@ public class LoginController {
             if(encoder.matches(loginRequest.getPassword(), correctPassword)) {
                 HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
                 session.setAttribute("username", correctLogin);
+                session.setAttribute("name", profileRepository.getName(correctLogin));
+                session.setAttribute("surname", profileRepository.getSurname(correctLogin));
                 return "index.xhtml";
-            } else {
-                FacesContext.getCurrentInstance().addMessage("loginForm:password", new FacesMessage("Błędne hasło, albo użytkownik nie istnieje"));
-                //System.out.println("Tried to log in using " + loginRequest.toString() + correctPassword + " " + loginRequest.getPassword());
             }
         }
+        FacesContext.getCurrentInstance().addMessage("loginForm:password", new FacesMessage("Błędne hasło, albo użytkownik nie istnieje"));
         return "login.xhtml";
     }
 

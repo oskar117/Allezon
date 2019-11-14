@@ -1,6 +1,7 @@
 package pl.edu.pjwstk.jazapp.oauth;
 
 import netscape.javascript.JSObject;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
 
@@ -60,6 +61,8 @@ public class Callback extends HttpServlet {
                 HttpSession session=req.getSession();
                 String currUser = json.getString("name");
                 session.setAttribute("username", currUser);
+                session.setAttribute("name", json.getString("given_name"));
+                session.setAttribute("surname", json.getString("family_name"));
 
                 if(profileRepository.userExists(currUser)) {
                     resp.sendRedirect(req.getContextPath() + "/index.xhtml");
@@ -81,9 +84,19 @@ public class Callback extends HttpServlet {
 
     public static String getBirthDate() {
         JSONObject json = getUserDataJson("birthdays");
-        json = json.getJSONArray("birthdays").getJSONObject(0).getJSONObject("date");
         DecimalFormat formatter = new DecimalFormat("00");
-        String data = formatter.format(json.getInt("day")) + "-" + formatter.format(json.getInt("month")) + "-" + json.getInt("year");
+        String data = "";
+
+        for(int x = 0; x < json.getJSONArray("birthdays").length(); x++) {
+            try{
+                json = json.getJSONArray("birthdays").getJSONObject(x).getJSONObject("date");
+                data = formatter.format(json.getInt("day")) + "-" + formatter.format(json.getInt("month")) + "-" + json.getInt("year");
+            } catch(Exception e) {
+                continue;
+            }
+            break;
+        }
+
         return data;
     }
 

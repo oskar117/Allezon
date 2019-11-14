@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-        <!DOCTYPE html
-                PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
     <title>Zalogowano</title>
-    <h:outputStylesheet name="main.css" library="css" />
-    <h:outputStylesheet name="bootstrap.min.css" library="css" />
+    <h:outputStylesheet name="main.css" library="css"/>
+    <h:outputStylesheet name="bootstrap.min.css" library="css"/>
 </h:head>
 
 <h:body styleClass="boddy">
     <div class="container-fluid">
-        <div class="row">
-            <div class="pt-5 mx-auto">
-                <div class="card bg-dark">
-                    <h3 class="card-header">Witaj #{username}!</h3>
-                    <div class="card-body">
-                        <h:form><h:commandButton action="#{loginController.logout}" value="Logout" styleClass="btn btn-primary"/></h:form>
-                    </div>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="content">
+                <h3 class="card-header">Witaj #{name} #{surname}!</h3>
+                <div class="card-body">
+                    <h:form>
+                        <h:commandButton action="#{loginController.logout}" value="Logout" styleClass="btn btn-primary"/>
+                    </h:form>
                 </div>
-            </div>
-        </div>
+            </ui:define>
+        </ui:composition>
     </div>
 </h:body>
 </html>

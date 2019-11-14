@@ -10,12 +10,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter("/index.xhtml")
+@WebFilter("*")
 public class LoginFilter extends HttpFilter {
 
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
-        if(!userIsLogged(req)) {
-            res.sendRedirect(req.getContextPath() + "/login.xhtml");
+
+        String currUrl = req.getRequestURI();
+
+        if(!currUrl.contains("javax.faces.resource")) {
+            //System.out.println(currUrl.indexOf("/app/index.xhtml") + " " + currUrl + " " + currUrl.contains("javax.faces.resource"));
+            if(currUrl.indexOf("/app/index.xhtml") >= 0 && !userIsLogged(req)) {
+                res.sendRedirect(req.getContextPath() + "/login.xhtml");
+            } else {
+                chain.doFilter(req, res);
+            }
         } else {
             chain.doFilter(req, res);
         }
