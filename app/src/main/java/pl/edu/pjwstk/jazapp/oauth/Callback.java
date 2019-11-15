@@ -85,18 +85,18 @@ public class Callback extends HttpServlet {
     public static String getBirthDate() {
         JSONObject json = getUserDataJson("birthdays");
         DecimalFormat formatter = new DecimalFormat("00");
-        String data = "";
+        String data = "err";
 
         for(int x = 0; x < json.getJSONArray("birthdays").length(); x++) {
             try{
                 json = json.getJSONArray("birthdays").getJSONObject(x).getJSONObject("date");
-                data = formatter.format(json.getInt("day")) + "-" + formatter.format(json.getInt("month")) + "-" + json.getInt("year");
+                data = formatter.format(json.getInt("day")) + "/" + formatter.format(json.getInt("month")) + "/" + json.getInt("year");
             } catch(Exception e) {
+                System.out.println("continue: " + e);
                 continue;
             }
             break;
         }
-
         return data;
     }
 

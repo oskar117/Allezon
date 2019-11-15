@@ -21,6 +21,7 @@
                 <h3 class="card-header">Zaloguj</h3>
                 <div class="card-body">
                     <h:form id="loginForm">
+                        <h:message styleClass="success_message" id="test" for="test"/><br/>
                         <div class="form-group">
                             <label>Login</label>
                             <h:inputText id="username" styleClass="form-control" value="#{loginRequest.username}">
@@ -34,6 +35,7 @@
                                            value="#{loginRequest.password}"/><br/>
                             <h:message styleClass="message" for="password"/>
                         </div>
+
                         <h:commandButton action="#{loginController.login}" value="Login" styleClass="btn btn-primary"/>
                     </h:form>
                     <h:outputLink style="margin-top: 5px" styleClass="btn btn-danger" value="/app/googleAuthorization"
@@ -41,7 +43,7 @@
                     </h:outputLink>
                     <br/>
                     <div><a style="margin-top: 5px" href="register.xhtml">Zarejestruj się</a></div>
-                    <!--<h:outputText value="#{msg['jaz.app.name']}"/>-->
+
                 </div>
             </ui:define>
         </ui:composition>

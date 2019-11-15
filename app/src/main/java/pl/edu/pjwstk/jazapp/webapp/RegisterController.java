@@ -23,6 +23,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.util.List;
 
+import static javax.faces.application.FacesMessage.*;
+
 @Named
 @RequestScoped
 public class RegisterController {
@@ -41,6 +43,7 @@ public class RegisterController {
                 BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 profileRepository.registerUser(registerRequest.getUsername(), registerRequest.getSurname(), registerRequest.getEmail(), encoder.encode(registerRequest.getPassword()), registerRequest.getName(), LocalDate.parse(registerRequest.getDate(), formatter));
+                FacesContext.getCurrentInstance().addMessage("loginForm:test", new FacesMessage("Zarejestrowano pomyślnie"));
                 return "login.xhtml";
             }
         } else {
@@ -73,8 +76,8 @@ public class RegisterController {
         } else {
             System.out.println("zle haslo w sensie powtorzone");
             FacesContext.getCurrentInstance().addMessage("formOauth:password", new FacesMessage("Hasła się nie zgadzają"));
-            return "oauthRegister.xhtml";
         }
+        return "oauthRegister.xhtml";
     }
 
     public String getformDateCheck() {
@@ -83,6 +86,7 @@ public class RegisterController {
         } catch(Exception e) {
             return "display: block;";
         }
+        registerRequest.setDate("01/01/1970");
         return "display: none;";
     }
 
