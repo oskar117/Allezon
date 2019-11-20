@@ -13,4 +13,29 @@ public class CategoryEntity {
     @ManyToOne
     @JoinColumn(name = "section_id")
     private SectionEntity sectionId;
+
+    public CategoryEntity(String name, SectionEntity sectionEntity) {
+        this.name = name;
+        this.sectionId = sectionEntity;
+    }
+
+    public CategoryEntity() {
+
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

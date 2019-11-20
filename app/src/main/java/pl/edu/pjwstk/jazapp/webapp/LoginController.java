@@ -2,6 +2,7 @@ package pl.edu.pjwstk.jazapp.webapp;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
+import pl.edu.pjwstk.jazapp.entity.TestRepository;
 import pl.edu.pjwstk.jazapp.login.LoginRequest;
 
 import javax.enterprise.context.RequestScoped;
@@ -10,8 +11,6 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
 
 @Named
 @RequestScoped

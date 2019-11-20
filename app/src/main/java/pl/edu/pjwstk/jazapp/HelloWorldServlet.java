@@ -13,7 +13,7 @@ public class HelloWorldServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+//h:outputlink h:commandlink zamiast a href + c:foreach
         resp.setStatus(200);
         PrintWriter writer = resp.getWriter();
         if (req.getParameter("average") == null) {

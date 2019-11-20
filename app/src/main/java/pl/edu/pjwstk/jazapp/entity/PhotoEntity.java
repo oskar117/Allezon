@@ -1,11 +1,9 @@
 package pl.edu.pjwstk.jazapp.entity;
 
-import jdk.jfr.Enabled;
-
 import javax.persistence.*;
 import java.util.List;
 
-@Enabled
+@Entity
 @Table(name = "photo")
 public class PhotoEntity {
 
@@ -13,10 +11,23 @@ public class PhotoEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "auction_id")
     private AuctionEntity auctionId;
 
-    @OneToMany
-    private List<String> url;
+    private String url;
+
+    public PhotoEntity() {
+
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
 }
