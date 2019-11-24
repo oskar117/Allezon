@@ -1,6 +1,7 @@
 package pl.edu.pjwstk.jazapp.admin;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 @Named

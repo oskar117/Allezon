@@ -19,14 +19,17 @@
             <div class="pt-5 mx-auto col-xs-2 col-md-3 col-sm-5">
                 <div class="card bg-dark">
                     <div class="card-body">
+                        <label>Sekcje:</label>
                         <ul class="list-group">
+                            <c:if test="${empty sectionController.sections}"><li class="list-group-item">Nie dodano sekcji</li></c:if>
                             <c:forEach items="#{sectionController.sections}" var="names">
                                 <li class="list-group-item" >
-                                    <h:outputText value="#{names}"></h:outputText>
-                                    <h:form id="asd">
-                                        <h:commandButton action="#{sectionController.delete}" value="usun" styleClass="btn btn-danger float-right"></h:commandButton>
+                                    <h:form id="dsa">
+                                        <h:outputText value="#{names.value}"/>
+
+                                        <h:commandLink action="#{sectionController.delete(names.key)}" styleClass="btn btn-danger float-right"><i class="fas fa-trash-alt"></i></h:commandLink>
+                                        <h:outputLink value="sectionServlet?id=#{names.key}" styleClass="btn float-right"><i class="fas fa-edit"></i></h:outputLink>
                                     </h:form>
-                                    <span class="btn" style="float: right"><i class="fas fa-edit"></i></span>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -42,7 +45,7 @@
                             <h:inputText id="name" styleClass="form-control" value="#{sectionRequest.name}"></h:inputText><br/>
                             <h:message styleClass="message" for="name" redisplay="false"/>
                         </div>
-                        <h:commandButton action="#{sectionController.addSection}" value="Zarejestruj"
+                        <h:commandButton action="#{sectionController.addSection}" value="Dodaj"
                                          styleClass="btn btn-primary"></h:commandButton>
                     </h:form>
                 </div>

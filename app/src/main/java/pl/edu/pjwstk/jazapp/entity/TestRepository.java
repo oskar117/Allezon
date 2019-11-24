@@ -7,7 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @ApplicationScoped
 public class TestRepository {
@@ -21,18 +23,29 @@ public class TestRepository {
         em.persist(se);
     }
 
-    public List<String> getSections() {
-        List<String> res = new ArrayList<String>();
+    public Map<Long, String> getSections() {
+        Map<Long, String> res = new HashMap<Long, String>();
         List<SectionEntity> list = em.createQuery("from SectionEntity ", SectionEntity.class).getResultList();
         for(SectionEntity x : list) {
-            res.add(x.getName());
+            res.put(x.getId(), x.getName());
         }
         return res;
     }
 
-    public void deleteSection() {
-
+    @Transactional
+    public void deleteSection(Long id) {
+        var section = em.find(SectionEntity.class, id);
+        em.remove(section);
     }
+
+    @Transactional
+    public void editSection(Long id, String name) {
+        var section = em.find(SectionEntity.class, id);
+        em.detach(section);
+        section.setName(name);
+        em.merge(section);
+    }
+
 
   /*  @Transactional
     public void testPhotos3() {
