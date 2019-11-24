@@ -6,6 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -18,6 +19,19 @@ public class TestRepository {
     public void addSection(String name) {
         SectionEntity se = new SectionEntity(name);
         em.persist(se);
+    }
+
+    public List<String> getSections() {
+        List<String> res = new ArrayList<String>();
+        List<SectionEntity> list = em.createQuery("from SectionEntity ", SectionEntity.class).getResultList();
+        for(SectionEntity x : list) {
+            res.add(x.getName());
+        }
+        return res;
+    }
+
+    public void deleteSection() {
+
     }
 
   /*  @Transactional

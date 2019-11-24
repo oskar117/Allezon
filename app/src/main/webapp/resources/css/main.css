@@ -7,6 +7,17 @@
     color: whitesmoke;;
 }
 
+li {
+    color: black;
+    text-align: left;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.sect{
+    float: right;
+}
+
 @keyframes tlo {
     0% {
         background-color: lightpink;
