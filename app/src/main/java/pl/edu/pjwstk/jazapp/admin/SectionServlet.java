@@ -16,13 +16,26 @@ public class SectionServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //h:outputlink h:commandlink zamiast a href + c:foreach
 
-        if (req.getParameter("id") == null) {
-            resp.sendRedirect("adminSection.xhtml");
+        if (req.getParameter("id") == null || req.getParameter("action") == null) {
+            resp.sendRedirect("admin.xhtml");
         } else {
+
             Long id = Long.valueOf(req.getParameter("id"));
             HttpSession sess = req.getSession();
             sess.setAttribute("editId", id);
-            resp.sendRedirect(req.getContextPath() + "/edit.xhtml");
+
+            switch (req.getParameter("action")) {
+                case "section" : {
+                    resp.sendRedirect(req.getContextPath() + "/editSection.xhtml");
+                    break;
+                }
+                case "category" : {
+                    resp.sendRedirect(req.getContextPath() + "/editCategory.xhtml");
+                    break;
+                }
+            }
+
+
         }
     }
 }

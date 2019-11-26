@@ -17,7 +17,9 @@ li {
 .sect{
     float: right;
 }
-
+.table {
+    border-radius: 5px;
+}
 @keyframes tlo {
     0% {
         background-color: lightpink;

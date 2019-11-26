@@ -10,9 +10,20 @@ public class CategoryEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+
+
     @ManyToOne
     @JoinColumn(name = "section_id")
     private SectionEntity sectionId;
+
+
+    public SectionEntity getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(SectionEntity sectionId) {
+        this.sectionId = sectionId;
+    }
 
     public CategoryEntity(String name, SectionEntity sectionEntity) {
         this.name = name;

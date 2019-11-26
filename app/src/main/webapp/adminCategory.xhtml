@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+                PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"></link>
+    <h:outputStylesheet name="bootstrap.min.css" library="css" />
+    <h:outputStylesheet name="main.css" library="css" />
+</h:head>
+
+<h:body>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="pt-5 col-xs-2 col-md-3 col-sm-5">
+                <div class="card bg-dark">
+                    <div class="card-body">
+                        <label>Kategorie:</label>
+                        <table class="table table-borderless table-light">
+                            <thead>
+                                <tr>
+                                    <c:if test="${empty categoryController.categories}"><th scope="col">Nie dodano kategorii</th></c:if>
+                                    <c:if test="${not empty categoryController.categories}">
+                                        <th scope="col">Nazwa</th>
+                                        <th scope="col">Dzial</th>
+                                    </c:if>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="#{categoryController.categories}" var="names">
+                                    <tr>
+                                        <td>
+                                            <h:outputText value="#{names.name}"/>
+                                        </td>
+                                        <td>
+                                            <h:outputText value="#{names.sectionId.name}"/>
+                                        </td>
+                                        <td>
+                                            <h:form>
+                                                <h:commandLink action="#{categoryController.delete(names.id)}" styleClass="btn btn-danger float-right"><i class="fas fa-trash-alt"></i></h:commandLink>
+                                                <h:outputLink value="sectionServlet?id=#{names.id}&amp;action=category" styleClass="btn float-right"><i class="fas fa-edit"></i></h:outputLink>
+                                            </h:form>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="float-left pt-5 col-xs-2 col-md-3 col-sm-5">
+
+                <div class="card bg-dark">
+                    <div class="card-body">
+                        <h:form id="categoryForm2">
+                            <div class="form-group">
+                                <label>Dodaj kategorie</label>
+                                <h:inputText id="name" styleClass="form-control" value="#{categoryRequest.name}"></h:inputText><br/>
+                                <h:message styleClass="message" for="name" redisplay="false"/>
+                            </div>
+                            <div class="form-group">
+                                <h:selectOneMenu class="form-control" value="#{categoryRequest.section}">
+                                    <f:selectItems value="#{sectionController.sections.entrySet()}" var="cat" itemValue="#{cat.key}" itemLabel="#{cat.value}" />
+                                </h:selectOneMenu>
+                            </div>
+
+                            <h:commandButton action="#{categoryController.addSection}" value="Dodaj" styleClass="btn btn-primary"></h:commandButton>
+                        </h:form>
+                    </div>
+                </div>
+
+                <div class="card bg-dark mt-5">
+                    <div class="card-body">
+                        <h:outputLink style="margin-top: 5px" styleClass="btn btn-warning btn-block" value="admin.xhtml">Wroc</h:outputLink>
+                    </div>
+                </div>
+        </div>
+        </div>
+    </div>
+</h:body>
+</html>

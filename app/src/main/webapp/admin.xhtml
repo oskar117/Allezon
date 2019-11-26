@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <title>Admin panel</title>
+    <h:outputStylesheet name="bootstrap.min.css" library="css"/>
+    <h:outputStylesheet name="main.css" library="css"/>
+</h:head>
+
+<h:body styleClass="boddy">
+    <div class="container-fluid">
+
+        <ui:composition template="/template/template.xhtml">
+
+            <ui:define name="content">
+                <h3 class="card-header">Admin panel</h3>
+                <div class="card-body">
+                    <h:outputLink style="margin-top: 5px" styleClass="btn btn-primary btn-block" value="adminSection.xhtml">Dzialy</h:outputLink>
+                    <h:outputLink style="margin-top: 5px" styleClass="btn btn-primary btn-block" value="adminCategory.xhtml">Kategorie</h:outputLink>
+                    <h:outputLink style="margin-top: 5px" styleClass="btn btn-warning btn-block" value="login.xhtml">Wroc</h:outputLink>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </div>
+</h:body>
+</html>
