@@ -30,6 +30,32 @@ public class TestRepository {
         em.persist(ce);
     }
 
+    @Transactional
+    public void addAuction(String title, String description, String price, Long section, Long category, List<String> photos) {
+        SectionEntity se = em.getReference(SectionEntity.class, section);
+        CategoryEntity ce = em.getReference(CategoryEntity.class, category);
+        AuctionEntity ae = new AuctionEntity(title, description, Double.parseDouble(price), ce, se);
+        em.persist(ae);
+        em.flush();
+
+        addPhoto(ae.getId(), photos);
+
+        List<PhotoEntity> pe = em.createQuery("from PhotoEntity ", PhotoEntity.class).getResultList();
+
+        em.detach(ae);
+        ae.setPhotos(pe);
+        em.merge(ae);
+    }
+
+    @Transactional
+    public void addPhoto(Long auctionId, List<String> urls) {
+        AuctionEntity ae = em.getReference(AuctionEntity.class, auctionId);
+        for(var x : urls) {
+            PhotoEntity pe = new PhotoEntity(ae, x);
+            em.persist(pe);
+        }
+    }
+
     public Map<Long, String> getSections() {
         Map<Long, String> res = new HashMap<Long, String>();
         List<SectionEntity> list = em.createQuery("from SectionEntity ", SectionEntity.class).getResultList();
@@ -41,6 +67,11 @@ public class TestRepository {
 
     public List<CategoryEntity> getCategories() {
         List<CategoryEntity> list = em.createQuery("from CategoryEntity ", CategoryEntity.class).getResultList();
+        return list;
+    }
+
+    public List<AuctionEntity> getAuctions() {
+        List<AuctionEntity> list = em.createQuery("from AuctionEntity ", AuctionEntity.class).getResultList();
         return list;
     }
 

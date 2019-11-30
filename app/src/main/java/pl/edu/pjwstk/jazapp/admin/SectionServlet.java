@@ -26,6 +26,7 @@ public class SectionServlet extends HttpServlet {
 
             switch (req.getParameter("action")) {
                 case "section" : {
+                    //new SectionRequest(id);
                     resp.sendRedirect(req.getContextPath() + "/editSection.xhtml");
                     break;
                 }

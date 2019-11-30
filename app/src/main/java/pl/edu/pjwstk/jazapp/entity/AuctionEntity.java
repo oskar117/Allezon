@@ -21,7 +21,7 @@ public class AuctionEntity {
     @JoinColumn(name = "category_id")
     private CategoryEntity categoryId;
 
-    @OneToMany(mappedBy = "auctionId")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "auctionId")
     private List<PhotoEntity> photos;
 
     public AuctionEntity(String title, String description, double price, CategoryEntity categoryEntity, SectionEntity sectionEntity) {
@@ -30,10 +30,19 @@ public class AuctionEntity {
         this.price = price;
         this.categoryId = categoryEntity;
         this.sectionId = sectionEntity;
+        //this.photos = photos;
     }
 
     public AuctionEntity() {
 
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public Long getId() {
