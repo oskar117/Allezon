@@ -14,9 +14,9 @@ import java.nio.file.Files;
 public class ImageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String filename = request.getPathInfo().substring(1);
-        File file = new File("/home/olek/Projects/jazzapp/app/src/main/content/auctionPhotos/", filename);
+        File file = new File("/home/olek/Projects/jazzapp/app/content/auctionPhotos/", filename);
         if(!file.isFile()) {
-            file = new File("/home/olek/Projects/jazzapp/app/src/main/content/auctionPhotos/", "nophoto.jpg");
+            file = new File("/home/olek/Projects/jazzapp/app/content/auctionPhotos/", "nophoto.jpg");
         }
         Files.copy(file.toPath(), response.getOutputStream());
     }
