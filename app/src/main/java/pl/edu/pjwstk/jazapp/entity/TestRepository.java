@@ -31,7 +31,7 @@ public class TestRepository {
     }
 
     @Transactional
-    public void addAuction(String title, String description, String price, Long section, Long category, List<String> photos) {
+    public void addAuction(String title, String description, String price, Long section, Long category, List<String> photos, Map<String, String> params) {
         SectionEntity se = em.getReference(SectionEntity.class, section);
         CategoryEntity ce = em.getReference(CategoryEntity.class, category);
         AuctionEntity ae = new AuctionEntity(title, description, Double.parseDouble(price), ce, se);
@@ -39,12 +39,40 @@ public class TestRepository {
         em.flush();
 
         addPhoto(ae.getId(), photos);
+        addParams(ae.getId(), params);
 
         List<PhotoEntity> pe = em.createQuery("from PhotoEntity ", PhotoEntity.class).getResultList();
 
         em.detach(ae);
         ae.setPhotos(pe);
         em.merge(ae);
+    }
+
+    @Transactional
+    public void addParams(Long auctionId, Map<String, String> params) {
+
+        List<ParameterEntity> paramKeys = em.createQuery("from ParameterEntity ", ParameterEntity.class).getResultList();
+
+
+        for(var x : params.keySet()) {
+            Object qw = em.createQuery("select count(*) from ParameterEntity where key = :usr").setParameter("usr", x).getSingleResult();
+
+            ParameterEntity pe;
+
+            if((Long) qw == 0) {
+                pe = new ParameterEntity(x);
+                em.persist(pe);
+                em.flush();
+            } else {
+                pe = (ParameterEntity) em.createQuery("from ParameterEntity where key = :usr").setParameter("usr", x).getSingleResult();
+            }
+
+            AuctionEntity ae = em.getReference(AuctionEntity.class, auctionId);
+            AuctionParameterEntity ape = new AuctionParameterEntity(ae, pe, params.get(x));
+            ape.setAuctionParameterId(new AuctionParameterId(1L, pe.getId()));
+            em.persist(ape);
+        }
+
     }
 
     @Transactional

@@ -54,7 +54,7 @@ public class AuctionController {
             }
         }
 
-        testRepository.addAuction(auctionRequest.getTitle(), auctionRequest.getDescription(), auctionRequest.getPrice(), auctionRequest.getSection(), auctionRequest.getCategory(), photos);
+        testRepository.addAuction(auctionRequest.getTitle(), auctionRequest.getDescription(), auctionRequest.getPrice(), auctionRequest.getSection(), auctionRequest.getCategory(), photos, auctionRequest.getParams());
         return "addAuction.xhtml";
     }
 

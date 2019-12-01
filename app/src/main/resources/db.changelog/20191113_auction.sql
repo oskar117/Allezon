@@ -44,6 +44,7 @@ CREATE TABLE auction_parameter(
     parameter_id BIGINT NOT NULL,
     value varchar,
 
+    PRIMARY KEY(auction_id, parameter_id),
     CONSTRAINT fk_auction_id FOREIGN KEY (auction_id) REFERENCES auction(id),
     CONSTRAINT fk_parameter_id FOREIGN KEY (parameter_id) REFERENCES parameter(id)
 );
