@@ -19,7 +19,7 @@ public class LoginFilter extends HttpFilter {
 
         if(!currUrl.contains("javax.faces.resource")) {
             //System.out.println(currUrl.indexOf("/app/index.xhtml") + " " + currUrl + " " + currUrl.contains("javax.faces.resource"));
-            if(currUrl.indexOf("/app/index.xhtml") >= 0 && !userIsLogged(req)) {
+            if(((currUrl.indexOf("/app/index.xhtml") >= 0) || (currUrl.indexOf("/app/myAuctions.xhtml")>= 0) || (currUrl.indexOf("/app/addAuction.xhtml")>= 0)) && !userIsLogged(req)) {
                 res.sendRedirect(req.getContextPath() + "/login.xhtml");
             } else {
                 chain.doFilter(req, res);

@@ -1,5 +1,7 @@
 package pl.edu.pjwstk.jazapp.entity;
 
+import pl.edu.pjwstk.jazapp.auth.ProfileEntity;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -21,15 +23,21 @@ public class AuctionEntity {
     @JoinColumn(name = "category_id")
     private CategoryEntity categoryId;
 
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private ProfileEntity ownerId;
+
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "auctionId")
     private List<PhotoEntity> photos;
 
-    public AuctionEntity(String title, String description, double price, CategoryEntity categoryEntity, SectionEntity sectionEntity) {
+    public AuctionEntity(String title, String description, double price, CategoryEntity categoryEntity, SectionEntity sectionEntity, ProfileEntity profileEntity) {
         this.title = title;
         this.description = description;
         this.price = price;
         this.categoryId = categoryEntity;
         this.sectionId = sectionEntity;
+        this.ownerId = profileEntity;
         //this.photos = photos;
     }
 

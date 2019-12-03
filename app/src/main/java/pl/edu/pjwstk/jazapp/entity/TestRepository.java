@@ -1,6 +1,8 @@
 package pl.edu.pjwstk.jazapp.entity;
 
 import jdk.jfr.Percentage;
+import pl.edu.pjwstk.jazapp.auth.ProfileEntity;
+import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
@@ -31,10 +33,11 @@ public class TestRepository {
     }
 
     @Transactional
-    public void addAuction(String title, String description, String price, Long section, Long category, List<String> photos, Map<String, String> params) {
+    public void addAuction(String title, String description, String price, Long section, Long category, List<String> photos, Map<String, String> params, Long owner) {
         SectionEntity se = em.getReference(SectionEntity.class, section);
         CategoryEntity ce = em.getReference(CategoryEntity.class, category);
-        AuctionEntity ae = new AuctionEntity(title, description, Double.parseDouble(price), ce, se);
+        ProfileEntity usr = em.getReference(ProfileEntity.class, owner);
+        AuctionEntity ae = new AuctionEntity(title, description, Double.parseDouble(price), ce, se, usr);
         em.persist(ae);
         em.flush();
 
@@ -43,16 +46,13 @@ public class TestRepository {
 
         List<PhotoEntity> pe = em.createQuery("from PhotoEntity ", PhotoEntity.class).getResultList();
 
-        em.detach(ae);
+        //em.detach(ae);
         ae.setPhotos(pe);
         em.merge(ae);
     }
 
     @Transactional
     public void addParams(Long auctionId, Map<String, String> params) {
-
-        List<ParameterEntity> paramKeys = em.createQuery("from ParameterEntity ", ParameterEntity.class).getResultList();
-
 
         for(var x : params.keySet()) {
             Object qw = em.createQuery("select count(*) from ParameterEntity where key = :usr").setParameter("usr", x).getSingleResult();
@@ -69,7 +69,7 @@ public class TestRepository {
 
             AuctionEntity ae = em.getReference(AuctionEntity.class, auctionId);
             AuctionParameterEntity ape = new AuctionParameterEntity(ae, pe, params.get(x));
-            ape.setAuctionParameterId(new AuctionParameterId(1L, pe.getId()));
+            ape.setAuctionParameterId(new AuctionParameterId(auctionId, pe.getId()));
             em.persist(ape);
         }
 
@@ -100,6 +100,12 @@ public class TestRepository {
 
     public List<AuctionEntity> getAuctions() {
         List<AuctionEntity> list = em.createQuery("from AuctionEntity ", AuctionEntity.class).getResultList();
+        return list;
+    }
+
+    public List<AuctionEntity> getMyAuctions(Long username) {
+        ProfileEntity usr = em.getReference(ProfileEntity.class, username);
+        List<AuctionEntity> list = em.createQuery("from AuctionEntity where ownerId = :usr", AuctionEntity.class).setParameter("usr", usr).getResultList();
         return list;
     }
 
@@ -137,33 +143,4 @@ public class TestRepository {
         category.setSectionId(section);
         em.merge(section);
     }
-
-
-  /*  @Transactional
-    public void testPhotos3() {
-        SectionEntity se = new SectionEntity("testowy_dzial");
-        em.persist(se);
-    }
-
-    @Transactional
-    public void testPhotos4() {
-        SectionEntity se = em.getReference(SectionEntity.class, Long.parseLong("10"));
-        CategoryEntity ce = new CategoryEntity("testowa_kategoria", se);
-        em.persist(ce);
-    }
-
-    @Transactional
-    public void testPhotos() {
-        SectionEntity se = em.getReference(SectionEntity.class, Long.parseLong("10"));
-        CategoryEntity ce = em.getReference(CategoryEntity.class, Long.parseLong("15"));
-        AuctionEntity am = new AuctionEntity("super", "auto", 21.37, ce, se);
-        em.persist(am);
-    }
-
-    public void testPhotos2() {
-        List<AuctionEntity> user = em.createQuery("from AuctionEntity", AuctionEntity.class).getResultList();
-        for(AuctionEntity x : user) {
-            System.out.println(x.getTitle());
-        }
-    }*/
 }

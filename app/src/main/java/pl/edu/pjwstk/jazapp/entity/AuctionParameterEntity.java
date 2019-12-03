@@ -10,9 +10,11 @@ public class AuctionParameterEntity {
     @EmbeddedId
     private AuctionParameterId auctionParameterId;
     @OneToOne
+    @MapsId("auctionId")
     @JoinColumn(name = "auction_id")
     private AuctionEntity auctionId;
     @ManyToOne
+    @MapsId("parameterId")
     @JoinColumn(name = "parameter_id")
     private ParameterEntity parameterId;
     private String value;

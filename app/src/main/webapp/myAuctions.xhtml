@@ -21,9 +21,9 @@
                         <label>Aukcje:</label>
                         <table class="table table-borderless table-light">
                             <tbody>
-                            <c:if test="${empty auctionController.auctions}"><tr><th scope="col">Nie dodano Żadnych aukcji</th></tr></c:if>
-                                <c:if test="${not empty auctionController.auctions}">
-                                    <c:forEach items="#{auctionController.auctions}" var="names">
+                            <c:if test="${empty auctionController.myAuctions}"><tr><th scope="col">Nie dodałeś żadnych aukcji :(</th></tr></c:if>
+                                <c:if test="${not empty auctionController.myAuctions}">
+                                    <c:forEach items="#{auctionController.myAuctions}" var="names">
                                         <tr>
                                             <td>
                                                 <h:graphicImage value="/images/#{names.photos[0].url}" width="100" height="100"/>
@@ -39,18 +39,7 @@
                                 </c:if>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-            </div>
-            <div class="pt-5 col-xs-2 col-md-3 col-sm-5">
-                <div class="card bg-dark mt-5">
-                    <h3 class="card-header">Witaj #{name} #{surname}!</h3>
-                    <div class="card-body">
-                        <h:form>
-                            <h:outputLink style="margin-top: 5px" styleClass="btn btn-primary btn-block" value="addAuction.xhtml">Dodaj aukcje</h:outputLink>
-                            <h:outputLink style="margin-top: 5px" styleClass="btn btn-warning btn-block" value="myAuctions.xhtml">Moje aukcje</h:outputLink>
-                            <h:commandButton style="margin-top: 5px" action="#{loginController.logout}" value="Logout" styleClass="btn btn-danger btn-block"/>
-                        </h:form>
+                        <h:outputLink style="margin-top: 5px" styleClass="btn btn-warning btn-block" value="index.xhtml">Wróć</h:outputLink>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 package pl.edu.pjwstk.jazapp.auction;
 
+import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
 import pl.edu.pjwstk.jazapp.entity.AuctionEntity;
 import pl.edu.pjwstk.jazapp.entity.TestRepository;
 
@@ -10,6 +11,7 @@ import javax.inject.Named;
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +30,9 @@ public class AuctionController {
     @Inject
     private AuctionRequest auctionRequest;
 
+    @Inject
+    private ProfileRepository profileRepository;
+
     private static Map<String, String> temp;
 
     public static Collection<Part> getAllParts(Part part) throws ServletException, IOException {
@@ -45,16 +50,17 @@ public class AuctionController {
         Random random = new Random();
         for(Part x : getAllParts(auctionRequest.getPhotos())){
             try (InputStream input = x.getInputStream()) {
-                String url = auctionRequest.getTitle()+"_"+random.nextInt();
-                Files.copy(input, new File("/home/olek/Projects/jazzapp/app/content/auctionPhotos", url+".jpg").toPath());
+                String url = auctionRequest.getTitle()+"_"+random.nextInt()+".jpg";
+                Files.copy(input, new File("/home/olek/Projects/jazzapp/app/content/auctionPhotos", url).toPath());
                 photos.add(url);
             }
             catch (IOException e) {
                 System.out.println("error: " + e.getMessage());
             }
         }
-
-        testRepository.addAuction(auctionRequest.getTitle(), auctionRequest.getDescription(), auctionRequest.getPrice(), auctionRequest.getSection(), auctionRequest.getCategory(), photos, auctionRequest.getParams());
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        String owner = (String) session.getAttribute("username");
+        testRepository.addAuction(auctionRequest.getTitle(), auctionRequest.getDescription(), auctionRequest.getPrice(), auctionRequest.getSection(), auctionRequest.getCategory(), photos, auctionRequest.getParams(), profileRepository.getId(owner));
         return "addAuction.xhtml";
     }
 
@@ -72,5 +78,10 @@ public class AuctionController {
 
     public List<AuctionEntity> getAuctions() {
         return testRepository.getAuctions();
+    }
+
+    public List<AuctionEntity> getMyAuctions() {
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        return testRepository.getMyAuctions(profileRepository.getId((String)session.getAttribute("username")));
     }
 }

@@ -1,5 +1,7 @@
 package pl.edu.pjwstk.jazapp.admin;
 
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebServlet;

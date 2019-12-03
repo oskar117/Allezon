@@ -48,4 +48,9 @@ public class ProfileRepository {
         return user.getSurname();
     }
 
+    public Long getId(String username) {
+        ProfileEntity user = em.createQuery("from ProfileEntity where username = :usr", ProfileEntity.class).setParameter("usr", username).getSingleResult();
+        return user.getId();
+    }
+
 }

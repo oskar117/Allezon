@@ -21,9 +21,11 @@ CREATE TABLE auction(
     section_id BIGINT NOT NULL,
     price DECIMAL NOT NULL,
     category_id BIGINT NOT NULL,
+    owner_id BIGINT NOT NULL,
 
     CONSTRAINT fk_section_id FOREIGN KEY (section_id) REFERENCES section(id),
-    CONSTRAINT fk_category_id FOREIGN KEY (category_id) REFERENCES category(id)
+    CONSTRAINT fk_category_id FOREIGN KEY (category_id) REFERENCES category(id),
+    CONSTRAINT fk_owner_id FOREIGN KEY (owner_id) REFERENCES users(id)
 );
 
 CREATE TABLE photo(
