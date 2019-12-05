@@ -43,7 +43,7 @@
                                         <td>
                                             <h:form>
                                                 <h:commandLink action="#{categoryController.delete(names.id)}" styleClass="btn btn-danger float-right"><i class="fas fa-trash-alt"></i></h:commandLink>
-                                                <h:outputLink value="sectionServlet?id=#{names.id}&amp;action=category" styleClass="btn float-right"><i class="fas fa-edit"></i></h:outputLink>
+                                                <h:outputLink value="editCategory.xhtml?id=#{names.id}" styleClass="btn float-right"><i class="fas fa-edit"></i></h:outputLink>
                                             </h:form>
                                         </td>
                                     </tr>
@@ -60,11 +60,11 @@
                         <h:form id="categoryForm2">
                             <div class="form-group">
                                 <label>Dodaj kategorie</label>
-                                <h:inputText id="name" styleClass="form-control" value="#{categoryRequest.name}"></h:inputText><br/>
+                                <h:inputText id="name" styleClass="form-control" value="#{categoryController.categoryRequest.name}"></h:inputText><br/>
                                 <h:message styleClass="message" for="name" redisplay="false"/>
                             </div>
                             <div class="form-group">
-                                <h:selectOneMenu class="form-control" value="#{categoryRequest.section}">
+                                <h:selectOneMenu class="form-control" value="#{categoryController.categoryRequest.section}">
                                     <f:selectItems value="#{sectionController.sections.entrySet()}" var="cat" itemValue="#{cat.key}" itemLabel="#{cat.value}" />
                                 </h:selectOneMenu>
                             </div>

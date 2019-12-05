@@ -28,7 +28,7 @@
                                         <h:outputText value="#{names.value}"/>
 
                                         <h:commandLink action="#{sectionController.delete(names.key)}" styleClass="btn btn-danger float-right"><i class="fas fa-trash-alt"></i></h:commandLink>
-                                        <h:outputLink value="sectionServlet?id=#{names.key}&amp;action=section" styleClass="btn float-right"><i class="fas fa-edit"></i></h:outputLink>
+                                        <h:outputLink value="editSection.xhtml?id=#{names.key}" styleClass="btn float-right"><i class="fas fa-edit"></i></h:outputLink>
                                     </h:form>
                                 </li>
                             </c:forEach>
@@ -43,7 +43,7 @@
                         <h:form id="sectionForm2">
                             <div class="form-group">
                                 <label>Dodaj Sekcję</label>
-                                <h:inputText id="name" styleClass="form-control" value="#{sectionRequest.name}"></h:inputText><br/>
+                                <h:inputText id="name" styleClass="form-control" value="#{sectionController.sectionRequest.name}"></h:inputText><br/>
                                 <h:message styleClass="message" for="name" redisplay="false"/>
                             </div>
                             <h:commandButton action="#{sectionController.addSection}" value="Dodaj"

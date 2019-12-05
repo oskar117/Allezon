@@ -1,5 +1,8 @@
 package pl.edu.pjwstk.jazapp.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -9,7 +12,7 @@ public class AuctionParameterEntity {
 
     @EmbeddedId
     private AuctionParameterId auctionParameterId;
-    @OneToOne
+    @ManyToOne
     @MapsId("auctionId")
     @JoinColumn(name = "auction_id")
     private AuctionEntity auctionId;

@@ -1,9 +1,12 @@
 package pl.edu.pjwstk.jazapp.auction;
 
+import pl.edu.pjwstk.jazapp.admin.CategoryRequest;
 import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
 import pl.edu.pjwstk.jazapp.entity.AuctionEntity;
+import pl.edu.pjwstk.jazapp.entity.PhotoEntity;
 import pl.edu.pjwstk.jazapp.entity.TestRepository;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -21,67 +24,105 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Named
-@RequestScoped
+@ApplicationScoped
 public class AuctionController {
 
     @Inject
     private TestRepository testRepository;
 
-    @Inject
     private AuctionRequest auctionRequest;
 
     @Inject
     private ProfileRepository profileRepository;
 
-    private static Map<String, String> temp;
+    @Inject
+    private HttpServletRequest request;
+
 
     public static Collection<Part> getAllParts(Part part) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         return request.getParts().stream().filter(p -> part.getName().equals(p.getName())).collect(Collectors.toList());
     }
 
-    public String add() throws ServletException, IOException {
+    public AuctionRequest getAuctionRequest() {
+        if(auctionRequest == null) {
+            auctionRequest = createAuctionRequest();
+        }
+        return auctionRequest;
+    }
 
-        auctionRequest.setParams(temp);
-        temp = null;
+    private AuctionRequest createAuctionRequest() {
+        if (request.getParameter("id") != null) {
+            var id = request.getParameter("id");
+            var auction = testRepository.getAuction(Long.parseLong(id));
+            Map<String, String> params = new LinkedHashMap<String, String>();
+            for(var x : auction.getParams()) {
+                params.put(x.getParameterId().getKey(), x.getValue());
+            }
+            return new AuctionRequest(auction.getId(), auction.getTitle(), auction.getDescription(), auction.getSectionId().getId(), String.valueOf(auction.getPrice()), auction.getCategoryId().getId(), params);
+        }
+        return new AuctionRequest();
+    }
+
+    public String add() throws ServletException, IOException {
 
         List<String> photos = new ArrayList<String>();
 
         Random random = new Random();
-        for(Part x : getAllParts(auctionRequest.getPhotos())){
-            try (InputStream input = x.getInputStream()) {
-                String url = auctionRequest.getTitle()+"_"+random.nextInt()+".jpg";
-                Files.copy(input, new File("/home/olek/Projects/jazzapp/app/content/auctionPhotos", url).toPath());
-                photos.add(url);
-            }
-            catch (IOException e) {
-                System.out.println("error: " + e.getMessage());
-            }
-        }
+//        for(Part x : getAllParts(auctionRequest.getPhotos())){
+//            try (InputStream input = x.getInputStream()) {
+//                String url = auctionRequest.getTitle()+"_"+random.nextInt()+".jpg";
+//                Files.copy(input, new File("/home/olek/Projects/jazzapp/app/content/auctionPhotos", url).toPath());
+//                photos.add(url);
+//            }
+//            catch (IOException e) {
+//                System.out.println("error: " + e.getMessage());
+//            }
+//        }
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         String owner = (String) session.getAttribute("username");
-        testRepository.addAuction(auctionRequest.getTitle(), auctionRequest.getDescription(), auctionRequest.getPrice(), auctionRequest.getSection(), auctionRequest.getCategory(), photos, auctionRequest.getParams(), profileRepository.getId(owner));
-        return "addAuction.xhtml";
+        if(auctionRequest.getId() != null) {
+            testRepository.addAuction(auctionRequest.getId() ,auctionRequest.getTitle(), auctionRequest.getDescription(), auctionRequest.getPrice(), auctionRequest.getSection(), auctionRequest.getCategory(), photos, auctionRequest.getParams(), profileRepository.getId(owner));
+            return "myAuctions.xhtml";
+        } else {
+            testRepository.addAuction(null ,auctionRequest.getTitle(), auctionRequest.getDescription(), auctionRequest.getPrice(), auctionRequest.getSection(), auctionRequest.getCategory(), photos, auctionRequest.getParams(), profileRepository.getId(owner));
+            return "myAuctions.xhtml";
+        }
+    }
+
+    public void delete(Long id) {
+        List<PhotoEntity> pe = testRepository.getAuctionPhotos(id);
+
+        for(PhotoEntity x : pe) {
+            File file = new File("/home/olek/Projects/jazzapp/app/content/auctionPhotos/", x.getUrl());
+            file.delete();
+        }
+
+        testRepository.deleteAuction(id);
     }
 
     public void addParam() {
+        Map<String, String> asd = auctionRequest.getParams();
+        asd.put(auctionRequest.getKey(), auctionRequest.getValue());
+        auctionRequest.setParams(asd);
 
-        //Map<String, String> temp;
-
-        if(temp == null) {
-            temp = new HashMap<String, String>();
-        }
-
-        temp.put(auctionRequest.getKey(), auctionRequest.getValue());
-        auctionRequest.setParams(temp);
     }
 
     public List<AuctionEntity> getAuctions() {
         return testRepository.getAuctions();
     }
 
+
     public List<AuctionEntity> getMyAuctions() {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         return testRepository.getMyAuctions(profileRepository.getId((String)session.getAttribute("username")));
+    }
+
+    public Boolean getIsUserAdmin() {
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        if(session.getAttribute("username").equals("admin")) {
+            return true;
+        }
+        return false;
     }
 }

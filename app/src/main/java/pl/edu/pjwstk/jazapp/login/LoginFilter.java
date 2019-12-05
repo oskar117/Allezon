@@ -22,11 +22,12 @@ public class LoginFilter extends HttpFilter {
             if(((currUrl.indexOf("/app/index.xhtml") >= 0) || (currUrl.indexOf("/app/myAuctions.xhtml")>= 0) || (currUrl.indexOf("/app/addAuction.xhtml")>= 0)) && !userIsLogged(req)) {
                 res.sendRedirect(req.getContextPath() + "/login.xhtml");
             } else {
-                chain.doFilter(req, res);
+                if((currUrl.indexOf("/app/admin.xhtml") >= 0 || currUrl.indexOf("/app/adminCategory.xhtml") >=0 || currUrl.indexOf("/app/adminSection.xhtml") >= 0) && !idLoggedUserAdmin(req)) {
+                    res.sendRedirect(req.getContextPath() + "/index.xhtml");
+                }
             }
-        } else {
-            chain.doFilter(req, res);
         }
+        chain.doFilter(req, res);
     }
 
     private boolean userIsLogged(HttpServletRequest req) {
@@ -40,6 +41,14 @@ public class LoginFilter extends HttpFilter {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    private boolean idLoggedUserAdmin (HttpServletRequest req) {
+        HttpSession session = req.getSession(false);
+        if(session.getAttribute("username").equals("admin")) {
+            return true;
         }
         return false;
     }

@@ -48,7 +48,8 @@
                     <div class="card-body">
                         <h:form>
                             <h:outputLink style="margin-top: 5px" styleClass="btn btn-primary btn-block" value="addAuction.xhtml">Dodaj aukcje</h:outputLink>
-                            <h:outputLink style="margin-top: 5px" styleClass="btn btn-warning btn-block" value="myAuctions.xhtml">Moje aukcje</h:outputLink>
+                            <h:outputLink style="margin-top: 5px" styleClass="btn btn-primary btn-block" value="myAuctions.xhtml">Moje aukcje</h:outputLink>
+                            <h:outputLink rendered="#{auctionController.isUserAdmin}" style="margin-top: 5px" styleClass="btn btn-warning btn-block" value="admin.xhtml">Admin panel</h:outputLink>
                             <h:commandButton style="margin-top: 5px" action="#{loginController.logout}" value="Logout" styleClass="btn btn-danger btn-block"/>
                         </h:form>
                     </div>

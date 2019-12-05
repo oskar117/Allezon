@@ -1,5 +1,7 @@
 package pl.edu.pjwstk.jazapp.entity;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import pl.edu.pjwstk.jazapp.auth.ProfileEntity;
 
 import javax.persistence.*;
@@ -27,9 +29,12 @@ public class AuctionEntity {
     @JoinColumn(name = "owner_id")
     private ProfileEntity ownerId;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "auctionId", cascade = CascadeType.REMOVE)
+    private List<PhotoEntity> photos;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "auctionId")
-    private List<PhotoEntity> photos;
+    private List<AuctionParameterEntity> params;
 
     public AuctionEntity(String title, String description, double price, CategoryEntity categoryEntity, SectionEntity sectionEntity, ProfileEntity profileEntity) {
         this.title = title;
@@ -43,6 +48,22 @@ public class AuctionEntity {
 
     public AuctionEntity() {
 
+    }
+
+    public List<AuctionParameterEntity> getParams() {
+        return params;
+    }
+
+    public void setParams(List<AuctionParameterEntity> params) {
+        this.params = params;
+    }
+
+    public ProfileEntity getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(ProfileEntity ownerId) {
+        this.ownerId = ownerId;
     }
 
     public double getPrice() {

@@ -7,6 +7,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -14,11 +15,29 @@ import java.util.List;
 @RequestScoped
 public class CategoryController {
 
-    @Inject
     private CategoryRequest categoryRequest;
 
     @Inject
     private TestRepository testRepository;
+
+    @Inject
+    private HttpServletRequest request;
+
+    public CategoryRequest getCategoryRequest() {
+        if(categoryRequest == null) {
+            categoryRequest = createCategoryRequest();
+        }
+        return categoryRequest;
+    }
+
+    private CategoryRequest createCategoryRequest() {
+        if (request.getParameter("id") != null) {
+            var id = request.getParameter("id");
+            var auction = testRepository.getCategory(Long.parseLong(id));
+            return new CategoryRequest(auction.getId(), auction.getName(), auction.getSectionId().getId());
+        }
+        return new CategoryRequest();
+    }
 
     public void addSection() {
         testRepository.addCategory(categoryRequest.getName(), categoryRequest.getSection());
@@ -35,8 +54,7 @@ public class CategoryController {
     }
 
     public String edit() {
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-        testRepository.editCategory((Long) session.getAttribute("editId"), categoryRequest.getName(), categoryRequest.getSection());
+        testRepository.editCategory(categoryRequest.getId(), categoryRequest.getName(), categoryRequest.getSection());
         categoryRequest.setName(null);
         return "adminCategory.xhtml";
     }

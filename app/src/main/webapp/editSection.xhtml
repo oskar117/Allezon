@@ -20,17 +20,15 @@
             <ui:define name="content">
                 <h3 class="card-header">Edycja</h3>
                 <div class="card-body">
-                    <h:form id="loginForm">
-
                         <h:form id="sectionForm3">
+                            <h:inputHidden value="#{sectionController.sectionRequest.id}"></h:inputHidden>
                             <div class="form-group">
                                 <label>Nowa nazwa</label>
-                                <h:inputText id="sectionName" styleClass="form-control" value="#{sectionRequest.name}"></h:inputText><br/>
+                                <h:inputText id="sectionName" styleClass="form-control" value="#{sectionController.sectionRequest.name}"></h:inputText><br/>
                                 <h:message styleClass="message" for="sectionName" redisplay="false"/>
                             </div>
                             <h:commandButton action="#{sectionController.edit}" value="Zapisz" styleClass="btn btn-primary"></h:commandButton>
                         </h:form>
-                    </h:form>
                 </div>
             </ui:define>
         </ui:composition>

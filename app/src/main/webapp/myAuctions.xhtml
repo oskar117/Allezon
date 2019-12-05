@@ -10,6 +10,7 @@
     <title>Zalogowano</title>
     <h:outputStylesheet name="main.css" library="css"/>
     <h:outputStylesheet name="bootstrap.min.css" library="css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"></link>
 </h:head>
 
 <h:body>
@@ -33,6 +34,12 @@
                                             </td>
                                             <td>
                                                 <h:outputText value="#{names.price} zł"/>
+                                            </td>
+                                            <td>
+                                                <h:form>
+                                                    <h:commandLink action="#{auctionController.delete(names.id)}" styleClass="btn btn-danger float-right"><i class="fas fa-trash-alt"></i></h:commandLink>
+                                                    <h:outputLink value="addAuction.xhtml?id=#{names.id}" styleClass="btn float-right"><i class="fas fa-edit"></i></h:outputLink>
+                                                </h:form>
                                             </td>
                                         </tr>
                                     </c:forEach>

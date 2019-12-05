@@ -1,7 +1,14 @@
 package pl.edu.pjwstk.jazapp.auction;
 
+import pl.edu.pjwstk.jazapp.entity.AuctionEntity;
+import pl.edu.pjwstk.jazapp.entity.TestRepository;
+
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +17,7 @@ import java.util.Map;
 @RequestScoped
 public class AuctionRequest {
 
+    private Long id;
     private String title;
     private String description;
     private Long section;
@@ -19,7 +27,27 @@ public class AuctionRequest {
     private Map<String, String> params;
     private String key;
     private String value;
-    private Part testPhoto;
+
+    public AuctionRequest(Long id, String title, String description, Long section, String price, Long category, Map<String, String> params) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.section = section;
+        this.price = price;
+        this.category = category;
+        this.params = params;
+    }
+
+    public AuctionRequest() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getKey() {
         return key;
