@@ -78,6 +78,11 @@
                                             <td>
                                                 <h:outputText value="#{names.value}"/>
                                             </td>
+                                            <td>
+                                                <h:commandButton action="#{auctionController.deleteParam(names.key)}" value="X" styleClass="btn btn-danger">
+                                                    <f:ajax execute="params" render="params"></f:ajax>
+                                                </h:commandButton>
+                                            </td>
                                         </tr>
                                     </c:forEach>
                                     <tr>
@@ -90,7 +95,6 @@
                                     <f:ajax execute="params" render="params"></f:ajax>
                                 </h:commandButton>
                             </h:panelGroup>
-
                             <h:commandButton action="#{auctionController.add}" value="Zapisz" styleClass="btn btn-primary"></h:commandButton>
                         </h:form>
                 </div>

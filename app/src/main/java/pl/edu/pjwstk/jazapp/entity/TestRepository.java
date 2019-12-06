@@ -51,6 +51,14 @@ public class TestRepository {
             ae.setCategoryId(ce);
             ae.setSectionId(se);
             em.merge(ae);
+
+            for(var x : ae.getParams()) {
+                System.out.println(x.getParameterId().getKey());
+                if(!params.containsKey(x.getParameterId().getKey())) {
+                    deleteParam(x.getParameterId().getKey());
+                }
+            }
+
         }
         em.flush();
 
@@ -58,6 +66,8 @@ public class TestRepository {
         if(params != null) addParams(ae.getId(), params);
 
         List<PhotoEntity> pe = em.createQuery("from PhotoEntity ", PhotoEntity.class).getResultList();
+
+
         List<AuctionParameterEntity> ape = em.createQuery("From AuctionParameterEntity ", AuctionParameterEntity.class).getResultList();
 
         ae.setParams(ape);
@@ -170,8 +180,10 @@ public class TestRepository {
     @Transactional
     public void deleteAuction(Long id) {
         var auction = em.find(AuctionEntity.class, id);
-        var params = em.createQuery("From AuctionParameterEntity where auctionId = :xd", AuctionParameterEntity.class).setParameter("xd", auction).getSingleResult();
-        em.remove(params);
+        var params = em.createQuery("From AuctionParameterEntity where auctionId = :xd", AuctionParameterEntity.class).setParameter("xd", auction).getResultList();
+        for(var x : params) {
+            em.remove(x);
+        }
         em.remove(auction);
     }
 

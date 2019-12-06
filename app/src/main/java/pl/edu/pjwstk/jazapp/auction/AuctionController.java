@@ -42,14 +42,7 @@ public class AuctionController implements Serializable {
     @Inject
     private HttpServletRequest request;
 
-    @PreDestroy
-    public void destroy() {
-        System.out.println("niszczymy");
-        auctionRequest = null;
-    }
-
-    public static Collection<Part> getAllParts(Part part) throws ServletException, IOException {
-        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+    public Collection<Part> getAllParts(Part part) throws ServletException, IOException {
         return request.getParts().stream().filter(p -> part.getName().equals(p.getName())).collect(Collectors.toList());
     }
 
@@ -111,6 +104,12 @@ public class AuctionController implements Serializable {
         asd.put(auctionRequest.getKey().substring(0, 1).toUpperCase() + auctionRequest.getKey().substring(1), auctionRequest.getValue().substring(0, 1).toUpperCase() + auctionRequest.getValue().substring(1));
         auctionRequest.setParams(asd);
 
+    }
+
+    public void deleteParam(String key) {
+        Map<String, String> asd = auctionRequest.getParams();
+        asd.remove(key);
+        auctionRequest.setParams(asd);
     }
 
     public List<AuctionEntity> getAuctions() {
