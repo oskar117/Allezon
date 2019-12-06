@@ -6,9 +6,12 @@ import pl.edu.pjwstk.jazapp.entity.AuctionEntity;
 import pl.edu.pjwstk.jazapp.entity.PhotoEntity;
 import pl.edu.pjwstk.jazapp.entity.TestRepository;
 
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mail.MessagingException;
@@ -19,13 +22,14 @@ import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Named
-@ApplicationScoped
-public class AuctionController {
+@ViewScoped
+public class AuctionController implements Serializable {
 
     @Inject
     private TestRepository testRepository;
@@ -38,6 +42,11 @@ public class AuctionController {
     @Inject
     private HttpServletRequest request;
 
+    @PreDestroy
+    public void destroy() {
+        System.out.println("niszczymy");
+        auctionRequest = null;
+    }
 
     public static Collection<Part> getAllParts(Part part) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -81,13 +90,9 @@ public class AuctionController {
 //        }
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         String owner = (String) session.getAttribute("username");
-        if(auctionRequest.getId() != null) {
-            testRepository.addAuction(auctionRequest.getId() ,auctionRequest.getTitle(), auctionRequest.getDescription(), auctionRequest.getPrice(), auctionRequest.getSection(), auctionRequest.getCategory(), photos, auctionRequest.getParams(), profileRepository.getId(owner));
-            return "myAuctions.xhtml";
-        } else {
-            testRepository.addAuction(null ,auctionRequest.getTitle(), auctionRequest.getDescription(), auctionRequest.getPrice(), auctionRequest.getSection(), auctionRequest.getCategory(), photos, auctionRequest.getParams(), profileRepository.getId(owner));
-            return "myAuctions.xhtml";
-        }
+        testRepository.addAuction(auctionRequest.getId(), auctionRequest.getTitle(), auctionRequest.getDescription(), auctionRequest.getPrice(), auctionRequest.getSection(), auctionRequest.getCategory(), photos, auctionRequest.getParams(), profileRepository.getId(owner));
+        auctionRequest = null;
+        return "myAuctions.xhtml";
     }
 
     public void delete(Long id) {
@@ -103,7 +108,7 @@ public class AuctionController {
 
     public void addParam() {
         Map<String, String> asd = auctionRequest.getParams();
-        asd.put(auctionRequest.getKey(), auctionRequest.getValue());
+        asd.put(auctionRequest.getKey().substring(0, 1).toUpperCase() + auctionRequest.getKey().substring(1), auctionRequest.getValue().substring(0, 1).toUpperCase() + auctionRequest.getValue().substring(1));
         auctionRequest.setParams(asd);
 
     }
