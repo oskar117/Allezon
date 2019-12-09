@@ -27,11 +27,12 @@ public class AuctionRequest {
     private String price;
     private Long category;
     private Part photos;
+    private List<String> photos2;
     private Map<String, String> params;
     private String key;
     private String value;
 
-    public AuctionRequest(Long id, String title, String description, Long section, String price, Long category, Map<String, String> params) {
+    public AuctionRequest(Long id, String title, String description, Long section, String price, Long category, Map<String, String> params, List<String> photos2) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -39,10 +40,19 @@ public class AuctionRequest {
         this.price = price;
         this.category = category;
         this.params = params;
+        this.photos2 = photos2;
     }
 
     public AuctionRequest() {
         params = new LinkedHashMap<String, String>();
+    }
+
+    public List<String> getPhotos2() {
+        return photos2;
+    }
+
+    public void setPhotos2(List<String> photos2) {
+        this.photos2 = photos2;
     }
 
     public Long getId() {

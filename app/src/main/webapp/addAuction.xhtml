@@ -55,11 +55,27 @@
                                     <f:selectItems value="#{categoryController.categories}" var="cat" itemValue="#{cat.id}" itemLabel="#{cat.name}" />
                                 </h:selectOneMenu>
                             </div>
-                            <div class="form-group">
-                                <label>Zdjęcia</label>
-                                <h:inputFile styleClass="form-control" a:multiple="true" id="photos" value="#{auctionController.auctionRequest.photos}"/>
+
+                            <h:panelGroup id="photos2">
+                                <h:panelGrid columns="3" class="table table-borderless table-light">
+                                        <c:forEach items="#{auctionController.auctionRequest.photos2}" var="names">
+                                            <h:panelGroup>
+                                                <h:graphicImage value="/images/#{names}" width="100" height="100"/>
+                                                <h:commandButton action="#{auctionController.deletePhoto(names)}" value="X" styleClass="btn btn-danger">
+                                                    <f:ajax execute="photos2" render="photos2"></f:ajax>
+                                                </h:commandButton>
+                                            </h:panelGroup>
+                                        </c:forEach>
+                                </h:panelGrid>
+                                <div class="form-group">
+                                    <label>Zdjęcia</label>
+                                    <h:inputFile styleClass="form-control" a:multiple="true" id="photos" value="#{auctionController.auctionRequest.photos}"/>
+                                </div>
+                                <h:commandButton action="#{auctionController.addPhotos}" value="Dodaj zdjęcia" styleClass="btn btn-primary">
+                                    <f:ajax execute="photos2" render="photos2"></f:ajax>
+                                </h:commandButton>
                                 <h:message styleClass="message" for="photos" redisplay="false"/>
-                            </div>
+                            </h:panelGroup>
 
                             <h:panelGroup id="params">
                                 <table class="table table-borderless table-light">

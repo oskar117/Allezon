@@ -35,6 +35,7 @@ public class TestRepository {
 
     @Transactional
     public void addAuction(Long editId,String title, String description, String price, Long section, Long category, List<String> photos, Map<String, String> params, Long owner) {
+
         SectionEntity se = em.getReference(SectionEntity.class, section);
         CategoryEntity ce = em.getReference(CategoryEntity.class, category);
         ProfileEntity usr = em.getReference(ProfileEntity.class, owner);
@@ -53,9 +54,15 @@ public class TestRepository {
             em.merge(ae);
 
             for(var x : ae.getParams()) {
-                System.out.println(x.getParameterId().getKey());
                 if(!params.containsKey(x.getParameterId().getKey())) {
                     deleteParam(x.getParameterId().getKey());
+                }
+            }
+
+            for(var x : ae.getPhotos()) {
+                System.out.println("kurwa: "+x.getUrl());
+                if(!photos.contains(x.getUrl())) {
+                    deletePhoto(x.getUrl());
                 }
             }
 
@@ -114,11 +121,23 @@ public class TestRepository {
     }
 
     @Transactional
+    public void deletePhoto(String url) {
+        var photo = em.createQuery("From PhotoEntity where url = :url").setParameter("url", url).getSingleResult();
+        System.out.println("usuwanko: "+url);
+        em.remove(photo);
+    }
+
+    @Transactional
     public void addPhoto(Long auctionId, List<String> urls) {
         AuctionEntity ae = em.getReference(AuctionEntity.class, auctionId);
+
         for(var x : urls) {
-            PhotoEntity pe = new PhotoEntity(ae, x);
-            em.persist(pe);
+            Object qw = em.createQuery("select count(*) from PhotoEntity where url = :usr").setParameter("usr", x).getSingleResult();
+
+            if((Long) qw == 0) {
+                PhotoEntity pe = new PhotoEntity(ae, x);
+                em.persist(pe);
+            }
         }
     }
 
@@ -188,7 +207,7 @@ public class TestRepository {
     }
 
     public List<PhotoEntity> getAuctionPhotos(Long id) {
-        return em.createQuery("from PhotoEntity where auctionId = :id", PhotoEntity.class).setParameter("id", em.getReference(AuctionEntity.class, id)).getResultList();
+        return em.createQuery("from PhotoEntity where auctionId = :id order by id", PhotoEntity.class).setParameter("id", em.getReference(AuctionEntity.class, id)).getResultList();
     }
 
     public AuctionEntity getAuction(Long editId) {
