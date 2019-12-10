@@ -100,16 +100,20 @@ public class AuctionController implements Serializable {
     public void addPhotos() throws ServletException, IOException {
         List<String> asd = auctionRequest.getPhotos2();
 
+        if(asd == null) {
+            asd = new LinkedList<String>();
+        }
+
         Random random = new Random();
         for(Part x : getAllParts(auctionRequest.getPhotos())){
             try (InputStream input = x.getInputStream()) {
-                String url = auctionRequest.getTitle()+"_"+random.nextInt()+".jpg";
+                String url = random.nextInt()+".jpg";
                 Files.copy(input, new File("/home/olek/Projects/jazzapp/app/content/auctionPhotos", url).toPath());
                 asd.add(url);
             }
             catch (IOException e) {
-                System.out.println("error: " + e.getMessage());
-            }
+                System.out.println("error: " + e.getMessage());        }
+
         }
 
         auctionRequest.setPhotos2(asd);

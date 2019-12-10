@@ -12,10 +12,22 @@
     <h:outputStylesheet name="bootstrap.min.css" library="css"/>
 </h:head>
 
-<h:body>
+<h:body style="height: 100%">
+    <div class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow position-relative">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="index.xhtml">Allezon</a>
+        <h3 style="color: whitesmoke">Witaj #{name} #{surname}!</h3>
+    </div>
     <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="pt-5 col-xs-2 col-md-3 col-sm-5">
+        <div class="row" style="height: 100%">
+            <div class="col-md-2 d-none d-md-block bg-dark sidebar position-relative">
+                <h:form>
+                    <h:outputLink style="margin-top: 5px" styleClass="btn btn-primary btn-block" value="addAuction.xhtml">Dodaj aukcje</h:outputLink>
+                    <h:outputLink style="margin-top: 5px" styleClass="btn btn-primary btn-block" value="myAuctions.xhtml">Moje aukcje</h:outputLink>
+                    <h:outputLink rendered="#{auctionController.isUserAdmin}" style="margin-top: 5px" styleClass="btn btn-warning btn-block" value="admin.xhtml">Admin panel</h:outputLink>
+                    <h:commandButton style="margin-top: 5px" action="#{loginController.logout}" value="Logout" styleClass="btn btn-danger btn-block"/>
+                </h:form>
+            </div>
+            <div class="pt-5 col-xs-2 col-md-8 col-sm-5 mx-auto">
                 <div class="card bg-dark">
                     <div class="card-body">
                         <label>Aukcje:</label>
@@ -39,19 +51,6 @@
                                 </c:if>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-            </div>
-            <div class="pt-5 col-xs-2 col-md-3 col-sm-5">
-                <div class="card bg-dark mt-5">
-                    <h3 class="card-header">Witaj #{name} #{surname}!</h3>
-                    <div class="card-body">
-                        <h:form>
-                            <h:outputLink style="margin-top: 5px" styleClass="btn btn-primary btn-block" value="addAuction.xhtml">Dodaj aukcje</h:outputLink>
-                            <h:outputLink style="margin-top: 5px" styleClass="btn btn-primary btn-block" value="myAuctions.xhtml">Moje aukcje</h:outputLink>
-                            <h:outputLink rendered="#{auctionController.isUserAdmin}" style="margin-top: 5px" styleClass="btn btn-warning btn-block" value="admin.xhtml">Admin panel</h:outputLink>
-                            <h:commandButton style="margin-top: 5px" action="#{loginController.logout}" value="Logout" styleClass="btn btn-danger btn-block"/>
-                        </h:form>
                     </div>
                 </div>
             </div>
