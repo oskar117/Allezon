@@ -29,6 +29,9 @@ public class AuctionEntity {
     @JoinColumn(name = "owner_id")
     private ProfileEntity ownerId;
 
+    @Version
+    private long version;
+
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "auctionId", cascade = CascadeType.REMOVE)
     private List<PhotoEntity> photos;
@@ -48,6 +51,14 @@ public class AuctionEntity {
 
     public AuctionEntity() {
 
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 
     public List<AuctionParameterEntity> getParams() {

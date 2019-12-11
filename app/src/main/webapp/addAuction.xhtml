@@ -41,7 +41,6 @@
                             <div class="form-group">
                                 <label>Cena</label>
                                 <h:inputText id="price" styleClass="form-control" value="#{auctionController.auctionRequest.price}" validatorMessage="#{msg['jaz.app.price']}">
-                                    <f:validateRegex pattern="(\d+\.\d{1,2})$"/>
                                 </h:inputText><br/>
                                 <h:message styleClass="message" for="price" redisplay="false"/>
                             </div>
@@ -58,6 +57,7 @@
                                 </h:selectOneMenu>
                             </div>
 
+                            <label>Zdjęcia</label>
                             <h:panelGroup id="photos2">
                                 <c:if test="#{auctionController.auctionRequest.photos2 != null}">
                                     <h:panelGrid columns="3" class="table table-borderless table-light">
@@ -72,7 +72,6 @@
                                     </h:panelGrid>
                                 </c:if>
                                 <div class="form-group">
-                                    <label>Zdjęcia</label>
                                     <h:inputFile styleClass="form-control" a:multiple="true" id="photos" value="#{auctionController.auctionRequest.photos}"/>
                                 </div>
                                 <h:commandButton action="#{auctionController.addPhotos}" value="Dodaj zdjęcia" styleClass="btn btn-primary">

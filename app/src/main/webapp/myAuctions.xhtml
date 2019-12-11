@@ -20,6 +20,7 @@
                 <div class="card bg-dark">
                     <div class="card-body">
                         <label>Aukcje:</label>
+                        <h:messages id="editedMessage" styleClass="message"/>
                         <table class="table table-borderless table-light">
                             <tbody>
                             <c:if test="${empty auctionController.myAuctions}"><tr><th scope="col">Nie dodałeś żadnych aukcji :(</th></tr></c:if>

@@ -6,12 +6,14 @@ import pl.edu.pjwstk.jazapp.entity.PhotoEntity;
 import pl.edu.pjwstk.jazapp.entity.PhotoRepository;
 import pl.edu.pjwstk.jazapp.entity.AuctionRepository;
 
+import javax.annotation.PreDestroy;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.io.File;
@@ -44,26 +46,26 @@ public class AuctionController implements Serializable {
         return request.getParts().stream().filter(p -> part.getName().equals(p.getName())).collect(Collectors.toList());
     }
 
-    public AuctionRequest getAuctionRequest() {
-        if(auctionRequest == null) {
+    public AuctionRequest getAuctionRequest() throws IOException {
+        if (auctionRequest == null) {
             auctionRequest = createAuctionRequest();
         }
         return auctionRequest;
     }
 
-    private AuctionRequest createAuctionRequest() {
+    private AuctionRequest createAuctionRequest() throws IOException {
         if (request.getParameter("id") != null) {
-            var id = request.getParameter("id"); 
+            var id = request.getParameter("id");
             var auction = auctionRepository.getAuction(Long.parseLong(id));
             Map<String, String> params = new LinkedHashMap<String, String>();
-            for(var x : auction.getParams()) {
+            for (var x : auction.getParams()) {
                 params.put(x.getParameterId().getKey(), x.getValue());
             }
             List<String> photos = new LinkedList<String>();
-            for(var x : auction.getPhotos()) {
+            for (var x : auction.getPhotos()) {
                 photos.add(x.getUrl());
             }
-            return new AuctionRequest(auction.getId(), auction.getTitle(), auction.getDescription(), auction.getSectionId().getId(), String.valueOf(auction.getPrice()), auction.getCategoryId().getId(), params, photos);
+            return new AuctionRequest(auction.getId(), auction.getTitle(), auction.getDescription(), auction.getSectionId().getId(), String.valueOf(auction.getPrice()), auction.getCategoryId().getId(), params, photos, auction.getVersion());
         }
         return new AuctionRequest();
     }
@@ -72,7 +74,7 @@ public class AuctionController implements Serializable {
 
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         String owner = (String) session.getAttribute("username");
-        auctionRepository.addAuction(auctionRequest.getId(), auctionRequest.getTitle(), auctionRequest.getDescription(), auctionRequest.getPrice(), auctionRequest.getSection(), auctionRequest.getCategory(), auctionRequest.getPhotos2(), auctionRequest.getParams(), profileRepository.getId(owner));
+        auctionRepository.addAuction(auctionRequest.getId(), auctionRequest.getTitle(), auctionRequest.getDescription(), auctionRequest.getPrice(), auctionRequest.getSection(), auctionRequest.getCategory(), auctionRequest.getPhotos2(), auctionRequest.getParams(), profileRepository.getId(owner), auctionRequest.getVersion());
         auctionRequest = null;
         return "myAuctions.xhtml";
     }
@@ -80,7 +82,7 @@ public class AuctionController implements Serializable {
     public void delete(Long id) {
         List<PhotoEntity> pe = photoRepository.getAuctionPhotos(id);
 
-        for(PhotoEntity x : pe) {
+        for (PhotoEntity x : pe) {
             File file = new File("/home/olek/Projects/jazzapp/app/content/auctionPhotos/", x.getUrl());
             file.delete();
         }
@@ -98,19 +100,19 @@ public class AuctionController implements Serializable {
     public void addPhotos() throws ServletException, IOException {
         List<String> asd = auctionRequest.getPhotos2();
 
-        if(asd == null) {
+        if (asd == null) {
             asd = new LinkedList<String>();
         }
 
         Random random = new Random();
-        for(Part x : getAllParts(auctionRequest.getPhotos())){
+        for (Part x : getAllParts(auctionRequest.getPhotos())) {
             try (InputStream input = x.getInputStream()) {
-                String url = random.nextInt()+".jpg";
+                String url = random.nextInt() + ".jpg";
                 Files.copy(input, new File("/home/olek/Projects/jazzapp/app/content/auctionPhotos", url).toPath());
                 asd.add(url);
+            } catch (IOException e) {
+                System.out.println("error: " + e.getMessage());
             }
-            catch (IOException e) {
-                System.out.println("error: " + e.getMessage());        }
 
         }
 
@@ -136,12 +138,12 @@ public class AuctionController implements Serializable {
 
     public List<AuctionEntity> getMyAuctions() {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-        return auctionRepository.getMyAuctions(profileRepository.getId((String)session.getAttribute("username")));
+        return auctionRepository.getMyAuctions(profileRepository.getId((String) session.getAttribute("username")));
     }
 
     public Boolean getIsUserAdmin() {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-        if(session.getAttribute("username").equals("admin")) {
+        if (session.getAttribute("username").equals("admin")) {
             return true;
         }
         return false;

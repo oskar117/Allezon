@@ -22,8 +22,9 @@ public class AuctionRequest {
     private Map<String, String> params;
     private String key;
     private String value;
+    private Long version;
 
-    public AuctionRequest(Long id, String title, String description, Long section, String price, Long category, Map<String, String> params, List<String> photos2) {
+    public AuctionRequest(Long id, String title, String description, Long section, String price, Long category, Map<String, String> params, List<String> photos2, Long version) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -32,6 +33,15 @@ public class AuctionRequest {
         this.category = category;
         this.params = params;
         this.photos2 = photos2;
+        this.version = version;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 
     public AuctionRequest() {

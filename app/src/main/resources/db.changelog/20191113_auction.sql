@@ -22,6 +22,7 @@ CREATE TABLE auction(
     price DECIMAL NOT NULL,
     category_id BIGINT NOT NULL,
     owner_id BIGINT NOT NULL,
+    version BIGINT,
 
     CONSTRAINT fk_section_id FOREIGN KEY (section_id) REFERENCES section(id),
     CONSTRAINT fk_category_id FOREIGN KEY (category_id) REFERENCES category(id),

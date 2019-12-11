@@ -6,6 +6,8 @@ import pl.edu.pjwstk.jazapp.auth.ProfileEntity;
 import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
@@ -15,6 +17,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 
 @ApplicationScoped
 public class AuctionRepository {
@@ -29,7 +33,7 @@ public class AuctionRepository {
     private ParameterRepository parameterRepository;
 
     @Transactional
-    public void addAuction(Long editId,String title, String description, String price, Long section, Long category, List<String> photos, Map<String, String> params, Long owner) {
+    public void addAuction(Long editId, String title, String description, String price, Long section, Long category, List<String> photos, Map<String, String> params, Long owner, Long version) {
 
         SectionEntity se = em.getReference(SectionEntity.class, section);
         CategoryEntity ce = em.getReference(CategoryEntity.class, category);
@@ -41,28 +45,32 @@ public class AuctionRepository {
             em.persist(ae);
         } else {
             ae = em.find(AuctionEntity.class, editId);
-            ae.setTitle(title);
-            ae.setDescription(description);
-            ae.setPrice(Double.parseDouble(price));
-            ae.setCategoryId(ce);
-            ae.setSectionId(se);
-            em.merge(ae);
 
-            for(var x : ae.getParams()) {
-                if(!params.containsKey(x.getParameterId().getKey())) {
-                    parameterRepository.deleteParam(x.getParameterId().getKey());
+            if(version == ae.getVersion()) {
+                ae.setTitle(title);
+                ae.setDescription(description);
+                ae.setPrice(Double.parseDouble(price));
+                ae.setCategoryId(ce);
+                ae.setSectionId(se);
+                em.merge(ae);
+
+                for(var x : ae.getParams()) {
+                    if(!params.containsKey(x.getParameterId().getKey())) {
+                        parameterRepository.deleteParam(x.getParameterId().getKey());
+                    }
                 }
-            }
 
-            for(var x : ae.getPhotos()) {
-                System.out.println("kurwa: "+x.getUrl());
-                if(!photos.contains(x.getUrl())) {
-                    photoRepository.deletePhoto(x.getUrl());
+                for(var x : ae.getPhotos()) {
+                    if(!photos.contains(x.getUrl())) {
+                        photoRepository.deletePhoto(x.getUrl());
+                    }
                 }
+            } else {
+                System.out.println("wypers");
+                FacesContext.getCurrentInstance().addMessage("editedMessage", new FacesMessage("Ktoś zedytował już tą aukcję!"));
+                return;
             }
-
         }
-        em.flush();
 
         if(photos != null) photoRepository.addPhoto(ae.getId(), photos);
         if(params != null) parameterRepository.addParams(ae.getId(), params);
@@ -105,5 +113,4 @@ public class AuctionRepository {
         var auction = em.find(AuctionEntity.class, editId);
         return auction;
     }
-
 }
