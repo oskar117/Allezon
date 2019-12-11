@@ -15,12 +15,12 @@
 </h:head>
 
 <h:body styleClass="boddy">
-    <div class="container-fluid">
-
-        <ui:composition template="/template/template.xhtml">
-
-            <ui:define name="content">
-                <h3 class="card-header">Edycja</h3>
+    <ui:composition template="/template/pageTemplate.xhtml">
+        <ui:define name="content">
+            <div class="pt-5 mx-auto col-xs-2 col-md-3 col-sm-5">
+            <div class="card bg-dark">
+                <c:if test="#{auctionController.auctionRequest.id == null}"><h3 class="card-header">Dodawanie aukcji</h3></c:if>
+                <c:if test="#{auctionController.auctionRequest.id != null}"><h3 class="card-header">Edycja</h3></c:if>
                 <div class="card-body">
                         <h:form id="auctionForm" enctype="multipart/form-data">
 
@@ -34,13 +34,15 @@
                                 <h:message styleClass="message" for="name" redisplay="false"/>
                             </div>
                             <div class="form-group">
-                                <label>opis</label>
-                                <h:inputText id="description" styleClass="form-control" value="#{auctionController.auctionRequest.description}"></h:inputText><br/>
+                                <label>Opis</label>
+                                <h:inputTextarea id="description" styleClass="form-control" value="#{auctionController.auctionRequest.description}"></h:inputTextarea><br/>
                                 <h:message styleClass="message" for="description" redisplay="false"/>
                             </div>
                             <div class="form-group">
                                 <label>Cena</label>
-                                <h:inputText id="price" styleClass="form-control" value="#{auctionController.auctionRequest.price}"></h:inputText><br/>
+                                <h:inputText id="price" styleClass="form-control" value="#{auctionController.auctionRequest.price}" validatorMessage="#{msg['jaz.app.price']}">
+                                    <f:validateRegex pattern="(\d+\.\d{1,2})$"/>
+                                </h:inputText><br/>
                                 <h:message styleClass="message" for="price" redisplay="false"/>
                             </div>
                             <div class="form-group">
@@ -57,16 +59,18 @@
                             </div>
 
                             <h:panelGroup id="photos2">
-                                <h:panelGrid columns="3" class="table table-borderless table-light">
-                                        <c:forEach items="#{auctionController.auctionRequest.photos2}" var="names">
-                                            <h:panelGroup>
-                                                <h:graphicImage value="/images/#{names}" width="100" height="100"/>
-                                                <h:commandButton action="#{auctionController.deletePhoto(names)}" value="X" styleClass="btn btn-danger">
-                                                    <f:ajax execute="photos2" render="photos2"></f:ajax>
-                                                </h:commandButton>
-                                            </h:panelGroup>
-                                        </c:forEach>
-                                </h:panelGrid>
+                                <c:if test="#{auctionController.auctionRequest.photos2 != null}">
+                                    <h:panelGrid columns="3" class="table table-borderless table-light">
+                                            <c:forEach items="#{auctionController.auctionRequest.photos2}" var="names">
+                                                <h:panelGroup>
+                                                    <h:graphicImage value="/images/#{names}" width="100" height="100"/>
+                                                    <h:commandButton action="#{auctionController.deletePhoto(names)}" value="X" styleClass="btn btn-danger">
+                                                        <f:ajax execute="photos2" render="photos2"></f:ajax>
+                                                    </h:commandButton>
+                                                </h:panelGroup>
+                                            </c:forEach>
+                                    </h:panelGrid>
+                                </c:if>
                                 <div class="form-group">
                                     <label>Zdjęcia</label>
                                     <h:inputFile styleClass="form-control" a:multiple="true" id="photos" value="#{auctionController.auctionRequest.photos}"/>
@@ -114,8 +118,9 @@
                             <h:commandButton action="#{auctionController.add}" value="Zapisz" styleClass="btn btn-primary"></h:commandButton>
                         </h:form>
                 </div>
-            </ui:define>
-        </ui:composition>
-    </div>
+            </div>
+            </div>
+        </ui:define>
+    </ui:composition>
 </h:body>
 </html>

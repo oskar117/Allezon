@@ -14,9 +14,9 @@
 </h:head>
 
 <h:body>
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="pt-5 col-xs-2 col-md-3 col-sm-5">
+    <ui:composition template="/template/pageTemplate.xhtml">
+        <ui:define name="content">
+            <div class="pt-5 col-xs-2 col-md-8 col-sm-5 mx-auto">
                 <div class="card bg-dark">
                     <div class="card-body">
                         <label>Aukcje:</label>
@@ -50,7 +50,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </ui:define>
+    </ui:composition>
 </h:body>
 </html>

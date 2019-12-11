@@ -1,20 +1,15 @@
 package pl.edu.pjwstk.jazapp.auction;
 
-import pl.edu.pjwstk.jazapp.admin.CategoryRequest;
 import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
 import pl.edu.pjwstk.jazapp.entity.AuctionEntity;
 import pl.edu.pjwstk.jazapp.entity.PhotoEntity;
-import pl.edu.pjwstk.jazapp.entity.TestRepository;
+import pl.edu.pjwstk.jazapp.entity.PhotoRepository;
+import pl.edu.pjwstk.jazapp.entity.AuctionRepository;
 
-import javax.annotation.PreDestroy;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -32,9 +27,12 @@ import java.util.stream.Collectors;
 public class AuctionController implements Serializable {
 
     @Inject
-    private TestRepository testRepository;
+    private AuctionRepository auctionRepository;
 
     private AuctionRequest auctionRequest;
+
+    @Inject
+    private PhotoRepository photoRepository;
 
     @Inject
     private ProfileRepository profileRepository;
@@ -55,8 +53,8 @@ public class AuctionController implements Serializable {
 
     private AuctionRequest createAuctionRequest() {
         if (request.getParameter("id") != null) {
-            var id = request.getParameter("id");
-            var auction = testRepository.getAuction(Long.parseLong(id));
+            var id = request.getParameter("id"); 
+            var auction = auctionRepository.getAuction(Long.parseLong(id));
             Map<String, String> params = new LinkedHashMap<String, String>();
             for(var x : auction.getParams()) {
                 params.put(x.getParameterId().getKey(), x.getValue());
@@ -74,20 +72,20 @@ public class AuctionController implements Serializable {
 
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         String owner = (String) session.getAttribute("username");
-        testRepository.addAuction(auctionRequest.getId(), auctionRequest.getTitle(), auctionRequest.getDescription(), auctionRequest.getPrice(), auctionRequest.getSection(), auctionRequest.getCategory(), auctionRequest.getPhotos2(), auctionRequest.getParams(), profileRepository.getId(owner));
+        auctionRepository.addAuction(auctionRequest.getId(), auctionRequest.getTitle(), auctionRequest.getDescription(), auctionRequest.getPrice(), auctionRequest.getSection(), auctionRequest.getCategory(), auctionRequest.getPhotos2(), auctionRequest.getParams(), profileRepository.getId(owner));
         auctionRequest = null;
         return "myAuctions.xhtml";
     }
 
     public void delete(Long id) {
-        List<PhotoEntity> pe = testRepository.getAuctionPhotos(id);
+        List<PhotoEntity> pe = photoRepository.getAuctionPhotos(id);
 
         for(PhotoEntity x : pe) {
             File file = new File("/home/olek/Projects/jazzapp/app/content/auctionPhotos/", x.getUrl());
             file.delete();
         }
 
-        testRepository.deleteAuction(id);
+        auctionRepository.deleteAuction(id);
     }
 
     public void addParam() {
@@ -132,13 +130,13 @@ public class AuctionController implements Serializable {
     }
 
     public List<AuctionEntity> getAuctions() {
-        return testRepository.getAuctions();
+        return auctionRepository.getAuctions();
     }
 
 
     public List<AuctionEntity> getMyAuctions() {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-        return testRepository.getMyAuctions(profileRepository.getId((String)session.getAttribute("username")));
+        return auctionRepository.getMyAuctions(profileRepository.getId((String)session.getAttribute("username")));
     }
 
     public Boolean getIsUserAdmin() {

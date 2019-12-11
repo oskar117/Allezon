@@ -12,20 +12,23 @@
     <h:outputStylesheet name="main.css" library="css"/>
 </h:head>
 
-<h:body styleClass="boddy">
-    <div class="container-fluid">
-
-        <ui:composition template="/template/template.xhtml">
-
-            <ui:define name="content">
-                <h3 class="card-header">Admin panel</h3>
-                <div class="card-body">
-                    <h:outputLink style="margin-top: 5px" styleClass="btn btn-primary btn-block" value="adminSection.xhtml">Dzialy</h:outputLink>
-                    <h:outputLink style="margin-top: 5px" styleClass="btn btn-primary btn-block" value="adminCategory.xhtml">Kategorie</h:outputLink>
-                    <h:outputLink style="margin-top: 5px" styleClass="btn btn-warning btn-block" value="index.xhtml">Wroc</h:outputLink>
+<h:body>
+    <ui:composition template="/template/pageTemplate.xhtml">
+        <ui:define name="content">
+                <div class="pt-5 mx-auto col-xs-2 col-md-3 col-sm-5">
+                    <div class="card bg-dark">
+                        <h3 class="card-header">Admin panel</h3>
+                        <div class="card-body">
+                            <h:outputLink style="margin-top: 5px" styleClass="btn btn-primary btn-block"
+                                          value="adminSection.xhtml">Dzialy</h:outputLink>
+                            <h:outputLink style="margin-top: 5px" styleClass="btn btn-primary btn-block"
+                                          value="adminCategory.xhtml">Kategorie</h:outputLink>
+                            <h:outputLink style="margin-top: 5px" styleClass="btn btn-warning btn-block"
+                                          value="index.xhtml">Wroc</h:outputLink>
+                        </div>
+                    </div>
                 </div>
-            </ui:define>
-        </ui:composition>
-    </div>
+        </ui:define>
+    </ui:composition>
 </h:body>
 </html>

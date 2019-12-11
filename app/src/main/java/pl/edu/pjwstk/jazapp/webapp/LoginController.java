@@ -2,7 +2,6 @@ package pl.edu.pjwstk.jazapp.webapp;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
-import pl.edu.pjwstk.jazapp.entity.TestRepository;
 import pl.edu.pjwstk.jazapp.login.LoginRequest;
 
 import javax.enterprise.context.RequestScoped;

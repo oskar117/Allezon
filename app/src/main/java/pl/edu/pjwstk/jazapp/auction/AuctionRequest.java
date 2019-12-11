@@ -1,17 +1,8 @@
 package pl.edu.pjwstk.jazapp.auction;
 
-import pl.edu.pjwstk.jazapp.entity.AuctionEntity;
-import pl.edu.pjwstk.jazapp.entity.TestRepository;
-
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

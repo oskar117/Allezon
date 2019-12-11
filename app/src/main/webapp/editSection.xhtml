@@ -11,27 +11,28 @@
     <h:outputStylesheet name="bootstrap.min.css" library="css"/>
     <h:outputStylesheet name="main.css" library="css"/>
 </h:head>
-
-<h:body styleClass="boddy">
-    <div class="container-fluid">
-
-        <ui:composition template="/template/template.xhtml">
-
-            <ui:define name="content">
-                <h3 class="card-header">Edycja</h3>
-                <div class="card-body">
-                        <h:form id="sectionForm3">
-                            <h:inputHidden value="#{sectionController.sectionRequest.id}"></h:inputHidden>
-                            <div class="form-group">
-                                <label>Nowa nazwa</label>
-                                <h:inputText id="sectionName" styleClass="form-control" value="#{sectionController.sectionRequest.name}"></h:inputText><br/>
-                                <h:message styleClass="message" for="sectionName" redisplay="false"/>
-                            </div>
-                            <h:commandButton action="#{sectionController.edit}" value="Zapisz" styleClass="btn btn-primary"></h:commandButton>
-                        </h:form>
-                </div>
-            </ui:define>
-        </ui:composition>
-    </div>
+<h:body>
+    <ui:composition template="/template/pageTemplate.xhtml">
+        <ui:define name="content">
+            <div class="pt-5 mx-auto col-xs-2 col-md-3 col-sm-5">
+            <div class="card bg-dark">
+            <h3 class="card-header">Edycja</h3>
+            <div class="card-body">
+                <h:form id="editSectionForm">
+                    <h:inputHidden value="#{sectionController.sectionRequest.id}"></h:inputHidden>
+                    <div class="form-group">
+                        <label>Nowa nazwa</label>
+                        <h:inputText id="sectionName" styleClass="form-control" value="#{sectionController.sectionRequest.name}">
+                            <f:validateLength for="sectionName" minimum = "3" maximum = "50" />
+                        </h:inputText><br/>
+                        <h:message for="sectionName" styleClass="message"/>
+                    </div>
+                    <h:commandButton action="#{sectionController.edit}" value="Zapisz" styleClass="btn btn-primary"></h:commandButton>
+                </h:form>
+            </div>
+            </div>
+            </div>
+        </ui:define>
+    </ui:composition>
 </h:body>
 </html>

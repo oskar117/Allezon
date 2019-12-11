@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <h:outputStylesheet name="bootstrap.min.css" library="css" />
+    <h:outputStylesheet name="main.css" library="css" />
+</h:head>
+
+<h:body>
+    <div class="col-md-2 d-none d-md-block bg-dark sidebar position-relative">
+        <h:form>
+            <h:outputLink style="margin-top: 5px" styleClass="btn btn-primary btn-block" value="addAuction.xhtml">Dodaj aukcje</h:outputLink>
+            <h:outputLink style="margin-top: 5px" styleClass="btn btn-primary btn-block" value="myAuctions.xhtml">Moje aukcje</h:outputLink>
+            <h:outputLink rendered="#{auctionController.isUserAdmin}" style="margin-top: 5px" styleClass="btn btn-warning btn-block" value="admin.xhtml">Admin panel</h:outputLink>
+            <h:commandButton style="margin-top: 5px" action="#{loginController.logout}" value="Logout" styleClass="btn btn-danger btn-block"/>
+        </h:form>
+    </div>
+</h:body>
+</html>
