@@ -15,22 +15,22 @@
     <ui:composition template="/template/pageTemplate.xhtml">
         <ui:define name="content">
             <div class="pt-5 mx-auto col-xs-2 col-md-3 col-sm-5">
-            <div class="card bg-dark">
-            <h3 class="card-header">Edycja</h3>
-            <div class="card-body">
-                <h:form id="editSectionForm">
-                    <h:inputHidden value="#{sectionController.sectionRequest.id}"></h:inputHidden>
-                    <div class="form-group">
-                        <label>Nowa nazwa</label>
-                        <h:inputText id="sectionName" styleClass="form-control" value="#{sectionController.sectionRequest.name}">
-                            <f:validateLength for="sectionName" minimum = "3" maximum = "50" />
-                        </h:inputText><br/>
-                        <h:message for="sectionName" styleClass="message"/>
+                <div class="card bg-dark">
+                    <h3 class="card-header">Edycja</h3>
+                    <div class="card-body">
+                        <h:form id="editSectionForm">
+                            <h:inputHidden value="#{sectionController.sectionRequest.id}"></h:inputHidden>
+                            <div class="form-group">
+                                <label>Nowa nazwa</label>
+                                <h:inputText id="sectionName" styleClass="form-control" value="#{sectionController.sectionRequest.name}">
+                                    <f:validateLength for="sectionName" minimum = "3" maximum = "50" />
+                                </h:inputText><br/>
+                                <h:message for="editSectionForm:sectionName" styleClass="message"/>
+                            </div>
+                            <h:commandButton action="#{sectionController.edit}" value="Zapisz" styleClass="btn btn-primary"></h:commandButton>
+                        </h:form>
                     </div>
-                    <h:commandButton action="#{sectionController.edit}" value="Zapisz" styleClass="btn btn-primary"></h:commandButton>
-                </h:form>
-            </div>
-            </div>
+                </div>
             </div>
         </ui:define>
     </ui:composition>

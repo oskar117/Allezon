@@ -41,14 +41,10 @@
                             <div class="form-group">
                                 <label>Cena</label>
                                 <h:inputText id="price" styleClass="form-control" value="#{auctionController.auctionRequest.price}" validatorMessage="#{msg['jaz.app.price']}">
+                                    ^(\d+[\.\,]\d{1,2}$)
+                                    <f:validateRegex pattern="^(\d+[\.\,]\d{1,2}$)"/>
                                 </h:inputText><br/>
                                 <h:message styleClass="message" for="price" redisplay="false"/>
-                            </div>
-                            <div class="form-group">
-                                <label>Dział</label>
-                                <h:selectOneMenu class="form-control" value="#{auctionController.auctionRequest.section}">
-                                    <f:selectItems value="#{sectionController.sections.entrySet()}" var="cat" itemValue="#{cat.key}" itemLabel="#{cat.value}" />
-                                </h:selectOneMenu>
                             </div>
                             <div class="form-group">
                                 <label>Kategoria</label>
@@ -56,9 +52,13 @@
                                     <f:selectItems value="#{categoryController.categories}" var="cat" itemValue="#{cat.id}" itemLabel="#{cat.name}" />
                                 </h:selectOneMenu>
                             </div>
-
+                            <br/>
                             <label>Zdjęcia</label>
                             <h:panelGroup id="photos2">
+                                <div class="form-group">
+                                    <h:inputFile styleClass="form-control-file" a:multiple="true" id="photos" value="#{auctionController.auctionRequest.photos}"/>
+                                </div>
+                                <h:message styleClass="message" for="photos" redisplay="false"/>
                                 <c:if test="#{auctionController.auctionRequest.photos2 != null}">
                                     <h:panelGrid columns="3" class="table table-borderless table-light">
                                             <c:forEach items="#{auctionController.auctionRequest.photos2}" var="names">
@@ -71,15 +71,8 @@
                                             </c:forEach>
                                     </h:panelGrid>
                                 </c:if>
-                                <div class="form-group">
-                                    <h:inputFile styleClass="form-control" a:multiple="true" id="photos" value="#{auctionController.auctionRequest.photos}"/>
-                                </div>
-                                <h:commandButton action="#{auctionController.addPhotos}" value="Dodaj zdjęcia" styleClass="btn btn-primary">
-                                    <f:ajax execute="photos2" render="photos2"></f:ajax>
-                                </h:commandButton>
-                                <h:message styleClass="message" for="photos" redisplay="false"/>
                             </h:panelGroup>
-
+                            <br/>
                             <h:panelGroup id="params">
                                 <table class="table table-borderless table-light">
                                     <thead>
@@ -105,14 +98,18 @@
                                         </tr>
                                     </c:forEach>
                                     <tr>
-                                        <th scope="col"><h:inputText id="ke" styleClass="form-control" value="#{auctionController.auctionRequest.key}"></h:inputText><br/></th>
-                                        <th scope="col"><h:inputText id="val" styleClass="form-control" value="#{auctionController.auctionRequest.value}"></h:inputText><br/></th>
+                                        <th scope="col"><h:inputText id="ke" styleClass="form-control" value="#{auctionController.auctionRequest.key}">
+                                        </h:inputText><br/></th>
+                                        <th scope="col"><h:inputText id="val" styleClass="form-control" value="#{auctionController.auctionRequest.value}">
+                                        </h:inputText><br/></th>
+                                        <th scope="col">
+                                            <h:commandButton action="#{auctionController.addParam}" value="+" styleClass="btn btn-primary">
+                                                <f:ajax execute="params" render="params"></f:ajax>
+                                            </h:commandButton>
+                                        </th>
                                     </tr>
                                     </tbody>
                                 </table>
-                                <h:commandButton action="#{auctionController.addParam}" value="Dodaj parametr" styleClass="btn btn-primary">
-                                    <f:ajax execute="params" render="params"></f:ajax>
-                                </h:commandButton>
                             </h:panelGroup>
                             <h:commandButton action="#{auctionController.add}" value="Zapisz" styleClass="btn btn-primary"></h:commandButton>
                         </h:form>

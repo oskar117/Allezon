@@ -24,11 +24,10 @@ public class AuctionRequest {
     private String value;
     private Long version;
 
-    public AuctionRequest(Long id, String title, String description, Long section, String price, Long category, Map<String, String> params, List<String> photos2, Long version) {
+    public AuctionRequest(Long id, String title, String description, String price, Long category, Map<String, String> params, List<String> photos2, Long version) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.section = section;
         this.price = price;
         this.category = category;
         this.params = params;
@@ -94,14 +93,6 @@ public class AuctionRequest {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Long getSection() {
-        return section;
-    }
-
-    public void setSection(Long section) {
-        this.section = section;
     }
 
     public String getPrice() {

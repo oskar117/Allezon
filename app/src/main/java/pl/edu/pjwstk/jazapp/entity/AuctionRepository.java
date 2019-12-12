@@ -33,10 +33,10 @@ public class AuctionRepository {
     private ParameterRepository parameterRepository;
 
     @Transactional
-    public void addAuction(Long editId, String title, String description, String price, Long section, Long category, List<String> photos, Map<String, String> params, Long owner, Long version) {
+    public void addAuction(Long editId, String title, String description, String price,Long section, Long category, List<String> photos, Map<String, String> params, Long owner, Long version) {
 
-        SectionEntity se = em.getReference(SectionEntity.class, section);
         CategoryEntity ce = em.getReference(CategoryEntity.class, category);
+        SectionEntity se = em.getReference(SectionEntity.class, section);
         ProfileEntity usr = em.getReference(ProfileEntity.class, owner);
         AuctionEntity ae;
 
@@ -66,7 +66,6 @@ public class AuctionRepository {
                     }
                 }
             } else {
-                System.out.println("wypers");
                 FacesContext.getCurrentInstance().addMessage("editedMessage", new FacesMessage("Ktoś zedytował już tą aukcję!"));
                 return;
             }

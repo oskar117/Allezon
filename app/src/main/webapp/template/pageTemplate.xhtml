@@ -21,7 +21,9 @@
             <ui:insert name="sidebar">
                 <ui:include src="sidebarTemplate.xhtml"></ui:include>
             </ui:insert>
-            <ui:insert name="content">ddd</ui:insert>
+            <ui:insert name="content">
+                <ui:include src="/template/defaultContent.xhtml" />
+            </ui:insert>
         </div>
     </div>
 </h:body>
