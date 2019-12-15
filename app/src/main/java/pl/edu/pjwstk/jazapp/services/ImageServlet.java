@@ -1,9 +1,6 @@
-package pl.edu.pjwstk.jazapp.admin;
+package pl.edu.pjwstk.jazapp.services;
 
-import javax.faces.context.FacesContext;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

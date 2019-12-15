@@ -2,15 +2,13 @@ package pl.edu.pjwstk.jazapp.auction;
 
 import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
 import pl.edu.pjwstk.jazapp.entity.*;
+import pl.edu.pjwstk.jazapp.services.ContextUtils;
 
-import javax.annotation.PreDestroy;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.io.File;
@@ -41,6 +39,9 @@ public class AuctionController implements Serializable {
 
     @Inject
     private HttpServletRequest request;
+
+    @Inject
+    private ContextUtils contextUtils;
 
     public Collection<Part> getAllParts(Part part) {
         try {
@@ -98,7 +99,7 @@ public class AuctionController implements Serializable {
 
             }
         }
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        HttpSession session = contextUtils.getSession();
         String owner = (String) session.getAttribute("username");
         Long sectionId = categoryRepository.getCategory(auctionRequest.getCategory()).getSectionId().getId();
         auctionRepository.addAuction(auctionRequest.getId(), auctionRequest.getTitle(), auctionRequest.getDescription(), auctionRequest.getPrice(), sectionId, auctionRequest.getCategory(), asd, auctionRequest.getParams(), profileRepository.getId(owner), auctionRequest.getVersion());
@@ -142,12 +143,12 @@ public class AuctionController implements Serializable {
 
 
     public List<AuctionEntity> getMyAuctions() {
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        HttpSession session = contextUtils.getSession();
         return auctionRepository.getMyAuctions(profileRepository.getId((String) session.getAttribute("username")));
     }
 
     public Boolean getIsUserAdmin() {
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        HttpSession session = contextUtils.getSession();
         if (session.getAttribute("username").equals("admin")) {
             return true;
         }

@@ -1,24 +1,15 @@
 package pl.edu.pjwstk.jazapp.entity;
 
-import jdk.jfr.Percentage;
-import pl.edu.pjwstk.jazapp.admin.SectionRequest;
 import pl.edu.pjwstk.jazapp.auth.ProfileEntity;
-import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
+import pl.edu.pjwstk.jazapp.services.ContextUtils;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 
 @ApplicationScoped
 public class AuctionRepository {
@@ -31,6 +22,9 @@ public class AuctionRepository {
 
     @Inject
     private ParameterRepository parameterRepository;
+
+    @Inject
+    private ContextUtils contextUtils;
 
     @Transactional
     public void addAuction(Long editId, String title, String description, String price,Long section, Long category, List<String> photos, Map<String, String> params, Long owner, Long version) {
@@ -66,7 +60,7 @@ public class AuctionRepository {
                     }
                 }
             } else {
-                FacesContext.getCurrentInstance().addMessage("editedMessage", new FacesMessage("Ktoś zedytował już tą aukcję!"));
+                contextUtils.setMessage("msgTest","Ktoś zedytował już tą aukcję!" );
                 return;
             }
         }
