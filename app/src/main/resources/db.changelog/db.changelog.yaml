@@ -14,11 +14,3 @@ databaseChangeLog:
         relativeToChangelogFile: true
         splitStatements: false
         path: 20191113_auction.sql
-
-  - changeSet:
-      id: 20191215_insert_admin
-      author: Olek Konieczny
-      sqlFile:
-        relativeToChangelogFile: true
-        splitStatements: false
-        path: 20191215_insert_admin.sql

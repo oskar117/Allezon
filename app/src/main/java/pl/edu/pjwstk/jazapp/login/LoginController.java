@@ -30,7 +30,7 @@ public class LoginController {
             String correctPassword = profileRepository.getPassword(correctLogin);
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-            if(encoder.matches(loginRequest.getPassword(), correctPassword) || correctPassword.equals("admin")) {
+            if(encoder.matches(loginRequest.getPassword(), correctPassword)) {
                 HttpSession session = contextUtils.getSession();
                 session.setAttribute("username", correctLogin);
                 session.setAttribute("name", profileRepository.getName(correctLogin));
