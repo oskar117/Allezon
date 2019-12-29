@@ -33,6 +33,21 @@ public class ProfileRepository {
         return false;
     }
 
+    @Transactional
+    public boolean userExistsByEmail(String email) {
+
+        Object qw = em.createQuery("select count(*) from ProfileEntity where email = :usr").setParameter("usr", email).getSingleResult();
+
+        if((long)qw != 0) {
+            ProfileEntity user = em.createQuery("from ProfileEntity where email = :usr", ProfileEntity.class).setParameter("usr", email).getSingleResult();
+            if(user != null) {
+                if(user.getEmail().equals(email)) return true;
+            }
+        }
+        return false;
+    }
+
+
     public String getPassword(String nickname) {
         ProfileEntity user = em.createQuery("from ProfileEntity where username = :usr", ProfileEntity.class).setParameter("usr", nickname).getSingleResult();
         return user.getPassword();
@@ -53,4 +68,8 @@ public class ProfileRepository {
         return user.getId();
     }
 
+    public Long getIdByEmail(String email) {
+        ProfileEntity user = em.createQuery("from ProfileEntity where email = :usr", ProfileEntity.class).setParameter("usr", email).getSingleResult();
+        return user.getId();
+    }
 }
