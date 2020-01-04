@@ -72,4 +72,12 @@ public class ProfileRepository {
         ProfileEntity user = em.createQuery("from ProfileEntity where email = :usr", ProfileEntity.class).setParameter("usr", email).getSingleResult();
         return user.getId();
     }
+
+    @Transactional
+    public void changePassword(Long userId, String password) {
+
+        ProfileEntity pe = em.find(ProfileEntity.class, userId);
+        pe.setPassword(password);
+        em.merge(pe);
+    }
 }
