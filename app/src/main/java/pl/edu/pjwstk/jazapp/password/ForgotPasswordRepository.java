@@ -70,16 +70,20 @@ public class ForgotPasswordRepository {
     }
 
     public boolean hasTokenExpiredByToken(String token) {
-        ForgotPasswordEntity fpe = em.createQuery("from ForgotPasswordEntity where token = :pe", ForgotPasswordEntity.class).setParameter("pe", token).getSingleResult();
 
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime expirationDate = fpe.getExpiration_date();
+        if(doesTokenExist(token)) {
+            ForgotPasswordEntity fpe = em.createQuery("from ForgotPasswordEntity where token = :pe", ForgotPasswordEntity.class).setParameter("pe", token).getSingleResult();
 
-        if(now.isAfter(expirationDate)) {
-            return true;
-        } else {
-            return false;
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime expirationDate = fpe.getExpiration_date();
+
+            if(now.isAfter(expirationDate)) {
+                return true;
+            } else {
+                return false;
+            }
         }
+        return true;
     }
 
     @Transactional

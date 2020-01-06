@@ -7,7 +7,6 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
-@Named
 @ApplicationScoped
 public class ContextUtils {
 
