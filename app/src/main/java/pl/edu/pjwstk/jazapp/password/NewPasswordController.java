@@ -6,6 +6,7 @@ import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
 import pl.edu.pjwstk.jazapp.services.ContextUtils;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServlet;
@@ -45,6 +46,9 @@ public class NewPasswordController {
     }
 
     public String changePassword() {
+
+        System.out.println("zmieniamy");
+
         String password = newPasswordRequest.getPassword();
         if(password.equals(newPasswordRequest.getPassword2()) && !forgotPasswordRepository.hasTokenExpiredByToken(newPasswordRequest.getToken())) {
 
@@ -55,8 +59,8 @@ public class NewPasswordController {
             profileRepository.changePassword(userId, bcrypt.encode(password));
             contextUtils.setMessage("loginForm:test", "Pomyślnie zmieniono hasło");
         } else {
-            contextUtils.setMessage("loginForm:test", "coś poszło nie tak");
+            contextUtils.setMessage("loginForm:test", "coś poszło nie tak", FacesMessage.SEVERITY_ERROR);
         }
-        return "login.xhtml?faces-redirect=true";
+        return "login.xhtml";
     }
 }

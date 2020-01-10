@@ -15,6 +15,12 @@ public class ContextUtils {
     }
 
     public void setMessage(String tagName, String message) {
+        System.out.println("fcmsg: "+ tagName);
         FacesContext.getCurrentInstance().addMessage(tagName, new FacesMessage(message));
+    }
+
+    public void setMessage(String tagName, String message, FacesMessage.Severity sev) {
+        System.out.println("fcmsg: "+ tagName);
+        FacesContext.getCurrentInstance().addMessage(tagName, new FacesMessage(sev, message, null));
     }
 }

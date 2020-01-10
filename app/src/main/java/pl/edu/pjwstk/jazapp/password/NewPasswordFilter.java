@@ -20,21 +20,18 @@ public class NewPasswordFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
-        System.out.println(req.getRequestURI());
-        String token =  req.getParameter("token");
-        if(!req.getRequestURI().contains("javax.faces.resource")) {
-            if (req.getParameter("token") != null) {
-                if(forgotPasswordRepository.hasTokenExpiredByToken(token)) {
-                    res.sendRedirect(req.getContextPath() + "/login.xhtml");
-                } else {
-                    chain.doFilter(req, res);
-                }
-            } else {
-                System.out.println("kibel");
+        System.out.println(req.getHeader("Faces-Request"));
+        if (req.getParameter("token") != null) {
+            if (forgotPasswordRepository.hasTokenExpiredByToken(req.getParameter("token"))) {
                 res.sendRedirect(req.getContextPath() + "/login.xhtml");
             }
         } else {
-            chain.doFilter(req, res);
+            if(req.getHeader("Faces-Request") == null) {
+                res.sendRedirect(req.getContextPath() + "/login.xhtml");
+            } else if((req.getHeader("Faces-Request") != null && !req.getHeader("Faces-Request").equals("partial/ajax"))) {
+                chain.doFilter(req, res);
+            }
         }
+        chain.doFilter(req, res);
     }
 }

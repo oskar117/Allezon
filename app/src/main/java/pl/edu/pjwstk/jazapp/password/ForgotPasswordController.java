@@ -5,9 +5,12 @@ import pl.edu.pjwstk.jazapp.services.ContextUtils;
 import pl.edu.pjwstk.jazapp.services.EmailUtils;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 @Named
@@ -45,6 +48,15 @@ public class ForgotPasswordController {
         return res;
     }
 
+    public void sendEmail(String email, String token, LocalDateTime data) {
+        Map<String, String> input = new HashMap<String, String>();
+        input.put("token", "http://localhost:8080/app/setNewPassword.xhtml?token="+token);
+
+        String body = emailUtils.readEmailFromHtml("/home/olek/Projects/jazzapp/app/src/main/webapp/template/passwordResetTemplate.html" ,input);
+        forgotPasswordRepository.setPasswordResetRecord(email, token, data);
+        emailUtils.sendEmail(email, "Przypomnienie hasła", body);
+    }
+
     public String sendPasswordChangeLink() {
 
         String email = forgotPasswordRequest.getEmail();
@@ -54,15 +66,19 @@ public class ForgotPasswordController {
             LocalDateTime data = LocalDateTime.now();
             data = data.plusHours(1);
             if(!forgotPasswordRepository.doesEmailExist(email)) {
-                forgotPasswordRepository.setPasswordResetRecord(email, token, data);
-                emailUtils.sendEmail(email, "Przypomnienie hasła", "http://localhost:8080/app/setNewPassword.xhtml?token="+token);
-            } else if(forgotPasswordRepository.hasTokenExpiredByEmail(email)){
-                forgotPasswordRepository.deletePasswordResetRecordByEmail(email);
-                forgotPasswordRepository.setPasswordResetRecord(email, token, data);
-                emailUtils.sendEmail(email, "Przypomnienie hasła", "http://localhost:8080/app/setNewPassword.xhtml?token="+token);
+                sendEmail(email, token, data);
+                contextUtils.setMessage("loginForm:test", "Wysłano wiadomość email");
+            } else {
+                if(forgotPasswordRepository.hasTokenExpiredByEmail(email)) {
+                    forgotPasswordRepository.deletePasswordResetRecordByEmail(email);
+                    sendEmail(email, token, data);
+                    contextUtils.setMessage("loginForm:test", "Wysłano wiadomość email");
+                } else {
+                    contextUtils.setMessage("loginForm:test", "Na ten email już wysłano wiadomość", FacesMessage.SEVERITY_ERROR);
+                }
             }
         } else {
-            contextUtils.setMessage("aa", "Użytkownik nie istnieje");
+            contextUtils.setMessage("loginForm:test", "Użytkownik nie istnieje", FacesMessage.SEVERITY_ERROR);
         }
 
         return "login.xhtml";

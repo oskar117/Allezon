@@ -1,13 +1,19 @@
 package pl.edu.pjwstk.jazapp.services;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Properties;
+import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.http.HttpRequest;
+import java.util.*;
+
+
 
 @ApplicationScoped
 public class EmailUtils {
@@ -48,7 +54,7 @@ public class EmailUtils {
 
             msg.setSubject(subject, "UTF-8");
 
-            msg.setText(body, "UTF-8");
+            msg.setContent(body, "text/html; charset=utf-8");
 
             msg.setSentDate(new Date());
 
@@ -62,5 +68,46 @@ public class EmailUtils {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public String readEmailFromHtml(String filePath, Map<String, String> input)
+    {
+        String msg = readContentFromFile(filePath);
+        try
+        {
+            Set<Map.Entry<String, String>> entries = input.entrySet();
+            for(Map.Entry<String, String> entry : entries) {
+                msg = msg.replace(entry.getKey().trim(), entry.getValue().trim());
+            }
+        }
+        catch(Exception exception)
+        {
+            exception.printStackTrace();
+        }
+        return msg;
+    }
+
+    private String readContentFromFile(String fileName)
+    {
+        StringBuffer contents = new StringBuffer();
+
+        try {
+            //use buffering, reading one line at a time
+            BufferedReader reader =  new BufferedReader(new FileReader(fileName));
+            try {
+                String line = null;
+                while (( line = reader.readLine()) != null){
+                    contents.append(line);
+                    contents.append(System.getProperty("line.separator"));
+                }
+            }
+            finally {
+                reader.close();
+            }
+        }
+        catch (IOException ex){
+            ex.printStackTrace();
+        }
+        return contents.toString();
     }
 }

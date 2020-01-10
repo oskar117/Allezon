@@ -13,15 +13,15 @@
 </h:head>
 
 <h:body styleClass="boddy">
-    <div class="container-fluid">
 
+    <div class="container-fluid">
         <ui:composition template="/template/template.xhtml">
 
             <ui:define name="content">
                 <h3 class="card-header">Zaloguj</h3>
                 <div class="card-body">
                     <h:form id="loginForm">
-                        <h:message styleClass="success_message" id="test" for="test"/><br/>
+                        <h:message errorClass="message" styleClass="success_message" id="test" for="test"/><br/>
                         <div class="form-group">
                             <label>Login</label>
                             <h:inputText id="username" styleClass="form-control" value="#{loginRequest.username}">
