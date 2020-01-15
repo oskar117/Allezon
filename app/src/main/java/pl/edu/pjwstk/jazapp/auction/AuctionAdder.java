@@ -57,12 +57,29 @@ public class AuctionAdder {
         AuctionEntity ae = auctionRepository.getAuction(editId);
 
         if(photos != null) photoRepository.addPhoto(ae.getId(), photos);
-        if(params != null) parameterRepository.addParams(ae.getId(), params);
+        if(params != null) addParams(ae.getId(), params);
 
         List<PhotoEntity> pe = photoRepository.getAuctionPhotos(editId);
         List<AuctionParameterEntity> ape = parameterRepository.getAuctionParams(editId);
 
         auctionRepository.addPhotosAndParams(editId, pe, ape);
+    }
+
+    public void addParams(Long auctionId, Map<String, String> params) {
+
+        for (var x : params.keySet()) {
+
+            if (parameterRepository.areParamsEmpty(x) == 0) {
+                parameterRepository.addParamKey(x);
+            }
+            ParameterEntity pe = parameterRepository.getParamKey(x);
+
+            if(parameterRepository.auctionParamsExist(auctionId, pe.getId()) == 0) {
+                parameterRepository.insertParam(auctionId, pe.getId(), params.get(x));
+            } else {
+                parameterRepository.updateParam(auctionId, pe.getId(), params.get(x));
+            }
+        }
     }
 
 }
