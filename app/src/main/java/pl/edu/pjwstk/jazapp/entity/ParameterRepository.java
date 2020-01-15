@@ -4,6 +4,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Map;
 
 @ApplicationScoped
@@ -47,6 +48,10 @@ public class ParameterRepository {
     public void deleteParam(String key) {
         var param = em.createQuery("From AuctionParameterEntity where parameterId.key = :key").setParameter("key", key).getSingleResult();
         em.remove(param);
+    }
+
+    public List<AuctionParameterEntity> getAuctionParams(Long id) {
+        return em.createQuery("From AuctionParameterEntity where auctionId.id = :ddd", AuctionParameterEntity.class).setParameter("ddd", id).getResultList();
     }
 
 }

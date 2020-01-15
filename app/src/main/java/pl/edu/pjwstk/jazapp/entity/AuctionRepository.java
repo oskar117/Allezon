@@ -17,68 +17,35 @@ public class AuctionRepository {
     @PersistenceContext
     private EntityManager em;
 
-    @Inject
-    private PhotoRepository photoRepository;
-
-    @Inject
-    private ParameterRepository parameterRepository;
-
-    @Inject
-    private ContextUtils contextUtils;
-
     @Transactional
-    public void addAuction(Long editId, String title, String description, String price,Long section, Long category, List<String> photos, Map<String, String> params, Long owner, Long version) {
-
+    public Long insertAuction(String title, String description, double price, long section, long category, long owner) {
         CategoryEntity ce = em.getReference(CategoryEntity.class, category);
         SectionEntity se = em.getReference(SectionEntity.class, section);
         ProfileEntity usr = em.getReference(ProfileEntity.class, owner);
-        AuctionEntity ae;
-
-        if(editId == null) {
-            ae = new AuctionEntity(title, description, Double.parseDouble(price), ce, se, usr);
-            em.persist(ae);
-        } else {
-            ae = em.find(AuctionEntity.class, editId);
-
-            if(version == ae.getVersion()) {
-                ae.setTitle(title);
-                ae.setDescription(description);
-                ae.setPrice(Double.parseDouble(price));
-                ae.setCategoryId(ce);
-                ae.setSectionId(se);
-                em.merge(ae);
-
-                for(var x : ae.getParams()) {
-                    if(!params.containsKey(x.getParameterId().getKey())) {
-                        parameterRepository.deleteParam(x.getParameterId().getKey());
-                    }
-                }
-
-                for(var x : ae.getPhotos()) {
-                    if(!photos.contains(x.getUrl())) {
-                        photoRepository.deletePhoto(x.getUrl());
-                    }
-                }
-            } else {
-                contextUtils.setMessage("msgTest","Ktoś zedytował już tą aukcję!" );
-                return;
-            }
-        }
-
-        if(photos != null) photoRepository.addPhoto(ae.getId(), photos);
-        if(params != null) parameterRepository.addParams(ae.getId(), params);
-
-        List<PhotoEntity> pe = em.createQuery("from PhotoEntity ", PhotoEntity.class).getResultList();
-
-
-        List<AuctionParameterEntity> ape = em.createQuery("From AuctionParameterEntity ", AuctionParameterEntity.class).getResultList();
-
-        ae.setParams(ape);
-        ae.setPhotos(pe);
-
-        em.merge(ae);
+        AuctionEntity ae = new AuctionEntity(title, description, price, ce, se, usr);
+        em.persist(ae);
+        return ae.getId();
     }
 
+    @Transactional
+    public void addPhotosAndParams(long id, List<PhotoEntity> pe, List<AuctionParameterEntity> ape) {
+        AuctionEntity ae = getAuction(id);
+        ae.setPhotos(pe);
+        ae.setParams(ape);
+    }
+
+    @Transactional
+    public void mergeAuction(Long editId, String title, String description, double price, long section, long category) {
+        CategoryEntity ce = em.getReference(CategoryEntity.class, category);
+        SectionEntity se = em.getReference(SectionEntity.class, section);
+        AuctionEntity ae = em.find(AuctionEntity.class, editId);
+        ae.setTitle(title);
+        ae.setDescription(description);
+        ae.setPrice(price);
+        ae.setCategoryId(ce);
+        ae.setSectionId(se);
+        em.merge(ae);
+    }
 
     public List<AuctionEntity> getAuctions() {
         List<AuctionEntity> list = em.createQuery("from AuctionEntity ", AuctionEntity.class).getResultList();
@@ -106,4 +73,5 @@ public class AuctionRepository {
         var auction = em.find(AuctionEntity.class, editId);
         return auction;
     }
+
 }

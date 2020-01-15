@@ -1,5 +1,6 @@
 package pl.edu.pjwstk.jazapp.auction;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
 import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
 import pl.edu.pjwstk.jazapp.entity.*;
 import pl.edu.pjwstk.jazapp.services.ContextUtils;
@@ -39,6 +40,9 @@ public class AuctionController implements Serializable {
 
     @Inject
     private HttpServletRequest request;
+
+    @Inject
+    private AuctionAdder auctionAdder;
 
     @Inject
     private ContextUtils contextUtils;
@@ -102,7 +106,8 @@ public class AuctionController implements Serializable {
         HttpSession session = contextUtils.getSession();
         String owner = (String) session.getAttribute("username");
         Long sectionId = categoryRepository.getCategory(auctionRequest.getCategory()).getSectionId().getId();
-        auctionRepository.addAuction(auctionRequest.getId(), auctionRequest.getTitle(), auctionRequest.getDescription(), auctionRequest.getPrice(), sectionId, auctionRequest.getCategory(), asd, auctionRequest.getParams(), profileRepository.getId(owner), auctionRequest.getVersion());
+        //auctionRepository.addAuction(auctionRequest.getId(), auctionRequest.getTitle(), auctionRequest.getDescription(), auctionRequest.getPrice(), sectionId, auctionRequest.getCategory(), asd, auctionRequest.getParams(), profileRepository.getId(owner), auctionRequest.getVersion());
+        auctionAdder.addAuction(auctionRequest.getId(), auctionRequest.getTitle(), auctionRequest.getDescription(), auctionRequest.getPrice(), sectionId, auctionRequest.getCategory(), asd, auctionRequest.getParams(), profileRepository.getId(owner), auctionRequest.getVersion());
         auctionRequest = null;
         return "myAuctions.xhtml";
     }
