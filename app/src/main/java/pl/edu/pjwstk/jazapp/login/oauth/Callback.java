@@ -1,9 +1,7 @@
-package pl.edu.pjwstk.jazapp.oauth;
+package pl.edu.pjwstk.jazapp.login.oauth;
 
-import netscape.javascript.JSObject;
-import org.json.JSONArray;
 import org.json.JSONObject;
-import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
+import pl.edu.pjwstk.jazapp.login.auth.ProfileRepository;
 
 import javax.inject.Inject;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +14,6 @@ import javax.ws.rs.core.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
-import java.time.LocalDate;
 
 @WebServlet("callback")
 public class Callback extends HttpServlet {

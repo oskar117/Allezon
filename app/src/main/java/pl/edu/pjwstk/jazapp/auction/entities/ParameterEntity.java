@@ -1,4 +1,4 @@
-package pl.edu.pjwstk.jazapp.entity;
+package pl.edu.pjwstk.jazapp.auction.entities;
 
 import javax.persistence.*;
 

@@ -1,12 +1,15 @@
-package pl.edu.pjwstk.jazapp.entity;
+package pl.edu.pjwstk.jazapp.auction.repositories;
+
+import pl.edu.pjwstk.jazapp.auction.entities.AuctionEntity;
+import pl.edu.pjwstk.jazapp.auction.entities.AuctionParameterEntity;
+import pl.edu.pjwstk.jazapp.auction.entities.AuctionParameterId;
+import pl.edu.pjwstk.jazapp.auction.entities.ParameterEntity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
-import javax.persistence.Parameter;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Map;
 
 @ApplicationScoped
 public class ParameterRepository {

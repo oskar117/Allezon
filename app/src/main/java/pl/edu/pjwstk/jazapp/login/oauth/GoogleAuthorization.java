@@ -1,4 +1,4 @@
-package pl.edu.pjwstk.jazapp.oauth;
+package pl.edu.pjwstk.jazapp.login.oauth;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

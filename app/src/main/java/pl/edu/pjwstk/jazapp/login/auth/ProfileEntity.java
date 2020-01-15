@@ -1,4 +1,4 @@
-package pl.edu.pjwstk.jazapp.auth;
+package pl.edu.pjwstk.jazapp.login.auth;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

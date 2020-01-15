@@ -1,9 +1,8 @@
 package pl.edu.pjwstk.jazapp.password;
 
-import pl.edu.pjwstk.jazapp.auth.ProfileEntity;
+import pl.edu.pjwstk.jazapp.login.auth.ProfileEntity;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity

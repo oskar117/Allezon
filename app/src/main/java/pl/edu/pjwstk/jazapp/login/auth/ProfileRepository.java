@@ -1,11 +1,10 @@
-package pl.edu.pjwstk.jazapp.auth;
+package pl.edu.pjwstk.jazapp.login.auth;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.util.List;
 
 @ApplicationScoped
 public class ProfileRepository {

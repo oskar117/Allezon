@@ -1,20 +1,14 @@
 package pl.edu.pjwstk.jazapp.login;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
-import pl.edu.pjwstk.jazapp.login.LoginRequest;
+import pl.edu.pjwstk.jazapp.login.auth.ProfileRepository;
 import pl.edu.pjwstk.jazapp.services.ContextUtils;
 
 import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.mail.*;
-import javax.mail.internet.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.Properties;
 
 @Named
 @RequestScoped

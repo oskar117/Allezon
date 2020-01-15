@@ -1,4 +1,6 @@
-package pl.edu.pjwstk.jazapp.entity;
+package pl.edu.pjwstk.jazapp.admin.section;
+
+import pl.edu.pjwstk.jazapp.admin.section.SectionEntity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;

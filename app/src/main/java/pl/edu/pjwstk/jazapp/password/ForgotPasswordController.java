@@ -1,6 +1,6 @@
 package pl.edu.pjwstk.jazapp.password;
 
-import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
+import pl.edu.pjwstk.jazapp.login.auth.ProfileRepository;
 import pl.edu.pjwstk.jazapp.services.ContextUtils;
 import pl.edu.pjwstk.jazapp.services.EmailUtils;
 

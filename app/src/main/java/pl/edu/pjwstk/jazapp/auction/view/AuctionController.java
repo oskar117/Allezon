@@ -1,8 +1,12 @@
-package pl.edu.pjwstk.jazapp.auction;
+package pl.edu.pjwstk.jazapp.auction.view;
 
-import com.fasterxml.jackson.annotation.JacksonInject;
-import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
-import pl.edu.pjwstk.jazapp.entity.*;
+import pl.edu.pjwstk.jazapp.admin.category.CategoryRepository;
+import pl.edu.pjwstk.jazapp.auction.entities.AuctionEntity;
+import pl.edu.pjwstk.jazapp.auction.entities.PhotoEntity;
+import pl.edu.pjwstk.jazapp.auction.repositories.AuctionRepository;
+import pl.edu.pjwstk.jazapp.auction.repositories.PhotoRepository;
+import pl.edu.pjwstk.jazapp.auction.services.AuctionAdder;
+import pl.edu.pjwstk.jazapp.login.auth.ProfileRepository;
 import pl.edu.pjwstk.jazapp.services.ContextUtils;
 
 import javax.faces.view.ViewScoped;

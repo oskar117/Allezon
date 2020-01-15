@@ -1,4 +1,4 @@
-package pl.edu.pjwstk.jazapp.auction;
+package pl.edu.pjwstk.jazapp.auction.view;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;

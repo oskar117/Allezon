@@ -1,7 +1,4 @@
-package pl.edu.pjwstk.jazapp.admin;
-
-import pl.edu.pjwstk.jazapp.entity.CategoryEntity;
-import pl.edu.pjwstk.jazapp.entity.CategoryRepository;
+package pl.edu.pjwstk.jazapp.admin.category;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;

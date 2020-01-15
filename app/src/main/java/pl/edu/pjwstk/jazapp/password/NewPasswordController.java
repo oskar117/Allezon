@@ -1,19 +1,15 @@
 package pl.edu.pjwstk.jazapp.password;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import pl.edu.pjwstk.jazapp.admin.SectionRequest;
-import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
+import pl.edu.pjwstk.jazapp.login.auth.ProfileRepository;
 import pl.edu.pjwstk.jazapp.services.ContextUtils;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.http.HttpRequest;
 
 @Named
 @RequestScoped

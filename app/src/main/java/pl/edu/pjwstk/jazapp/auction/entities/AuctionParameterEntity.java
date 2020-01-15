@@ -1,13 +1,12 @@
-package pl.edu.pjwstk.jazapp.entity;
+package pl.edu.pjwstk.jazapp.auction.entities;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "auction_parameter")
+@JsonIgnoreProperties({"auctionId"})
 public class AuctionParameterEntity {
 
     @EmbeddedId

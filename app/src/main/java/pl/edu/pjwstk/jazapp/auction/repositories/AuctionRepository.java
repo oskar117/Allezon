@@ -1,15 +1,17 @@
-package pl.edu.pjwstk.jazapp.entity;
+package pl.edu.pjwstk.jazapp.auction.repositories;
 
-import pl.edu.pjwstk.jazapp.auth.ProfileEntity;
-import pl.edu.pjwstk.jazapp.services.ContextUtils;
+import pl.edu.pjwstk.jazapp.admin.category.CategoryEntity;
+import pl.edu.pjwstk.jazapp.admin.section.SectionEntity;
+import pl.edu.pjwstk.jazapp.auction.entities.AuctionEntity;
+import pl.edu.pjwstk.jazapp.auction.entities.AuctionParameterEntity;
+import pl.edu.pjwstk.jazapp.auction.entities.PhotoEntity;
+import pl.edu.pjwstk.jazapp.login.auth.ProfileEntity;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Map;
 
 @ApplicationScoped
 public class AuctionRepository {

@@ -2,9 +2,8 @@ package pl.edu.pjwstk.jazapp.register;
 
 import org.json.JSONObject;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
-import pl.edu.pjwstk.jazapp.oauth.Callback;
-import pl.edu.pjwstk.jazapp.register.RegisterRequest;
+import pl.edu.pjwstk.jazapp.login.auth.ProfileRepository;
+import pl.edu.pjwstk.jazapp.login.oauth.Callback;
 import pl.edu.pjwstk.jazapp.services.ContextUtils;
 
 import javax.enterprise.context.RequestScoped;

@@ -1,4 +1,6 @@
-package pl.edu.pjwstk.jazapp.entity;
+package pl.edu.pjwstk.jazapp.admin.category;
+
+import pl.edu.pjwstk.jazapp.admin.section.SectionEntity;
 
 import javax.persistence.*;
 

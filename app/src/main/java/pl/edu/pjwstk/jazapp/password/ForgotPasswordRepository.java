@@ -1,9 +1,8 @@
 package pl.edu.pjwstk.jazapp.password;
 
-import pl.edu.pjwstk.jazapp.auth.ProfileEntity;
-import pl.edu.pjwstk.jazapp.auth.ProfileRepository;
+import pl.edu.pjwstk.jazapp.login.auth.ProfileEntity;
+import pl.edu.pjwstk.jazapp.login.auth.ProfileRepository;
 
-import javax.ejb.Local;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;

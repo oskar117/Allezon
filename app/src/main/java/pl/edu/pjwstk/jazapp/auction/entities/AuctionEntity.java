@@ -1,8 +1,10 @@
-package pl.edu.pjwstk.jazapp.entity;
+package pl.edu.pjwstk.jazapp.auction.entities;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import pl.edu.pjwstk.jazapp.auth.ProfileEntity;
+import pl.edu.pjwstk.jazapp.login.auth.ProfileEntity;
+import pl.edu.pjwstk.jazapp.admin.category.CategoryEntity;
+import pl.edu.pjwstk.jazapp.admin.section.SectionEntity;
 
 import javax.persistence.*;
 import java.util.List;

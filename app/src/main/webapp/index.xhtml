@@ -10,6 +10,7 @@
     <title>Zalogowano</title>
     <h:outputStylesheet name="main.css" library="css"/>
     <h:outputStylesheet name="bootstrap.min.css" library="css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"></link>
 </h:head>
 
 <h:body style="height: 100%">
@@ -33,6 +34,9 @@
                                             </td>
                                             <td>
                                                 <h:outputText value="#{names.price} zł"/>
+                                            </td>
+                                            <td>
+                                                <h:commandLink action="#{categoryController.delete(names.id)}" styleClass="btn btn-primary float-right"><i class="fas fa-shopping-cart"></i></h:commandLink>
                                             </td>
                                         </tr>
                                     </c:forEach>

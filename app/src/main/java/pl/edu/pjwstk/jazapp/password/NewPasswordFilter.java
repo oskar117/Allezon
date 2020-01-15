@@ -1,8 +1,5 @@
 package pl.edu.pjwstk.jazapp.password;
 
-import pl.edu.pjwstk.jazapp.entity.ParameterEntity;
-import pl.edu.pjwstk.jazapp.services.ContextUtils;
-
 import javax.inject.Inject;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

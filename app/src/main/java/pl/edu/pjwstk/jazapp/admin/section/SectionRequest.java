@@ -1,24 +1,25 @@
-package pl.edu.pjwstk.jazapp.admin;
+package pl.edu.pjwstk.jazapp.admin.section;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import java.util.Map;
 
 @Named
 @RequestScoped
-public class CategoryRequest {
+public class SectionRequest {
 
     private Long id;
     private String name;
-    private Long section;
 
-    public CategoryRequest() {
-    }
-
-    public CategoryRequest(Long id, String name, Long section) {
+    public SectionRequest(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.section = section;
+    }
+
+    public SectionRequest() {
     }
 
     public Long getId() {
@@ -27,14 +28,6 @@ public class CategoryRequest {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getSection() {
-        return section;
-    }
-
-    public void setSection(Long section) {
-        this.section = section;
     }
 
     public String getName() {

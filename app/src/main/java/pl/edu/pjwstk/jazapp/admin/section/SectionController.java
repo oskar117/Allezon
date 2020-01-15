@@ -1,6 +1,4 @@
-package pl.edu.pjwstk.jazapp.admin;
-
-import pl.edu.pjwstk.jazapp.entity.SectionRepository;
+package pl.edu.pjwstk.jazapp.admin.section;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
