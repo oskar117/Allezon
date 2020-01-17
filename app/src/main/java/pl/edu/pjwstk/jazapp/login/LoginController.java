@@ -32,6 +32,7 @@ public class LoginController {
 
             if(encoder.matches(loginRequest.getPassword(), correctPassword)) {
                 HttpSession session = contextUtils.getSession();
+                session.setAttribute("id", profileRepository.getId(correctLogin));
                 session.setAttribute("username", correctLogin);
                 session.setAttribute("name", profileRepository.getName(correctLogin));
                 session.setAttribute("surname", profileRepository.getSurname(correctLogin));

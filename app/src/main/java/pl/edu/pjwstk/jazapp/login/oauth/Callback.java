@@ -57,6 +57,7 @@ public class Callback extends HttpServlet {
 
                 HttpSession session=req.getSession();
                 String currUser = json.getString("name");
+                session.setAttribute("id", currUser);
                 session.setAttribute("username", currUser);
                 session.setAttribute("name", json.getString("given_name"));
                 session.setAttribute("surname", json.getString("family_name"));

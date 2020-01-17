@@ -11,19 +11,20 @@
     <h:outputStylesheet name="main.css" library="css"/>
     <h:outputStylesheet name="bootstrap.min.css" library="css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"></link>
-    <script type="text/javascript" src="jquery.min.js"></script>
-
-    <script type="test/javascript">
-        $("#addToBasket").click(function() {
-            alert( "Handler for .click() called." );
-        });
-    </script>
-
 </h:head>
 
 <h:body style="height: 100%">
     <ui:composition template="/template/pageTemplate.xhtml">
         <ui:define name="content">
+            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <script type="text/javascript">
+                $(function(){
+                    $('#addToBasket').click(function () {
+                        console.log("daszke: #{id} #{username}")
+
+                    })
+                });
+            </script>
             <div class="pt-5 col-xs-2 col-md-8 col-sm-5 mx-auto">
                 <div class="card bg-dark">
                     <div class="card-body">
