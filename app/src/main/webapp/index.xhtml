@@ -11,6 +11,14 @@
     <h:outputStylesheet name="main.css" library="css"/>
     <h:outputStylesheet name="bootstrap.min.css" library="css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"></link>
+    <script type="text/javascript" src="jquery.min.js"></script>
+
+    <script type="test/javascript">
+        $("#addToBasket").click(function() {
+            alert( "Handler for .click() called." );
+        });
+    </script>
+
 </h:head>
 
 <h:body style="height: 100%">
@@ -36,7 +44,7 @@
                                                 <h:outputText value="#{names.price} zł"/>
                                             </td>
                                             <td>
-                                                <h:commandLink action="#{categoryController.delete(names.id)}" styleClass="btn btn-primary float-right"><i class="fas fa-shopping-cart"></i></h:commandLink>
+                                                <div id="addToBasket" class="btn btn-primary float-right"><i class="fas fa-shopping-cart"></i></div>
                                             </td>
                                         </tr>
                                     </c:forEach>
