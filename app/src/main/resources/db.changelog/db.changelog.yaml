@@ -14,6 +14,7 @@ databaseChangeLog:
         relativeToChangelogFile: true
         splitStatements: false
         path: 20191113_auction.sql
+
   - changeSet:
       id: 20191229_create_forgot_password
       author: Olek Konieczny
@@ -21,3 +22,11 @@ databaseChangeLog:
         relativeToChangelogFile: true
         splitStatements: false
         path: 20191229_create_forgot_password.sql
+
+  - changeSet:
+      id: 20200117_cart
+      author: Olek Konieczny
+      sqlFile:
+        relativeToChangelogFile: true
+        splitStatements: false
+        path: 20200117_cart.sql

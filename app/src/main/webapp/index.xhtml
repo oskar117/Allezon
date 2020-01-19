@@ -20,8 +20,16 @@
             <script type="text/javascript">
                 $(function(){
                     $('#addToBasket').click(function () {
-                        console.log("daszke: #{id} #{username}")
-
+                        $.ajax({
+                            type: 'POST',
+                            url: 'http://localhost:8080/app/api/cart',
+                            contentType : 'application/json',
+                            dataType    : 'json',
+                            data: JSON.stringify({
+                                "user_id" : #{id},
+                                "item_id" : $('#item_id').val()
+                            })
+                        });
                     })
                 });
             </script>
@@ -45,6 +53,7 @@
                                                 <h:outputText value="#{names.price} zł"/>
                                             </td>
                                             <td>
+                                                <h:inputHidden id="item_id" value="#{names.id}"/>
                                                 <div id="addToBasket" class="btn btn-primary float-right"><i class="fas fa-shopping-cart"></i></div>
                                             </td>
                                         </tr>
