@@ -10,12 +10,27 @@
 <h:head>
     <h:outputStylesheet name="bootstrap.min.css" library="css" />
     <h:outputStylesheet name="main.css" library="css" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </h:head>
 
 <h:body>
     <div class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow position-relative">
         <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/app/index.xhtml">Allezon</a>
+
+        <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown">
+                Dropdown
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+        </div>
         <h3 class="mr-1" style="color: whitesmoke">Witaj #{name} #{surname}!</h3>
     </div>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </h:body>
 </html>

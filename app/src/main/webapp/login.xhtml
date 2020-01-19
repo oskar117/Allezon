@@ -16,8 +16,8 @@
 
     <div class="container-fluid">
         <ui:composition template="/template/template.xhtml">
-
             <ui:define name="content">
+
                 <h3 class="card-header">Zaloguj</h3>
                 <div class="card-body">
                     <h:form id="loginForm">
@@ -35,7 +35,6 @@
                                            value="#{loginRequest.password}"/><br/>
                             <h:message styleClass="message" for="password"/>
                         </div>
-
                         <h:commandButton action="#{loginController.login}" value="Login" styleClass="btn btn-primary"/>
                     </h:form>
                     <h:outputLink style="margin-top: 5px" styleClass="btn btn-danger" value="/app/googleAuthorization" target="_blank">Login Z googlem</h:outputLink>
