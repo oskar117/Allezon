@@ -19,7 +19,7 @@
             <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
             <script type="text/javascript">
                 $(function(){
-                    $('#addToBasket').click(function () {
+                    $(".basket, .btn, btn-primary, .float-right").click(function () {
                         $.ajax({
                             type: 'POST',
                             url: 'http://localhost:8080/app/api/cart',
@@ -32,6 +32,20 @@
                         });
                     })
                 });
+
+                function close (itemId) {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'http://localhost:8080/app/api/cart',
+                        contentType : 'application/json',
+                        dataType    : 'json',
+                        data: JSON.stringify({
+                            "user_id" : #{id},
+                            "item_id" : itemId
+                        })
+                    });
+                }
+
             </script>
             <div class="pt-5 col-xs-2 col-md-8 col-sm-5 mx-auto">
                 <div class="card bg-dark">
@@ -42,6 +56,7 @@
                             <c:if test="${empty auctionController.auctions}"><tr><th scope="col">Nie dodano Żadnych aukcji</th></tr></c:if>
                                 <c:if test="${not empty auctionController.auctions}">
                                     <c:forEach items="#{auctionController.auctions}" var="names">
+                                        <h:panelGroup id="cos">
                                         <tr>
                                             <td>
                                                 <h:graphicImage value="/images/#{names.photos[0].url}" width="100" height="100"/>
@@ -54,9 +69,13 @@
                                             </td>
                                             <td>
                                                 <h:inputHidden id="item_id" value="#{names.id}"/>
-                                                <div id="addToBasket" class="btn btn-primary float-right"><i class="fas fa-shopping-cart"></i></div>
+                                                <h:commandButton onclick="close(#{names.id})" value="+" styleClass="btn btn-primary">
+                                                    <f:ajax execute="cos"></f:ajax>
+                                                </h:commandButton>
                                             </td>
                                         </tr>
+
+                                        </h:panelGroup>
                                     </c:forEach>
                                 </c:if>
                             </tbody>

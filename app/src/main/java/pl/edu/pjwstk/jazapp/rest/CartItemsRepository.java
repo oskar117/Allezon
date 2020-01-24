@@ -49,7 +49,8 @@ public class CartItemsRepository {
     }
 
     public List<AuctionEntity> getItems(Long cartId) {
-        List<CartItemsEntity> items = em.createQuery("From CartItemsEntity where id = :x").setParameter("x", cartId).getResultList();
+        CartEntity cart = em.getReference(CartEntity.class, cartId);
+        List<CartItemsEntity> items = em.createQuery("From CartItemsEntity where cartId = :x").setParameter("x", cart).getResultList();
         List<AuctionEntity> itemIds = new ArrayList<AuctionEntity>();
 
         for(var x : items) {
