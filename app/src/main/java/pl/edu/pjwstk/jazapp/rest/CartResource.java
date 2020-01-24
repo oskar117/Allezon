@@ -21,7 +21,7 @@ public class CartResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addItem(AddToCartCommand addToCartCommand) {
 
-        System.out.println("itemId: "+addToCartCommand.getItem_id()+"\nuserId: "+addToCartCommand.getUser_id());
+        System.out.println("itemId: "+addToCartCommand.getItem_id()+"\tuserId: "+addToCartCommand.getUser_id());
 
         var userId = addToCartCommand.getUser_id();
         var itemId = addToCartCommand.getItem_id();
@@ -50,8 +50,27 @@ public class CartResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{cartId}")
-    public Response getItems(@PathParam("cartId") Long cartId) {
-        var items = cartItemsRepository.getItems(cartId);
+    public Response getItems(@PathParam("cartId") Long userId) {
+        var items = cartItemsRepository.getItems(userId);
         return Response.ok().entity(items).build();
+    }
+
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/delete")
+    public Response deleteCartItem(AddToCartCommand addToCartCommand) {
+        cartItemsRepository.deleteItem(addToCartCommand.getUser_id(), addToCartCommand.getItem_id());
+        return Response.ok().build();
+    }
+
+    //TODO zrobic ładnie z kaskadami i wogle
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("{userId}/checkout")
+    public Response checkout(@PathParam("userId") Long userId) {
+        CartEntity cart = cartRepository.getCart(userId);
+        cartItemsRepository.deleteItems(cart);
+        cartRepository.deleteCart(userId);
+        return Response.ok().build();
     }
 }

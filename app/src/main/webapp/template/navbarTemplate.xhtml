@@ -20,50 +20,106 @@
         //<![CDATA[
         $(function(){
             $('#dropdownMenuButton').click(function () {
-                $.ajax({
-                    url: 'http://localhost:8080/app/api/cart/10',
-                    dataType : "json"
-                }).done(function(res) {
-                    let photo
-                    let title
-                    let price
-                    let text = ""
-                    $.each(res, function (index, value) {
-                        title = value.title
-                        price = value.price
+                renderBasket()
 
-                        if(value.photos.length == 0) {
-                            photo = "nophoto.jpg"
-                        } else {
-                            photo = value.photos[0].url
+                $('#items').on('click', function (event) {
+                    event.stopPropagation()
+                });
+            })
 
-                        }
-                        text += "<li>" +
-                            "                        <span class=\"float-left\" style=\"display: block\">" +
-                            "                            <img src=\"/app/images/"+photo+"\" style=\"max-width: 70px; float: left;\" class=\"ml-2\"/>" +
-                            "                            <span style=\"float: left; display: block\" class=\"pl-1\">" +
-                            "                                <span>"+title+"</span><br/>" +
-                            "                                <span>"+price+"</span>" +
-                            "                            </span>" +
-                            "                        </span>" +
-                            "                        <span class=\"btn btn-danger float-right mr-2\"><i class=\"fas fa-trash-alt\"></i></span>" +
-                            "                    </li><br/>"
+        });
 
-                    });
-                    text += "<li>" +
-                        "                    <span style=\"margin-top: 5px; float: left\" class=\"btn btn-warning btn-block\">Do kady</span>" +
-                        "                </li>"
-                    $('#items').html(text)
+        function deleteItem(id) {
+            $.ajax({
+                url: 'http://localhost:8080/app/api/cart/delete',
+                type: 'DELETE',
+                contentType : 'application/json',
+                dataType    : 'json',
+                data: JSON.stringify({
+                    "user_id" : #{id},
+                    "item_id" : id
                 })
             })
-        });
+            location.reload();
+            renderBasket()
+        }
+
+        function checkout() {
+            $.ajax({
+                url: 'http://localhost:8080/app/api/cart/#{id}/checkout',
+                type: 'DELETE',
+                dataType: 'json',
+            })
+            location.reload();
+        }
+
+        function inc() {
+
+        }
+
+        function dec() {
+
+        }
+
+        function renderBasket() {
+            let text = ""
+            $.ajax({
+                url: 'http://localhost:8080/app/api/cart/#{id}',
+                dataType : "json"
+            }).done(function(res) {
+                let photo
+                let title
+                let price
+                $.each(res, function (index, value) {
+                    title = value.title
+                    price = value.price
+
+                    if(value.photos.length == 0) {
+                        photo = "nophoto.jpg"
+                    } else {
+                        photo = value.photos[0].url
+
+                    }
+
+                    text += "<li>" +
+                        "                        <span class=\"float-left\" style=\"display: block\">" +
+                        "                            <img src=\"/app/images/"+photo+"\" style=\"max-width: 70px; float: left;\" class=\"ml-2\"/>" +
+                        "                            <span style=\"float: left; display: block\" class=\"pl-1\">" +
+                        "                                <span>"+title+"</span><br/>" +
+                        "                                <span>"+price+"</span>" +
+                        "                            </span>" +
+                        "                        </span>" +
+                        "                        <span onclick='deleteItem("+value.id+")' class=\"btn btn-danger float-right mr-2\"><i class=\"fas fa-trash-alt\"></i></span>" +
+                        "                    </li><br/>"
+
+                });
+
+                if(text === "") {
+                    text += "<li>" +
+                        "                    <p style=\"margin: 5px; float: left\"><b>Twój koszyk jest pusty!</b></p>" +
+                        "                </li>"
+                } else {
+                    text += "<li>" +
+                        "                    <span onclick=\"checkout()\" style=\"margin: 5px; float: left\" class=\"btn btn-warning btn-block\">Do kasy</span>" +
+                        "                </li>"
+                }
+
+                $('#items').html(text)
+            }).fail(function( jqXHR, textStatus ) {
+                let text = "<li>" +
+                    "                    <p style=\"margin: 5px; float: left\"><b>Twój koszyk jest pusty!</b></p>" +
+                    "                </li>"
+                $('#items').html(text)
+            });
+        }
+
         //]]>
     </script>
 
     <div class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow position-relative justify-content-between">
         <a class="navbar-brand col-sm-3 col-md-2 mr-0 float-left" href="/app/index.xhtml">Allezon</a>
         <div class="dropdown ml-auto float-right pr-1" id="ddd" >
-            <button class="btn dropdown-toggle float-right" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+            <button style="color: whitesmoke" class="btn dropdown-toggle float-right" type="button" id="dropdownMenuButton" data-toggle="dropdown">
                 <span style="color: whitesmoke"><i class="fas fa-shopping-cart"></i> Koszyk</span>
             </button>
             <ul class="dropdown-menu" id="items" style="min-width:300px;">

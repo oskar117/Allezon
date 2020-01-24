@@ -48,8 +48,25 @@ public class CartItemsRepository {
         }
     }
 
-    public List<AuctionEntity> getItems(Long cartId) {
-        CartEntity cart = em.getReference(CartEntity.class, cartId);
+    @Transactional
+    public void deleteItem(Long userId, Long itemId) {
+        AuctionEntity ae = em.getReference(AuctionEntity.class, itemId);
+        ProfileEntity pe = em.getReference(ProfileEntity.class, userId);
+        CartEntity cart = em.createQuery("From CartEntity where userId = :y ", CartEntity.class).setParameter("y", pe).getSingleResult();
+        CartItemsEntity item = em.createQuery("From CartItemsEntity where cartId = :cart and auctionId = :ae", CartItemsEntity.class).setParameter("cart", cart).setParameter("ae", ae).getSingleResult();
+        em.remove(item);
+    }
+
+    public List<AuctionEntity> getItems(Long userId) {
+
+        ProfileEntity pe = em.getReference(ProfileEntity.class, userId);
+        CartEntity cart;
+        try {
+            cart = em.createQuery("From CartEntity where userId = :y ", CartEntity.class).setParameter("y", pe).getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+
         List<CartItemsEntity> items = em.createQuery("From CartItemsEntity where cartId = :x").setParameter("x", cart).getResultList();
         List<AuctionEntity> itemIds = new ArrayList<AuctionEntity>();
 

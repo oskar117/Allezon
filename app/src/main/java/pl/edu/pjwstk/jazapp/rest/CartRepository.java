@@ -32,6 +32,13 @@ public class CartRepository {
         return cartEntity;
     }
 
+    @Transactional
+    public void deleteCart(Long userId) {
+        ProfileEntity pe = em.getReference(ProfileEntity.class, userId);
+        CartEntity cart = em.createQuery("from CartEntity where userId = :x", CartEntity.class).setParameter("x", pe).getSingleResult();
+        em.remove(cart);
+    }
+
     public CartEntity renewCart(CartEntity cart, LocalDateTime date) {
         cart.setExpirationDate(date.plusMonths(1));
         em.merge(cart);
