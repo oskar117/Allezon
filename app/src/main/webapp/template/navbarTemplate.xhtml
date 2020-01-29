@@ -34,9 +34,11 @@
                 url: 'http://localhost:8080/app/api/cart/'+id+'/delete',
                 type: 'DELETE',
                 dataType    : 'json',
+                error: function () {
+                    renderBasket()
+                }
             })
-            location.reload();
-            renderBasket()
+            //renderBasket()
         }
 
         function checkout() {
@@ -44,8 +46,10 @@
                 url: 'http://localhost:8080/app/api/cart/#{id}/checkout',
                 type: 'DELETE',
                 dataType: 'json',
+                error: function () {
+                    renderBasket()
+                }
             })
-            location.reload();
         }
 
         function inc(itemId) {
@@ -54,8 +58,10 @@
                 url: 'http://localhost:8080/app/api/cart/'+itemId+'/inc',
                 contentType : 'application/json',
                 dataType    : 'json',
+                error: function () {
+                    renderBasket()
+                }
             });
-            location.reload();
         }
 
         function dec(itemId) {
@@ -64,8 +70,10 @@
                 url: 'http://localhost:8080/app/api/cart/'+itemId+'/dec',
                 contentType : 'application/json',
                 dataType    : 'json',
+                error: function () {
+                    renderBasket()
+                }
             });
-            location.reload();
         }
 
         function renderBasket() {
