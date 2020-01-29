@@ -30,3 +30,11 @@ databaseChangeLog:
         relativeToChangelogFile: true
         splitStatements: false
         path: 20200117_cart.sql
+
+  - changeSet:
+      id: 20200127_cart_item_amount
+      author: Olek Konieczny
+      sqlFile:
+        relativeToChangelogFile: true
+        splitStatements: false
+        path: 20200127_cart_item_amount.sql

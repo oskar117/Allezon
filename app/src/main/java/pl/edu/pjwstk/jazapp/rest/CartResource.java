@@ -1,8 +1,5 @@
 package pl.edu.pjwstk.jazapp.rest;
 
-import pl.edu.pjwstk.jazapp.auction.repositories.AuctionRepository;
-import pl.edu.pjwstk.jazapp.login.auth.ProfileRepository;
-
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -39,8 +36,10 @@ public class CartResource {
             cartItemsRepository.deleteItems(cart);
         }
 
-        if(!cartItemsRepository.containsItem(itemId)) {
-            cartItemsRepository.addItem(cart.getId(), itemId);
+        if(!cartItemsRepository.containsItem(itemId, userId)) {
+            cartItemsRepository.addItem(cart.getId(), itemId, 1);
+        } else {
+            cartItemsRepository.increaseItemAmount(cart.getId(), itemId);
         }
 
         return Response.ok().build();
@@ -51,7 +50,7 @@ public class CartResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{cartId}")
     public Response getItems(@PathParam("cartId") Long userId) {
-        var items = cartItemsRepository.getItems(userId);
+        var items = cartItemsRepository.getCartItems(userId);
         return Response.ok().entity(items).build();
     }
 

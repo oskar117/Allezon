@@ -17,13 +17,23 @@ public class CartItemsEntity {
     @ManyToOne
     @JoinColumn(name = "auction_id")
     private AuctionEntity auctionId;
+    private Integer amount;
 
     public CartItemsEntity() {
     }
 
-    public CartItemsEntity(CartEntity ce, AuctionEntity ae) {
+    public CartItemsEntity(CartEntity ce, AuctionEntity ae, Integer amount) {
         cartId = ce;
         auctionId = ae;
+        this.amount = amount;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 
     public Long getId() {

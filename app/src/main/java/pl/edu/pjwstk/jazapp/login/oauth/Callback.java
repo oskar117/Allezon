@@ -57,12 +57,13 @@ public class Callback extends HttpServlet {
 
                 HttpSession session=req.getSession();
                 String currUser = json.getString("name");
-                session.setAttribute("id", currUser);
+                //session.setAttribute("id", currUser);
                 session.setAttribute("username", currUser);
                 session.setAttribute("name", json.getString("given_name"));
                 session.setAttribute("surname", json.getString("family_name"));
 
                 if(profileRepository.userExists(currUser)) {
+                    session.setAttribute("id", profileRepository.getId(currUser));
                     resp.sendRedirect(req.getContextPath() + "/index.xhtml");
                 } else {
                     resp.sendRedirect(req.getContextPath() + "/oauthRegister.xhtml");

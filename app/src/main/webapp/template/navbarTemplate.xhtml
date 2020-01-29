@@ -70,14 +70,17 @@
                 let photo
                 let title
                 let price
+                let amount
                 $.each(res, function (index, value) {
-                    title = value.title
-                    price = value.price
 
-                    if(value.photos.length == 0) {
+                    title = value.auctionId.title
+                    price = value.auctionId.price
+                    amount = value.amount
+
+                    if(value.auctionId.photos.length == 0) {
                         photo = "nophoto.jpg"
                     } else {
-                        photo = value.photos[0].url
+                        photo = value.auctionId.photos[0].url
 
                     }
 
@@ -90,7 +93,8 @@
                         "                            </span>" +
                         "                        </span>" +
                         "                        <span onclick='deleteItem("+value.id+")' class=\"btn btn-danger float-right mr-2\"><i class=\"fas fa-trash-alt\"></i></span>" +
-                        "                    </li><br/>"
+                        "                        <span class=\"float-right border m-2 px-1\">"+amount+"</span>" +
+                        "                    </li><br/><br/>"
 
                 });
 
@@ -99,8 +103,8 @@
                         "                    <p style=\"margin: 5px; float: left\"><b>Twój koszyk jest pusty!</b></p>" +
                         "                </li>"
                 } else {
-                    text += "<li>" +
-                        "                    <span onclick=\"checkout()\" style=\"margin: 5px; float: left\" class=\"btn btn-warning btn-block\">Do kasy</span>" +
+                    text += "<li style=\"margin: 5px\">" +
+                        "                    <span onclick=\"checkout()\" style=\"float: left;\" class=\"btn btn-warning btn-block\">Do kasy</span>" +
                         "                </li>"
                 }
 
