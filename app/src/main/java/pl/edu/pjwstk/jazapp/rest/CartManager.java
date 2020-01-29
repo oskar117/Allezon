@@ -25,6 +25,7 @@ public class CartManager {
             cart = cartRepository.addCart(userId, date);
         }
 
+        System.out.println(date + ":::"+ cart.getExpirationDate());
         if(date.isAfter(cart.getExpirationDate())) {
             cart = cartRepository.renewCart(cart, date);
             cartItemsRepository.deleteItems(cart);

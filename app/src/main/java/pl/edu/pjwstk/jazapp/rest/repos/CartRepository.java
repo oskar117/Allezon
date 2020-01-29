@@ -40,6 +40,7 @@ public class CartRepository {
         em.remove(cart);
     }
 
+    @Transactional
     public CartEntity renewCart(CartEntity cart, LocalDateTime date) {
         cart.setExpirationDate(date.plusMonths(1));
         em.merge(cart);

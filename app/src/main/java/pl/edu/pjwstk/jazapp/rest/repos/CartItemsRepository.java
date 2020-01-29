@@ -6,9 +6,11 @@ import pl.edu.pjwstk.jazapp.rest.entities.CartEntity;
 import pl.edu.pjwstk.jazapp.rest.entities.CartItemsEntity;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,11 @@ public class CartItemsRepository {
 
     @PersistenceContext
     private EntityManager em;
+
+    @Inject
+    private CartItemsRepository cartItemsRepository;
+    @Inject
+    private CartRepository cartRepository;
 
     @Transactional
     public void addItem(Long cartId, Long auctionId, Integer amount) {
@@ -66,8 +73,15 @@ public class CartItemsRepository {
         } catch (Exception e) {
             return null;
         }
-        List<CartItemsEntity> items = em.createQuery("From CartItemsEntity where cartId = :x order by id").setParameter("x", cart).getResultList();
-        return items;
+        LocalDateTime date = LocalDateTime.now();
+        if(date.isAfter(cart.getExpirationDate())) {
+            cart = cartRepository.renewCart(cart, date);
+            cartItemsRepository.deleteItems(cart);
+            return null;
+        } else {
+            List<CartItemsEntity> items = em.createQuery("From CartItemsEntity where cartId = :x order by id").setParameter("x", cart).getResultList();
+            return items;
+        }
     }
 
     public List<AuctionEntity> getItems(Long userId) {
