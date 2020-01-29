@@ -1,6 +1,7 @@
-package pl.edu.pjwstk.jazapp.rest;
+package pl.edu.pjwstk.jazapp.rest.repos;
 
 import pl.edu.pjwstk.jazapp.login.auth.ProfileEntity;
+import pl.edu.pjwstk.jazapp.rest.entities.CartEntity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;

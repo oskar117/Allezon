@@ -1,7 +1,9 @@
-package pl.edu.pjwstk.jazapp.rest;
+package pl.edu.pjwstk.jazapp.rest.repos;
 
 import pl.edu.pjwstk.jazapp.auction.entities.AuctionEntity;
 import pl.edu.pjwstk.jazapp.login.auth.ProfileEntity;
+import pl.edu.pjwstk.jazapp.rest.entities.CartEntity;
+import pl.edu.pjwstk.jazapp.rest.entities.CartItemsEntity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
@@ -67,7 +69,7 @@ public class CartItemsRepository {
         } catch (Exception e) {
             return null;
         }
-        List<CartItemsEntity> items = em.createQuery("From CartItemsEntity where cartId = :x").setParameter("x", cart).getResultList();
+        List<CartItemsEntity> items = em.createQuery("From CartItemsEntity where cartId = :x order by id").setParameter("x", cart).getResultList();
         return items;
     }
 
@@ -98,5 +100,21 @@ public class CartItemsRepository {
         CartItemsEntity item = em.createQuery("From CartItemsEntity where cartId = :cart and auctionId = :ae", CartItemsEntity.class).setParameter("cart", cart).setParameter("ae", ae).getSingleResult();
         item.setAmount(item.getAmount() + 1);
         em.merge(item);
+    }
+
+    @Transactional
+    public void increaseItemAmount(Long id) {
+        CartItemsEntity item = em.createQuery("From CartItemsEntity where id = :id", CartItemsEntity.class).setParameter("id", id).getSingleResult();
+        item.setAmount(item.getAmount() + 1);
+        em.merge(item);
+    }
+
+    @Transactional
+    public void decreaseItemAmount(Long id) {
+        CartItemsEntity item = em.createQuery("From CartItemsEntity where id = :id", CartItemsEntity.class).setParameter("id", id).getSingleResult();
+        if(item.getAmount() > 1) {
+            item.setAmount(item.getAmount() - 1);
+            em.merge(item);
+        }
     }
 }

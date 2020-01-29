@@ -1,10 +1,13 @@
 package pl.edu.pjwstk.jazapp.rest;
 
+import pl.edu.pjwstk.jazapp.rest.entities.CartEntity;
+import pl.edu.pjwstk.jazapp.rest.repos.CartItemsRepository;
+import pl.edu.pjwstk.jazapp.rest.repos.CartRepository;
+
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.time.LocalDateTime;
 
 @Path("/cart")
 public class CartResource {
@@ -12,39 +15,21 @@ public class CartResource {
     @Inject
     private CartRepository cartRepository;
 
-    @Inject CartItemsRepository cartItemsRepository;
+    @Inject
+    private CartItemsRepository cartItemsRepository;
+
+    @Inject
+    private CartManager cartManager;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addItem(AddToCartCommand addToCartCommand) {
 
-        System.out.println("itemId: "+addToCartCommand.getItem_id()+"\tuserId: "+addToCartCommand.getUser_id());
-
         var userId = addToCartCommand.getUser_id();
         var itemId = addToCartCommand.getItem_id();
-
-        CartEntity cart = cartRepository.getCart(userId);
-
-        LocalDateTime date = LocalDateTime.now();
-
-        if(cart == null) {
-            cart = cartRepository.addCart(userId, date);
-        }
-
-        if(date.isAfter(cart.getExpirationDate())) {
-            cart = cartRepository.renewCart(cart, date);
-            cartItemsRepository.deleteItems(cart);
-        }
-
-        if(!cartItemsRepository.containsItem(itemId, userId)) {
-            cartItemsRepository.addItem(cart.getId(), itemId, 1);
-        } else {
-            cartItemsRepository.increaseItemAmount(cart.getId(), itemId);
-        }
-
+        cartManager.addItemToCart(userId, itemId);
         return Response.ok().build();
     }
-
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -61,6 +46,23 @@ public class CartResource {
         cartItemsRepository.deleteItem(addToCartCommand.getUser_id(), addToCartCommand.getItem_id());
         return Response.ok().build();
     }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("{itemId}/inc")
+    public Response incItems(@PathParam("itemId") Long id) {
+        cartItemsRepository.increaseItemAmount(id);
+        return Response.ok().build();
+    }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("{itemId}/dec")
+    public Response decItems(@PathParam("itemId") Long id) {
+        cartItemsRepository.decreaseItemAmount(id);
+        return Response.ok().build();
+    }
+
 
     //TODO zrobic ładnie z kaskadami i wogle
     @DELETE
