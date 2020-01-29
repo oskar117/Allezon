@@ -41,9 +41,9 @@ public class CartResource {
 
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/delete")
-    public Response deleteCartItem(AddToCartCommand addToCartCommand) {
-        cartItemsRepository.deleteItem(addToCartCommand.getUser_id(), addToCartCommand.getItem_id());
+    @Path("{itemId}/delete")
+    public Response deleteCartItem(@PathParam("itemId") Long id) {
+        cartItemsRepository.deleteItem(id);
         return Response.ok().build();
     }
 

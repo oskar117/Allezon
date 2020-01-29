@@ -53,11 +53,8 @@ public class CartItemsRepository {
     }
 
     @Transactional
-    public void deleteItem(Long userId, Long itemId) {
-        AuctionEntity ae = em.getReference(AuctionEntity.class, itemId);
-        ProfileEntity pe = em.getReference(ProfileEntity.class, userId);
-        CartEntity cart = em.createQuery("From CartEntity where userId = :y ", CartEntity.class).setParameter("y", pe).getSingleResult();
-        CartItemsEntity item = em.createQuery("From CartItemsEntity where cartId = :cart and auctionId = :ae", CartItemsEntity.class).setParameter("cart", cart).setParameter("ae", ae).getSingleResult();
+    public void deleteItem(Long itemId) {
+        CartItemsEntity item = em.createQuery("From CartItemsEntity where id = :id", CartItemsEntity.class).setParameter("id", itemId).getSingleResult();
         em.remove(item);
     }
 

@@ -31,14 +31,9 @@
 
         function deleteItem(id) {
             $.ajax({
-                url: 'http://localhost:8080/app/api/cart/delete',
+                url: 'http://localhost:8080/app/api/cart/'+id+'/delete',
                 type: 'DELETE',
-                contentType : 'application/json',
                 dataType    : 'json',
-                data: JSON.stringify({
-                    "user_id" : #{id},
-                    "item_id" : id
-                })
             })
             location.reload();
             renderBasket()
